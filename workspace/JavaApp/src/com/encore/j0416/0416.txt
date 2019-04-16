@@ -5,3 +5,98 @@
  - 데이터형이 동일한 자료		---> 조건
       같은(하나의) 변수명을 정의  ---> 특성
       자료들의 집합.			---> 정의
+ - 데이터를 구분하기 위해서 번지를 사용.
+ - 시작 번지는 0번지!
+ - 첫번째 데이터부터 인덱스(자동번호)가 부여.
+   (인덱스는 0부터 시작해서 1씩 증가)
+ - 배열의 크기가 정해지면 인덱스를 벗어나는 참조를 하면 안됨.
+    int []su3 = {10,20,30};
+       	 번지 ==>   0  1  2
+	System.out.println(su3[1]);	// 데이터 사용(두번째 데이터 출력)
+	System.out.println(su3[3]);
+	     ==> 에러발생 : ArrayIndexOutBoundsException!
+	     
+=========================================================================
+   11		22		33
+   true		false	true
+   "길동"	"라임"	"주원"
+   'j'	 'a'	'v' 	'a'
+   
+   int su1 = 11;
+   int su2 = 22;
+   int su3 = 33;
+   
+   int []su = { 11, 22, 33 };
+      번지(인덱스)
+   ---------
+      데이터를 구분하기 위해서 사용
+   ==> su라는 배열 변수에 복수 데이터 대입!
+   
+   int su; ==> 한개의 데이터 입력
+   int []su; ==> 여러개의 데이터 입력!(배열)
+   
+   boolean []b =  {true,false,true};
+   String [] str = {"길동","라임","주원"};
+   char []ch = {'j','a','v','a'};
+   
+==========================================================================
+
+ <자바빈즈> JavaBeans
+ - 서로 관련성 있는 속성을 묶어주는 클래스(객체)
+ - 사용하는 곳에 따라 VO(Value Object)또는 DTO(Data transfer Object)라는 이름을 사용하기도 함
+ 규칙)
+ 	1. 속성데이터를 private하게 선언
+ 	2. public 선언된 주고 받는 메소드를 정의.
+ 	----------------------------------------------
+ 	3. public한 기본 생성자, 오버로딩 생성자를 정의할 수 있다.
+ 	4. 반드시 속성이 수와 일치하는 get,set이 정의되지 않아도 됨.
+ 
+ 참고) 
+ 	get으로 시작되는 메소드들 : 게터메소드(getter메소드)
+ 	set으로 시작되는 메소드들 : 세터메소드(setter메소드)
+ 	
+-----------------------------------------------------------------------
+ 	
+ public class Person{
+ 	private String name;
+ 	private int age;
+ 	private String job;
+ 	
+ 	public Person(){}
+ 	
+ 	public Person(String name, int age, String job){
+ 		this.name = name;
+ 		this.age = age;
+ 		this.job = job;
+ 	}
+ 	
+
+ 	public void setName(String name){
+ 		this.name = name;
+ 	}
+ 	public void setAge(int age){
+ 		this.age = age;
+ 	}
+ 	public void setJob(String job){
+ 		this.job = job;
+ 	}
+ 	
+ 	
+ 	public String getName(){
+ 		return name;
+ 	}
+ 	public String getAge(){
+ 		return age;
+ 	}
+ 	public String getJob(){
+ 		return job;
+ 	}
+ }
+ ------------main()----------------------------------------
+ Person p = new Person();
+ 	p.name = "홍길동";				==> 이름 정보 주기				: 에러발생
+ 	  ----> p.setName("홍길동")		==> 이름 정보 주기				: 실행 OK
+ 	  
+ 	System.out.println(p.name);				 ==> 이름 정보 받기(얻기) "홍길동" 출력	: 에러발생
+ 		==> System.out.println(p.getName()); ==> 이름 정보 받기(얻기) "홍길동" 출력	: 실행 OK
+   

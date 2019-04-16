@@ -25,4 +25,16 @@ public class A {
 //		su1=10, su2=20, su3=30
 		System.out.println("m4() : " + su1 + "," + su2 + "," + su3);
 	}
+	
+	public void m5(int[] arr) {
+		System.out.println("m5() : " + arr[0] + "," + arr[1] + "," + arr[2]);
+	}
+	
+	public void m6(String name, int age, String job) {
+		System.out.println("m5() : " + name + "," + age + "," + job);
+	}
+	
+	public void m6_2(Person p) {
+		System.out.println("m6_2() : " + p.getName() + "," + p.getAge() + "," + p.getJob());
+	}
 }
