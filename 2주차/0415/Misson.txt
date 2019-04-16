@@ -1,0 +1,23 @@
+1. Gugudan.java
+ - 기능 정의
+ 
+  ==> 단 입력
+  	int inputDan(){
+  		int dan = System.in.read() 또는 readLine()
+  	}
+  	
+  ==> 단 출력
+  	void outputDan(int dan){
+  		//전달받은 dan에 대한 9줄 출력
+  	}
+  	
+  ==> 계속 여부
+  	char continueDan(){
+  		read() 또는 readLine()
+  	}
+  	
+  	
+2. GugudanTest.java
+	--> main()포함
+	--> 반복적인 실행 (while 또는 do while문 사용)
+	--> 반복문 내에서 Gugudan클래스내의 메소드들을 적당히 호출.

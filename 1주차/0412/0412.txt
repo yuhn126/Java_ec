@@ -1,0 +1,192 @@
+공백 (WhiteSpace) : 한 개 이상의 스페이스(한 칸), 탭(일정 간격), 엔터의 조합
+
+
+<Escape Character> Escape Squence
+- 특수문자, 확장문자
+- 기능을 갖는 확장된 문자
+- 주의 : 인용 부호 내에서만 사용해야함!
+
+종류)
+    \n : new line, Line Feed(LF), 줄바꿈
+    \r : Carriage Return(CR), 커서의 위치를 맨 앞으로 이동.
+    \t : Tab, 일정 간격 띄우기
+    \\ : '\' 문자 표현
+    \" : 큰 따옴표
+    \' : 작은 따옴표
+
+<printf() 메소드>
+   JDK5버전부터 지원!, C언어와 같음
+   f : format(형식)dmf dmlal
+   포맷스트링(formatString) : %s(문자열), %c(문자), %d(정수), %f(실수)
+   ----> 포맷스트링의 수 만큼 뒤에 인자가 매핑된다.
+
+   사용)
+    System.out.printf("출력포맷형식", 출력할 바인드 데이터);
+
+   예)
+    System.out.printf("hello %s java", "안녕");        --->  출력결과) "hello 안녕 java"
+    System.out.printf("hello %d java", 123);          --->  출력결과) "hello 123 java"
+    System.out.printf("hello %s java %d", "안녕", 5);  --->  출력결과) "hello 안녕 java 5"
+    System.out.printf("hello%5djava", 345);           --->  출력결과) "hello  345java" // 5칸의 자리 확보 후 우측 정렬
+    System.out.printf("hello%-5djava", 345);          --->  출력결과) "hello345  java" // 5칸의 자리 확보 후 좌측 정렬
+
+
+
+=============================================================================================
+
+자바 == OOP(Object Oriented Programming)
+
+<객체지향의 특징>
+1. 캡슐화 : 필드와 메소드를 묶어주는것
+    - 정보은닉
+    - 모듈성
+2. 상속 ★
+    - 부모가 갖는 자원(필드, 메소드)을 아낌없이 물려주는 것.
+    - 관련키워드 extends
+      예) class My extends 상속받고싶은 부모클래스명{
+      	          --------
+		  is a 관계
+	  }
+
+	  class Parent extends Object{
+	               ---------------
+		       컴파일러가 자동 추가
+	  	d
+	  }
+
+	  class child extends Parent{
+	  	d
+	  }
+       
+       질문) Parent p = new Child(); (o)
+            --------
+	      기준
+			=> 자식은 부모다!
+			=> Child 클래스는 Parent 클래스로 형변환이 가능하다
+			=> Parent 변수명 = Parent!!
+
+       	    Child c = new Parent(); (x)
+	     ---> 부모는 자식에 대한 정보가x 
+	                => 부모는 자식에 대한 정보가 없기 때문에
+			   형변환이 불가하다. (에러발생)
+
+	     왼쪽 기준 오른쪽이 변할수있나?
+
+    - 단일상속이 기본 원칙.
+
+    API 문서 (Application programming interface)
+    	==>
+
+	java.lang.Object		부모클래스, 상위클래스, super
+		java.lang.String	자식클래스, 하위클래스, sub, 확장클래스
+
+    ※Object 클래스 ---> 최상위클래스!!
+    		  ---> 자바의 모든 클래스의 부모 클래스
+		  ---> 사용자가 정의하는 클래스에도 자동 추가 extends Object
+
+
+	호출
+	class Parent extends Object{
+		int = 100;
+		void hello(){}
+	}
+
+	class Child extends Parent{
+		int y = 200;
+		void goodBye(){}
+	}
+
+	1. Parent p = new Parent();
+
+	2. Child c = new Child();
+
+		부           자
+ 	3. Parent p2 = new Child();
+	      <--참조       메모리 
+	   
+	   p2.hello();     (o)
+	   p2.toString();  (o)
+	   p2.goodBye();   (x)
+
+
+		자           부 (x)
+	4. Child c2 = new Parent();   (x)	//c2가 가르킬곳이 없음
+	   Child c2 = p2;             (x)
+	   Child c2 = (Child)p2;      (o)형변환
+
+
+3. 다형성
+    - 메소드 오버라이딩(MethodOverriding) ★★ ==> 메소드 재정의
+    	 : 상속에서 나온 개녕
+	 : 부모가 갖는 메소드를 자식클래스에서 재정의
+    - 메소드 오버로딩(Methodoverloading)
+         : 한 클래스 동일한 메소드를 여러개 구현
+	   (단, 인자의 갯수가 다르거나 자료형이 달라야 한다.)
+
+
+  class A{
+
+     void hello(){
+	System.out.println("안녕~!");
+     }
+
+     void hello(String name){ // 오버로딩 메소드
+	System.out.println("안녕," + name + "!!");
+     }
+
+  }
+
+
+====================================================================
+
+<생성자> Constructor
+ - 새로운 객체를 생성하기 위해서 초기화해주는 메소드.
+                                    ------
+
+1. 생성자의 이름은 반드시 클래스명과 일치(대소문자 일치)
+2. 리턴자료형을 명시하지 않는다. (void조차x)
+----------1,2번 : 일반 메소드와의 차이점----------
+3. 객체생성시 자동으로 호출.
+4. 클래스내에 생성자가 하나도 없다면 자바컴파일러가 컴파일시 자동으로 (기본생성자를) 추가.
+※주의) 만약, 클래스내에 한 개 이상의 생성자가 정의 되어 있다면 컴파일러는 소스코드에 관여하지 않는다.
+
+
+class Abc{
+    int su;
+    My  my;
+    
+    Abc(){	// 기본 생성자(매개변수 비어있는 생성자) --> 초기화(할당값)메소드
+      //멤버 필드에 대한 초기화 작업
+      su = 10;
+      my = new My();
+
+      //(일반메소드 호출 전 1번 실행하는)선행작업
+    
+    }
+
+    Abc(String name){ // 오버로딩 생성자
+    
+    }
+
+    ABc(int age){ // 컴파일 에러 발생 : 클래스명과 일치하지 않으므로 일반메소드-->리턴자료형을 명시하지 않음!	
+    }
+
+    void hello(){
+    
+    }
+}
+
+==============================================================================================
+
+Abc a = new Abc();
+	   -------
+	 기본생성자 호출!
+    a.hello();
+
+
+
+Abc a = new Abc("길동");
+	   -----------
+	   오버로딩생성자 호출!
+    a.hello();
+

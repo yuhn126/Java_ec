@@ -1,0 +1,36 @@
+class VariableTest
+{
+	public static void main(String[] args) 
+	{
+		System.out.println("변수 안녕");
+
+		System.out.println("출력하고자 하는 데이터~!");
+
+		System.out.println(20);
+
+		int su;		//변수 선언
+		su = 30;	//변수 초기화(값 할당)
+
+		System.out.println(su);
+		System.out.println("======");
+
+		//문제 3*1 부터 3*5까지 출력하시오.
+		/*
+		 System.out.println(3*1);
+		 System.out.println(3*2);
+		 System.out.println(3*3);
+		 System.out.println(3*4);
+		 System.out.println(3*5);
+		*/
+
+		 int dan;
+		 dan = 6;
+
+		 System.out.println(dan*1);
+		 System.out.println(dan*2);
+		 System.out.println(dan*3);
+		 System.out.println(dan*4);
+		 System.out.println(dan*5);
+
+	}
+}
