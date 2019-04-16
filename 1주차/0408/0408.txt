@@ -1,0 +1,125 @@
+1. 프로그램의 구성요소
+ - 필드 (field, 변수) : 데이터 속성, 자료구조, 데이터를 담는 그릇
+ - 메소드 (method, 함수) : 기능, 행위
+ - 클래스 (class) : 자바 프로그램 기본 단위(파일), 필드와 메소드를 담는 울타리(template)
+
+2. 구성요소 구분
+ - 변수, 필드 : 첫글자 소문자
+ - 메소드 : 첫글자 소문자
+ - 클래스 : 첫글자 대문자
+
+ System.out.println("안녕");
+클래스  필드   메소드
+
+3. 구성요소 형식
+ - 변수 : 
+
+	자료형 변수명;
+	-----> 변수 선언
+
+	커피 v1;
+	물  v2;
+
+ ※ 식별자 (identifier) 이름 규칙(변수명, 메소드명, 클래스명에 적용)
+   1. 첫 글자 숫자 불가능
+      cup1, cup2 (o)
+      1cup, 2cup (x)
+      
+      int su1; (o)
+      int su2; (o)
+
+      int 1su; (x)
+      int 2su; (x)
+      int 3su; (x)
+
+   2. 특수문자 사용 불가
+      cup@ cup% (x)
+      ---->예외) _ $ 사용 가능
+      
+      String name;
+      String studentName;
+      String student_name;
+
+   3. 한글 사용 가능 (비권장) ==> 자바는 유니코드(16bit)를 지원하기 때문
+      String 학생이름;
+
+   4. 예약어 사용 금지 (에러발생)
+      int class;  (x)
+      int public; (x)
+      int if;     (x)
+
+ ※ 자바 자료형 (DataType)
+ ===> 기본 자료형 8개 + 클래스 자료형(알파)
+    문자 - char
+          char ch;	//변수 선언 : ch변수에 문자 데이터를 받겠음
+	  ch = 'a';	//변수 초기화 (값을 할당)
+	  ch = '가';
+	  ch = '3';
+
+	  String -----> 문자열 (문자의 나열 : 0개 이상의 문자를 표현할 때 사용)
+	  String str;    (o)
+	  str = "홍길동";  (o)
+	  str = "홍";     (o)
+	  str = "";      (o)
+	  str = '길';     (x)
+
+    숫자 - 정수
+    	   byte  (1byte)
+		 - 1byte == 8bit == 2의 8승 == 256개 (-128 ~ 127 )
+	   short (2byte)
+	   int   (4byte) : 가장 많이 사용
+	       int i = 345;
+	   long  (8byte)
+
+        - 실수
+	   float  (4byte)
+	   double (8byte) : 많이 사용
+	       double d = 3.14;
+
+    논리 - boolean (반복문, 제어문과 함께 많이 사용, 참 또는 거짓을 담는 자료형)
+          boolean b1;
+	  b1 = true;
+	  b1 = false;
+ *자료형 : char,btye,short,int,long,float,double,boolean
+
+ - 메소드 : 
+
+     리턴자료형 메소드명 ( 매개변수 )
+     { //메소드 시작
+	
+     } //메소드 끝
+ 	
+	*매개변수 = 인자 = 인수 = argument = 파라미터
+
+	void gildong()
+	{
+	    1. 문 앞으로 이동;
+	    2. 문 열기;
+	    3. 되돌아오기;   return;   //생략가능
+	}
+
+	Coffee lime()
+	{
+	    1. 자판기 앞으로 이동;
+	    2. 동전 투입;
+	    3. 커피 버튼 클릭;
+	    4. 커피를 뽑아서 되돌아오기;  return 커피;   //생략불가
+	}
+
+	Cola juwon(int coin)
+	{
+	    1. 자판기 앞으로 이동;
+	    2. 동전 투입;
+	    3. 콜라 버튼 클릭;
+	    4. 콜라를 뽑아서 되돌아오기;  return 콜라;   //생략불가
+	}
+ 	
+ - 클래스
+   
+      class 클래스명
+      { //클래스 시작
+	변수 선언
+
+	메소드 정의
+      } //클래스 끝
+

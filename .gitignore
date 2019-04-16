@@ -29,3 +29,4 @@ workspace/.metadata/.plugins/org.eclipse.wst.jsdt.core/externalLibsTimeStamps
 workspace/JavaApp/.classpath
 workspace/JavaApp/.project
 *.ini
+*.png
