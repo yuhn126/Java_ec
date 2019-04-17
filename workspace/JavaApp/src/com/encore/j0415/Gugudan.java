@@ -4,13 +4,10 @@ import java.io.IOException;
 
 public class Gugudan {
 	int inputDan() throws IOException {
-		System.out.println("<<구구단>>");
 		System.out.print("원하는 단 : ");
-
 		int dan = System.in.read() -48;
 		System.in.read();
 		System.in.read();
-		
 		return dan;
 	}
 	
@@ -22,9 +19,10 @@ public class Gugudan {
 	
 	char continueDan() throws IOException {
 		System.out.print("계속 할까요?(y/n) : ");
-		int cd = System.in.read();
+		char cd = (char)System.in.read();
 		System.in.read();
 		System.in.read();
-		return (char)cd;
+		return cd;
+//		return '\u0000';  char의 기본
 	}
 }

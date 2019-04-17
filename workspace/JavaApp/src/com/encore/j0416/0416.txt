@@ -100,3 +100,28 @@
  	System.out.println(p.name);				 ==> 이름 정보 받기(얻기) "홍길동" 출력	: 에러발생
  		==> System.out.println(p.getName()); ==> 이름 정보 받기(얻기) "홍길동" 출력	: 실행 OK
    
+==========================================================================================
+ <추상클래스> abstract class
+ - 후손 class를 제어할 목적으로 사용.
+ - 객체화 될 수 없는 클래스
+ - 구현(정의)된 메소드와 선언된 메소드로 구성.
+ - 스스로 객체생성 불가(new 사용X), 후손 class 객체생성(자식은 부모다!)해서 사용. 
+ 
+ 형식)
+ 	abstract class 클래스명{
+ 		//필드선언
+ 	
+ 		public void hello(){}	// 구현된(정의된) 메소드
+ 		abstract void print();	// 선언된 메소드
+ 		
+ 	    ※주의 : 선언된 메소드를 사용하는 경우 반드시 abstract 명시!
+ 	}
+
+
+ class 기본클래스{				class 추상클래스{			  interface 인터페이스{
+ 	// 정의(구현)된 메소드			// 선언된 메소드		 	  // 선언된 메소드만
+ 	void hello(){				void hello()			  void hello();
+   								// 정의 메소드
+   	}							void goodBye(){}	  }
+   							 }
+   							 

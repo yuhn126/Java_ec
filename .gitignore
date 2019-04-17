@@ -30,3 +30,4 @@ workspace/JavaApp/.classpath
 workspace/JavaApp/.project
 *.ini
 *.png
+*.history

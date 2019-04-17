@@ -53,11 +53,56 @@ public class MethodCallTest {
 //		p.setJob(job);
 //		세개의 데이터가 p라는 한개의 변수명으로 묶여짐.
 		
-		Person p = new Person(job, age2, job);
+		Person p = new Person(name3, age2, job);
 //		세개의 데이터가 p라는 한개의 변수명으로 묶여짐.
 		a.m6_2(p);
 		
-
+		Person p1 = new Person("너길동", 15, "학생");
+		Person p2 = new Person("차라임", 17, "학생");
+		
+//		 배열식) 자료형 []배열명 = { value_list };
+		Person []persons = { p1, p2, new Person("고주원", 19, "학생")};
+//		p1 = persons[0], p2 = persons[1]
+		
+		int num = a.m11();
+		System.out.println("결과 : " + num);
+		
+		String name4 = a.m12();
+		System.out.println("결과 : " + name4);
+		
+		int[] suArr = a.m13();
+		System.out.println("==>결과");
+		/*
+		System.out.println("suArr[0] = " + suArr[0]);
+		System.out.println("suArr[1] = " + suArr[1]);
+		System.out.println("suArr[2] = " + suArr[2]);
+		*/
+//		배열 == 객체!, 배열명 == 참조변수
+//		배열명.length	  --->  배열의 길이(배열의 요소 갯수)
+		System.out.println("배열의 크키 : " + suArr.length);
+		for(int m=0; m<suArr.length; m++) {
+			System.out.println("suArr[" + m + "] = " + suArr[m]);
+		}
+		
+		Person pp = a.m14();
+		System.out.println("이름 : " + pp.getName());
+		System.out.println("나이 : " + pp.getAge());
+		System.out.println("직업 : " + pp.getJob());
+		System.out.println("=====================");
+		
+		My m = a.m15();
+		int ju = m.juwon();
+		System.out.println("ju = " + ju);
+		System.out.println("=====================");
+		
+		Person[] per = a.m16();
+		for(int n=0; n<per.length; n++) {	//0,1,2
+//			p1 == per[0]	p1.getName();	per[0].getName();
+//			p2 == per[1]
+			System.out.println("이름 : " + per[n].getName());
+			System.out.println("나이 : " + per[n].getAge());
+			System.out.println("직업 : " + per[n].getJob());
+		}	System.out.println("=====================");
 		
 	}
 }
