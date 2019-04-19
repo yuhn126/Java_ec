@@ -11,7 +11,7 @@ public class LottoMission {
 		for(int k = 1; k < 6; k++) {
 			System.out.print(k + "회 : ");
 			for(int i = 0; i < lotto.length; i++) {
-				lotto[i] = r.nextInt(45) + 1;
+				lotto[i] = r.nextInt(45) + 1;		//특정 범위 설정 (0~44) + 1 = 1~45
 				for(int j = 0; j < i; j++) {
 					if(lotto[i] == lotto[j]) {
 						i--;

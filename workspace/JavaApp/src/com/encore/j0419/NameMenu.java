@@ -1,12 +1,10 @@
 package com.encore.j0419;
 
-import java.io.IOException;
-
 public class NameMenu{
 	String []names = new String[5];
 	
 	
-	void add(String inputName) throws IOException{
+	void add(String inputName){
 		for(int i = 0; i < names.length; i++) {
 			if(names[i] == null) {
 				names[i] = inputName;
@@ -23,7 +21,7 @@ public class NameMenu{
 		}
 	}
 	
-	void update(String beforeUpdate, String afterUpdate) throws IOException{
+	void update(String beforeUpdate, String afterUpdate){
 		int i = 0;
 		do {
 			if(names[i].equals(beforeUpdate)) {
@@ -35,7 +33,7 @@ public class NameMenu{
 		}while(true);		
 	}
 	
-	void delete(String deleteName) throws IOException {
+	void delete(String deleteName){
 		int i = 0;
 		do {
 			if(names[i].equals(deleteName)) {
