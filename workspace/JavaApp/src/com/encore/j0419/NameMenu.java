@@ -24,28 +24,26 @@ public class NameMenu{
 	}
 	
 	void update(String beforeUpdate, String afterUpdate) throws IOException{
+		int i = 0;
 		do {
-			int i = 0;
 			if(names[i].equals(beforeUpdate)) {
 				names[i] = afterUpdate;
 				break;
 			}else{
 				i++;
 			}
-			break;
 		}while(true);		
 	}
 	
 	void delete(String deleteName) throws IOException {
+		int i = 0;
 		do {
-			int i = 0;
 			if(names[i].equals(deleteName)) {
 				names[i] = null;
 				break;
 			}else{
 				i++;
 			}
-			break;
 		}while(true);
 		
 	}
