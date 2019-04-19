@@ -14,36 +14,39 @@ public class NameMenuTest {
 			System.out.println("<이름메뉴>");
 			System.out.println("1.추가 2.검색 3.수정 4.삭제 5.종료");
 			System.out.print("번호 입력 --> ");
-			int num = System.in.read() -48;
-			System.in.read();
-			System.in.read();
-
-			switch(num) {
-				case 1:
-					System.out.print("이름 입력 : ");
-					String inputName = in.readLine();
-					n.add(inputName);
-					continue;
-				case 2:
-					n.search();
-					continue;
-				case 3:
-					System.out.print("기존 이름 입력 : ");
-					String beforeUpdate = in.readLine();
-					System.out.print("변경 이름 입력 : ");
-					String afterUpdate = in.readLine();
-					n.update(beforeUpdate, afterUpdate);
-					continue;
-				case 4:
-					System.out.print("삭제 이름 입력 : ");
-					String deleteName = in.readLine();
-					n.delete(deleteName);
-					continue;
-				case 5 :
-					System.out.println("프로그램을 종료합니다.");
-					b = false;
-				}
-				
+			String num = in.readLine();
+			System.out.println();
+			
+			char ch = num.charAt(0);
+			if (ch >= '0' && ch <= '5') {
+				switch(ch) {
+					case '1':
+						System.out.print("이름 입력 : ");
+						String inputName = in.readLine();
+						n.add(inputName);
+						continue;
+					case '2':
+						n.search();
+						continue;
+					case '3':
+						System.out.print("기존 이름 입력 : ");
+						String beforeUpdate = in.readLine();
+						System.out.print("변경 이름 입력 : ");
+						String afterUpdate = in.readLine();
+						n.update(beforeUpdate, afterUpdate);
+						continue;
+					case '4':
+						System.out.print("삭제 이름 입력 : ");
+						String deleteName = in.readLine();
+						n.delete(deleteName);
+						continue;
+					case '5' :
+						System.out.println("프로그램을 종료합니다.");
+						b = false;
+					}
+			}else {
+				System.out.println("#번호만 입력하세요!");
+			}
 		}while(b);
 		
 	}
