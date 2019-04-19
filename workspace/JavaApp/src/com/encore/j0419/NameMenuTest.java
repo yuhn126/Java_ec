@@ -12,6 +12,7 @@ public class NameMenuTest {
 		boolean b = true;
 		do {
 			System.out.println("<이름메뉴>");
+			System.out.println("1.추가 2.검색 3.수정 4.삭제 5.종료");
 			System.out.print("번호 입력 --> ");
 			int num = System.in.read() -48;
 			System.in.read();

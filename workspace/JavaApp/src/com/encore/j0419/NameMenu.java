@@ -32,6 +32,7 @@ public class NameMenu{
 			}else{
 				i++;
 			}
+			break;
 		}while(true);		
 	}
 	
@@ -44,6 +45,7 @@ public class NameMenu{
 			}else{
 				i++;
 			}
+			break;
 		}while(true);
 		
 	}
