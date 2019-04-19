@@ -1,6 +1,6 @@
-package p2;
+package com.encore.j0415.p2;
 
-import p1.Parent;
+import com.encore.j0415.p1.Parent;
 
 public class Other {
 	//자식에서 부모클래스의 메소드 호출
