@@ -21,9 +21,9 @@ public class MatchesTest {
 		System.out.println(str.matches("[abc]+"));	//a 또는 b 또는 c 문자의 조합이 여러번 발생(출현)을 한다면 true리턴
 		
 		
-		String name="gildong";
+		String name="gildonG";
 		//name변수에 대한 영문자 체크!
-		System.out.println("name변수의 이름(영문자) 체크 : " + name.matches("[a-zA-Z]+"));
+		System.out.println("name변수의 이름(영문자) 체크 : " + name.matches("[A-z]+"));
 		//표현식 사용시 대괄호[]안의 '-'부호는 범위를 표현
 		
 		String su = "34567";
@@ -34,5 +34,17 @@ public class MatchesTest {
 		String hangul = "김길동";
 		//hangul변수에 대한 한글 체크 !!
 		System.out.println("한글 체크 : " + hangul.matches("[ㄱ-힣]+"));
+		
+		String id = "";
+		//아이디는 8~12자리, 영문자와 숫자 조합
+		
+		String idPattern = "[a-zA-Z0-9] {8,12}";	//문자열 길이 = 8~12
+		//{8,12} 8 이상 12 이하   {8,}: 8 이상   {8} : 8번
+		
+		System.out.println("아이디 체크 : " + id.matches(idPattern));
+		
+		String juminBunho = "960302-3012345";
+		String juminPattern = "[\\d]{6}-[\\d]{7}";
+		System.out.println("주민번호 체크 : " + juminBunho.matches(juminPattern));
 	}
 }
