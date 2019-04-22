@@ -21,7 +21,7 @@ public class NameMission {
 	public void search() { //배열 내의 이름들 조회 Read
 		System.out.println("#이름목록");
 		for(int i = 0; i<names.length; i++) { //배열인덱스
-//			if(names[i] != null)			  //널은 출력xx
+			if(names[i] != null)			  //널은 출력xx
 				System.out.println(" " + names[i]);
 		}
 	}
@@ -68,4 +68,16 @@ public class NameMission {
 		}
 		return true;	//전체 문자가 숫자로 구성되었다면		
 	}//checkNum
+	
+	public boolean existName(String name) {
+//		중복(존재하는)이름 체크
+		for (int i = 0; i < names.length; i++) {//배열 인덱스
+//			null.equals("길동")	//NullPointerException발생
+//			"길동".equals(null)	//NullPointerException발생
+			if (name.equals(names[i])) {
+				return true;
+			}
+		}//for
+		return false;
+	}//existName
 }

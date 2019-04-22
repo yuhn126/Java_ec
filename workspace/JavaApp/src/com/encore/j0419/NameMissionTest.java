@@ -13,6 +13,7 @@ public class NameMissionTest {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		NameMission nm = new NameMission();
 		int no = 0;
+		int cnt = 0;
 		do {
 			System.out.println("<이름메뉴>");
 			System.out.println("1.추가  2.검색  3.수정  4.삭제  5.종료");
@@ -20,7 +21,7 @@ public class NameMissionTest {
 			String noStr = in.readLine();
 			
 			boolean flag = nm.checkNum(noStr);
-			if (!flag) {//(flag == false)
+			if (!noStr.matches("[0-9]")) {//(flag == false)
 				System.out.println("#번호만 입력하세요");
 				System.out.println();
 				continue;  //반복문을 계속 진행
@@ -34,10 +35,25 @@ public class NameMissionTest {
 			
 			System.out.println("");
 			switch(no) {
-				case 1:
+				case 1:{
+					if (cnt == 5) {
+						System.out.println("#더 이상 입력을 할 수 없습니다.");
+						System.out.println("한 개 이상의 이름을 먼저 삭제한 후 입력하세요!");
+						break;		//switch블럭 벗어나기
+					}
+					
 					System.out.print("이름 입력 : ");
 					String name = in.readLine();
+					
+					if (nm.existName(name)) {
+						//중복된 이름을 발견했다면
+						System.out.println("#이미 입력된 이름입니다.");
+						break;		//switch블럭 벗어나기
+					}
+					
 					nm.add(name);
+					cnt++;
+				}
 					break;
 				case 2:
 					nm.search();
@@ -45,16 +61,27 @@ public class NameMissionTest {
 				case 3:
 					System.out.print("기존 이름 입력 : ");
 					String oldName = in.readLine();
+					
+					if (!nm.existName(oldName)) {
+						//수정할 이름이 존재하지 않는다면
+						System.out.println("#존재하지 않는 이름입니다.");
+						break;
+					}
+					
 					System.out.print("변경 이름 입력 : ");
 					String newName = in.readLine();
-					
 					nm.update(oldName, newName);
 					
 					break;
 				case 4:
 					System.out.print("삭제 이름 입력 : ");
 					String delName = in.readLine();
+					if (!nm.existName(delName)) {						
+						System.out.println("#존재하지 않는 이름입니다.");
+						break;
+					}
 					nm.delete(delName);
+					cnt--;
 			}
 			
 			System.out.println("");
