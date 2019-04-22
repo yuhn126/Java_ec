@@ -13,8 +13,11 @@ public class StringTest2 {
 		System.out.println("대문자 변환 : " + s1.toUpperCase()); 	// 전체를 대문자로 (case : 대문자 or 소문자)
 		System.out.println("소문자 변환 : " + s2.toLowerCase()); 	// 전체를 소문자로
 		
-		System.out.println("전체 소문자(s1,s2) 변경 후 비교 : " + s1.toLowerCase().contentEquals(s2.toLowerCase()));
-		System.out.println("대소문자 구분 없이 비교 : " + s1.equalsIgnoreCase(s2));
+		System.out.println("전체 소문자(s1,s2) 변경 후 비교 : " + s1.toLowerCase().contentEquals(s2.toLowerCase()));	//sql db
+		
+		System.out.println("대소문자 구분 없이 비교 : " + s1.equalsIgnoreCase(s2));	//java
+		
+		
 		
 //		문제) str문자열 안에 있는 숫자의 갯수를 화면에 출력하시오.
 //			---> 힌트) 문자열 안의 각 문자들은 인덱스를 갖는다.

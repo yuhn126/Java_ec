@@ -16,7 +16,7 @@ public class StringTest {
 		
 //		부분 문자열 ---> "Pro"문자열 얻기
 //		.substring(beginIndex, endIndex) beginIndex부터(포함) endIndex전 까지(비포함)
-		System.out.println("str.substring(4, 6) : " + str.substring(4, 6));
+		System.out.println("str.substring(4, 7) : " + str.substring(4, 7));
 //		str.substring(4, 7) --> 인덱스 4 부터 6 까지
 		
 //		부분 문자열 ---> "Programming" 문자열 얻기
@@ -25,6 +25,7 @@ public class StringTest {
 		
 //		특정 인덱스의 문자 한1 자 얻어오기 : char str.charAt(int index)
 		System.out.println("str.charAt(4) : " + str.charAt(4));
+//		인덱스에 해당하는 한 문자 리턴!
 		
 //		특정 문자의 인덱스 얻어오기 : int str.indexOf(ch)
 		int index1 = str.indexOf(97);		//아스키코드 97 = 'a'
@@ -34,10 +35,10 @@ public class StringTest {
 		System.out.println("index : " + index2);
 		
 		System.out.println( 97 == 'a' );
+//		컴퓨터는 'a'문자를 내부에서 아스키숫자코드 97로 인식.
 		
 //		str에서 부분 문자열 "Programming"을 구하시오.
 		System.out.println("str.substring(str.indexOf('P')) : " + str.indexOf('P'));
-		
 //		str.substring(4);
 		
 //		세번째'a'문자의 인덱스를 구하시오
@@ -64,7 +65,7 @@ public class StringTest {
 		System.out.println("공백 추가 후 str문자열 길이 : " + str.length());
 		
 //		공백 제거!(문자열 앞뒤 연속된 공백 제거)
-		str = str.trim();		//좌우 연속된 공백 제거!
+		str = str.trim();			//좌우 연속된 공백 제거!
 		System.out.println("공백 제거 후 str문자열 길이 : " + str.length());
 	}
 

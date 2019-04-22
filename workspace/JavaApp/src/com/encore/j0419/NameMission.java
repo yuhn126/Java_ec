@@ -39,7 +39,7 @@ public class NameMission {
 				break;
 			}
 		}
-	}
+	}//update
 
 	
 	public void delete(String delName) { //배열에 저장된 이름을 삭제 Delete
@@ -52,5 +52,20 @@ public class NameMission {
 				}
 			}
 		}
-	}
+	}//delete
+	
+//	추가메소드정의!
+	
+//	문자열 데이터가 숫자 조합인지 체크!
+	public boolean checkNum(String str) {
+//		문자열 검사(숫자로 구성되었는지 체크!)
+		char ch;
+		for (int i = 0; i < str.length(); i++) {
+			ch = str.charAt(i);
+			if (ch<'0' || ch>'9') {//숫자로 구성된 문자가 아니라면
+				return false;
+			}
+		}
+		return true;	//전체 문자가 숫자로 구성되었다면		
+	}//checkNum
 }

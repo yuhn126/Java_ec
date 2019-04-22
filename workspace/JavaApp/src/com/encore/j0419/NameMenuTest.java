@@ -17,6 +17,8 @@ public class NameMenuTest {
 			String num = in.readLine();
 			System.out.println();
 			
+//			문자열 검사(숫자로 구성되었는지)!
+			
 			char ch = num.charAt(0);
 			if (ch >= '0' && ch <= '5') {
 				switch(ch) {
@@ -46,6 +48,9 @@ public class NameMenuTest {
 					}
 			}else {
 				System.out.println("#번호만 입력하세요!");
+//				Integer.parseInt("1234");  --->  1234 
+//				Integer.parseInt("dong");  --->  dong (에러)
+				
 			}
 		}while(b);
 		
