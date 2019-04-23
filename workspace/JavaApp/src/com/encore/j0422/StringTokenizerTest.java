@@ -12,7 +12,7 @@ public class StringTokenizerTest {
 		//token(토큰) : 분리된 각각의 데이터!
 		//공백 무시
 		
-		String tel = "031--5678";
+		String tel = "031-1234-5678";
 		StringTokenizer st = new StringTokenizer(tel, "-");
 		//st = ["010", "1234", "5678"];
 

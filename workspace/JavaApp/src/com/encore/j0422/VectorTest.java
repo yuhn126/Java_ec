@@ -21,7 +21,12 @@ public class VectorTest {
 		v.addElement(su);
 		v.addElement(su2);		//new Integer(2)
 		
+		System.out.println(v.get(0));
+		System.out.println(v.get(1));
+		
 		for (int i = 3; i < 10; i++) {	//3~9
+			//add()는 리턴값이 있고
+			//addElement()는 리턴값이 없음.
 			v.addElement(i);
 		}
 		
@@ -36,8 +41,8 @@ public class VectorTest {
 		System.out.println("벡터의 요소(입력된 데이터)갯수 : " + v.size());//12
 		
 		// 벡터 안의 데이터 포함 여부
-		if(v.contains(3.14)) {
-			System.out.println("3.14를 포함");
+		if(v.contains("자바")) {
+			System.out.println("자바를 포함");
 		}
 		
 		System.out.println("================================");
