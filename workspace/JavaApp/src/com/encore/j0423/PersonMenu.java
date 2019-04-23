@@ -30,19 +30,34 @@ public class PersonMenu {
 		}
 	}
 	
-	public void update(int updNo,int updAge,String updJob) {		
+	public void update(int updNo,int updAge,String updJob) {
+		Person newP = new Person();
+		newP.setNo(updNo);
+		newP.setAge(updAge);
+		newP.setJob(updJob);
+		
 		for (int i = 0; i < persons.size(); i++) {
-			if (updNo==p.getNo()) {
-				p.setAge(updAge);
-				p.setJob(updJob);
-			}break;
+			Person oldP = persons.get(i);
+			if(oldP.getNo() == newP.getNo()) {
+				oldP.setAge(newP.getAge());
+				oldP.setJob(newP.getJob());
+			}
+			
+			//persons.get(i).getNo();
+//			if (persons.get(i).getNo() == updNo) {
+//				persons.get(i).setAge(updAge);
+//				persons.get(i).setJob(updJob);
+//			}break;
+			
 		}
 	}
 	
 	public void delete(int delNo) {
 		for (int i = 0; i < persons.size(); i++) {
-			if(delNo == p.getNo()) {
-				
+			Person delP = persons.get(i);
+//			if(persons.get(i).getNo() == delNo) {
+			if(delP.getNo() == delNo) {
+				persons.remove(i);
 			}
 		}
 	}

@@ -47,6 +47,7 @@ public class PersonMenuTest {
 				int delNo = scan.nextInt();
 				menu.delete(delNo);
 				continue;
+				
 			case 5:
 				System.out.println(" -- END -- ");
 				loop = false;
