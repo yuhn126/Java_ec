@@ -31,3 +31,8 @@ workspace/JavaApp/.project
 *.ini
 *.png
 *.history
+workspace/JavaApp/.metadata/.plugins/org.eclipse.jdt.core/assumedExternalFilesCache
+workspace/JavaApp/.metadata/.plugins/org.eclipse.jdt.core/externalFilesCache
+workspace/.project
+workspace/JavaApp/.metadata/.plugins/org.eclipse.jdt.core/nonChainingJarsCache
+workspace/JavaApp/.metadata/.plugins/org.eclipse.ui.intro/introstate

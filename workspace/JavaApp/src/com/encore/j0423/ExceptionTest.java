@@ -30,7 +30,9 @@ public class ExceptionTest {
 		
 		//우클 - Surround With- try/catch block
 		try {
-			FileReader fr = new FileReader("a.txt");	//"읽고자하는 파일의 경로" FileNotFoundException(자식)
+			System.out.println("1번");
+			FileReader fr = new FileReader("b.txt");	//"읽고자하는 파일의 경로" FileNotFoundException(자식)
+			System.out.println("2번");
 //			System.out.println(fr.read());	//IOException(부모)
 //			System.out.println(fr.read());	//IOException(부모)
 //			System.out.println(fr.read());	//IOException(부모)
@@ -48,6 +50,9 @@ public class ExceptionTest {
 		} catch (IOException e) {
 			System.out.println("#입출력 에러가 발생했습니다.");
 //			e.printStackTrace();
+		} finally {
+			System.out.println("끝");
+			//무조건 실행
 		}
 		
 	}
