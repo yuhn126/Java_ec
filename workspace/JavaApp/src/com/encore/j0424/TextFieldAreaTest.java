@@ -1,6 +1,7 @@
 package com.encore.j0424;
 
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Frame;
@@ -13,6 +14,7 @@ public class TextFieldAreaTest extends Frame{
 	TextField tf1, tf2;
 	TextArea ta;
 	Label la;
+	Button b1;
 	
 	Panel pN,pS; //언제사용? 한 영역에 두 개 이상의 컴포넌트를 붙일 때
 				 //컴포넌트 속성을 지정하기 위해 사용.
@@ -24,6 +26,8 @@ public class TextFieldAreaTest extends Frame{
 		tf1 = new TextField("기본값",10);
 		tf2 = new TextField(5);
 		
+		b1 = new Button("전송");
+		
 		ta = new TextArea();
 		la = new Label("파일 이름 :");
 		
@@ -33,10 +37,11 @@ public class TextFieldAreaTest extends Frame{
 		//매개변수의 각 정수는 0~255 사이의 값!
 //		Color c = new Color(255,0,0);
 		pN.add(tf1);
+		pN.add(b1);
 		pN.setBackground(new Color(0,255,0));
 		
 		pS = new Panel(); //컨테이너
-		pS.setLayout(new FlowLayout()); //가운데 정렬
+		pS.setLayout(new FlowLayout()); //가운데 정렬, 기본 레이아웃은 flow임! 생략가능
 		pS.setBackground(Color.pink); //바탕색 설정
 		pS.setForeground(Color.red);
 		pS.add(la);
