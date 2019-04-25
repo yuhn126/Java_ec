@@ -36,7 +36,6 @@ public class EmailTest extends Frame{
 		NoP.add(tf2);
 		Event evt;
 		Object what;
-		NoP.action(evt, what)
 		
 		SoP = new Panel();
 		SoP.add(b1);
