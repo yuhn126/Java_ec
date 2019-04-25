@@ -55,6 +55,19 @@ Checkbox - state - true/false
  ---> bt1클릭시 화면 콘솔에 "안녕~!!"을 출력하시오.
  ---> bt2클릭시 화면 콘솔에 "잘가~!!"을 출력하시오.
  
+ /*
+	<이벤트처리> ---> 컴포넌트에 기능을 정의하자!!
+	
+	1. 이벤트소스(컴포넌트)에 적용할 이벤트 분석
+		   Button bt  ----> ActionEvent
+	2_1. ActionListener(인터페이스) ---> implements ActionListener
+	2_2. public void actionPerformed(ActionEvent e){} ===> 오버라이딩
+	
+	3. 연결자메소드 등록		[이벤트 소스] <------------연결-------------> [이벤트 처리부]
+		이벤트 소스명.add인터페이스명(이벤트 처리부의 위치);
+			bt.addActionListener(this);
+ */
+ 
  	
  
  
