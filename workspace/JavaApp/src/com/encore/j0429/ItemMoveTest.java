@@ -100,7 +100,7 @@ public class ItemMoveTest extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {	//핸들러(기능추가)
 		//액션 : 버튼 누르기, 텍스트 필드에 enter입력
 		//System.out.println("action");
-		Object ob = e.getSource();	//이벤트 발생시킨ㄴ 이밴트소스의 주소 얻기.
+		Object ob = e.getSource();	//이벤트 발생시킨 이밴트소스의 주소 얻기.
 		if(ob == left_tf) {	//좌측 텍스트필드에 엔터 입력시
 			//1. 데이터 얻기
 			String str = left_tf.getText();
