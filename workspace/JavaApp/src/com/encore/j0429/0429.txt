@@ -1,0 +1,15 @@
+	AWT : 내부적으로  c언어로 구성.
+	  ---> 운영체제에서 지원하는 컴포넌트를 얻어 옴.
+	  			  (동일한 class사 운영체제 os에 따라 다른 모양으로 보일 수 있음.)
+	  ---> java.awt.*;
+	  
+	SWING : 순수 자바 언어로 구성. (운영체제에 상관없이 동일한 컴포넌트 지원)
+	  ---> javax.swing.*;
+	  
+	     특징) awt와 비료하여 첫글자가 'J'로 시작!
+	     
+	      AWT				Swing
+	   ------------------------------
+	    Button				JButton
+	    Frame				JFrame
+	    Checkbox			JCheckBox (JCheckbox(X))

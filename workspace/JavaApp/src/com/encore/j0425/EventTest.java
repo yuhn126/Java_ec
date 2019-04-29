@@ -52,8 +52,9 @@ public class EventTest extends Frame implements ActionListener {
 		setTitle("이벤트테스트-" + cnt);
 		Button newbutton = new Button("추가버튼[" + cnt + "]");
 		
-		newbutton.setBackground(new Color((r.nextInt(254)+1),(r.nextInt(254)+1),(r.nextInt(254)+1)));
-		bt.setBackground(new Color((r.nextInt(254)+1),(r.nextInt(254)+1),(r.nextInt(254)+1)));
+		Color c = new Color((r.nextInt(254)+1),(r.nextInt(254)+1),(r.nextInt(254)+1));
+		
+		newbutton.setBackground(c);
 		
 		add(newbutton);
 		setVisible(true);

@@ -68,25 +68,4 @@ Checkbox - state - true/false
 			bt.addActionListener(this);
  */
  
- 	
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
+	

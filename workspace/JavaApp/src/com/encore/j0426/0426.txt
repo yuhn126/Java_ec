@@ -1,0 +1,60 @@
+
+<이벤트 처리>
+ - 사건이 발생했을 때 기능을 부여하는 것.
+ - 컴포넌트에서 사건(버튼 : 마우스클릭, 스크롤바 : 조절바 움직임, 체크박스 : v체크 또는 해제,마우스 움직임)이 발생했을 때 기능을 부여(코드를 추가하는 메소드)하는 것.
+
+ - 이벤트처리는 어떻게? 내가 기능 부여할 컴포넌트를 선정!
+ 
+ class My{
+ 	Frame f;
+ 	Button bt_hello, bt_exit;
+ 	Checkbox cb_apple;
+ 	List list;
+ 
+ }
+ 
+ [이벤트소스 후보자] f, bt_hello, bt_exit, cb_apple, list
+  -------
+    사건유발자
+    
+  1. 내가 기능 부여할 컴포넌트를 선정!
+  	 bt_hello,bt_hello				list
+  	 -----------------				----
+  	 	   Button					List
+  	 	   
+  ---> 자료형 : Button, List 컴포넌트
+  
+  2. API문서 찾기 (각 클래스내에서 메소드 add~Listener 찾기)
+  	 - Button : addActionListener(ActionListener l) 액션을 감시하는 메소드
+  	 - List   : addItemListener(ItemListener l)
+  	 
+  3_1. 인터페이스 상속!!
+  3_2. (인터페이스 내의) 선언된 메소드를 (My)클래스에서 구현(오버라이딩)!!
+  
+	  class My implements ActionListener, ItemListener{
+	  		   ----------
+	  		   	구현의 약속
+	  		public void actionPerformed(ActionEvent e){/*이벤트발생시 할 일*/} 	 ---> 이벤트처리부
+	  		
+	  		public void itemStateChanged(ItemEvent e){/*이벤트발생시 할 일*/}	 ---> Event Handler
+  	  }
+  	  
+  4. 연결! [이벤트소스] <----연결----> [이벤트 핸들러]
+  
+  	 연결방법)메소드 호출을 통해 --> 이벤트소스명.add인터페이스명(이벤트핸들러위치);
+  	  
+  	  class My{
+  	  
+  	  	My(){
+  	  		f.setSize();
+  	  		f.setVisible();
+  	  		// 연결!
+  	  		bt_hello.addActionListener(this);
+  	  		bt_exit.addActionListener(this);
+  	  		
+  	  		list.addItemListener(this);
+  	  	}
+  	  
+  	  }
+  	  
+  	  
