@@ -72,6 +72,9 @@ public class Controller implements ActionListener{
 		if (ob == mainView.bt_inp) {
 			mainView.setVisible(false);
 			inForm.setVisible(true);
+			inForm.tf_name.setText("");
+			inForm.tf_age.setText("");
+			inForm.tf_job.setText("");
 		}else if (ob == mainView.bt_upd) {
 //			Person p1 = new Person();
 //			p1.setNo(mainView.table.getSelectedRow());
@@ -82,6 +85,10 @@ public class Controller implements ActionListener{
 			//////////////////////////////////////////////////////////////
 			
 			int row = mainView.table.getSelectedRow();
+			if(row == -1) {
+				JOptionPane.showMessageDialog(mainView, "수정할 데이터를 선택하세요");
+				return;
+			}
 			int no = Integer.parseInt(mainView.table.getValueAt(row, 0).toString());
 			//JTable에서 선택된 행의 번호 얻기
 			
@@ -106,8 +113,18 @@ public class Controller implements ActionListener{
 			System.exit(0);
 		}else if (ob == inForm.bt_submit) {
 			String name = inForm.tf_name.getText();
-			int age = Integer.parseInt(inForm.tf_age.getText());
+			String inAge = inForm.tf_age.getText();
+			if(!inAge.matches("[\\d]+")) {
+				JOptionPane.showMessageDialog(mainView, "나이에 숫자만 입력하세요!");
+				return;
+			}
+			int age = Integer.parseInt(inAge);
 			String job = inForm.tf_job.getText();
+			
+//			if(name == null || inAge == null || job == null) {
+//				JOptionPane.showMessageDialog(inForm, "모든 정보를 입력하세요.");
+//				return;
+//			}
 			
 			Person p = new Person(0, name, age, job);
 			
@@ -122,7 +139,12 @@ public class Controller implements ActionListener{
 			mainView.setVisible(true);
 			
 		}else if (ob == upForm.bt_submit){
-			int age = Integer.parseInt(upForm.tf_age.getText());
+			String upAge = upForm.tf_age.getText();
+			if(!upAge.matches("[\\d]+")) {
+				JOptionPane.showMessageDialog(upForm, "나이에 숫자만 입력하세요!");
+				return;
+			}
+			int age = Integer.parseInt(upAge);
 			String job = upForm.tf_job.getText();
 			
 			Person p = new Person();
@@ -137,6 +159,13 @@ public class Controller implements ActionListener{
 			
 			upForm.setVisible(false);
 			mainView.setVisible(true);
+		}else if(ob == inForm.bt_cancel) {
+			inForm.tf_name.setText("");
+			inForm.tf_age.setText("");
+			inForm.tf_job.setText("");
+		}else if(ob == upForm.bt_cancel) {
+//			upForm.tf_age.setText();
+//			upForm.tf_job.setText();
 		}
 	}
 
