@@ -15,7 +15,7 @@ import com.encore.j0502.person.view.MainView;
 import com.encore.j0502.person.view.UpForm;
 
 public class Controller implements ActionListener{
-	//ActionListener상속한 이유? 뷰 내의 버튼의 클릭을 
+	//ActionListener상속한 이유? 뷰 내의 버튼의 눌림(액션)을 체크하기 위해서!  
 	
 	//전체 뷰 등록
 	MainView mainView;

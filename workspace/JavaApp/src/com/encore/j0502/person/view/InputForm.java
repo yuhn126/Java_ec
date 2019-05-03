@@ -54,5 +54,12 @@ public class InputForm extends JFrame{
 		add(btp);
 		//setVisible(true);
 		//setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+	}
+	
+	public void init() {
+		tf_name.setText("");
+		tf_age.setText("");
+		tf_job.setText("");
 	}
 }
