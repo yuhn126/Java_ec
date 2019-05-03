@@ -61,10 +61,12 @@ public class SimpleNotePad extends JFrame implements ActionListener {
 		item_exit.addActionListener(this);
 	}
 	
+	//FROM : 파일  ----> TO : TextArea  (fileReader)
 	public void openFile() {
 		chooser.showOpenDialog(this);
 	}
 	
+	//FROM : TextArea ----> TO : 파일    (fileWriter)
 	public void saveFile() {
 		chooser.showSaveDialog(this);
 	}
