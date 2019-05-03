@@ -2,6 +2,10 @@ package com.encore.j0507;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -11,7 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class SimpleNotePad extends JFrame implements ActionListener {
+public class SimpleNotePad extends JFrame implements ActionListener{
 	JTextArea ta;
 	JScrollPane scroll_ta;
 	
@@ -62,13 +66,43 @@ public class SimpleNotePad extends JFrame implements ActionListener {
 	}
 	
 	//FROM : 파일  ----> TO : TextArea  (fileReader)
-	public void openFile() {
-		chooser.showOpenDialog(this);
+	public void openFile(){
+		int i = chooser.showOpenDialog(this);
+		if(i == 0) {
+			FileReader fr;
+			try {
+				fr = new FileReader(chooser.getSelectedFile());
+				int ind;
+				String str;
+				while((ind=fr.read()) != -1) {
+					char ch = (char)ind;
+					str = Character.toString(ch);
+					ta.append(str);
+//				System.out.print((char)i); //화면출력
+//				fw.write(openI);//파일 복사
+				}
+				fr.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("오류나따");
+			}
+		}
 	}
 	
 	//FROM : TextArea ----> TO : 파일    (fileWriter)
 	public void saveFile() {
-		chooser.showSaveDialog(this);
+		int i = chooser.showSaveDialog(this);
+		if(i == 0) {
+			FileWriter fw;
+			try {
+				fw = new FileWriter(chooser.getSelectedFile());
+				fw.write(ta.getText());
+				fw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	@Override
