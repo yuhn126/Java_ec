@@ -53,15 +53,20 @@ public class Model2 {
 
 	
 	//벡터에 저장된 (특정 한개)Person을 삭제
-	public void delete(int no) {
+	public int delete(int no) {
 		//store.personV.remove(0); --> 핵심포인트
 		//문제 --> 무조건 벡터에 저장된 첫번째 Person만 삭제!
+		int rt = 0;
 		for(int i = 0; i < store.personV.size(); i++) {
 			Person oldp = store.personV.get(i);
-			if (oldp.getNo() == no) {//일치하는 번호 찾았다면
+			if (oldp.getNo() != no) {
+				rt = 1;
+			}else if(oldp.getNo() == no){//일치하는 번호 찾았다면
 				store.personV.remove(i);
+				rt = 0;
 			}
 		}
+		return rt;
 	}// delete
 
 	

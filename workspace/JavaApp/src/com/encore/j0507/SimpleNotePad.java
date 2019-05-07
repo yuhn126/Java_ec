@@ -71,6 +71,7 @@ public class SimpleNotePad extends JFrame implements ActionListener{
 		if(i == 0) {
 			FileReader fr;
 			try {
+				ta.setText("");	//ta 초기화
 				fr = new FileReader(chooser.getSelectedFile());
 				int ind;
 				String str;
@@ -84,7 +85,7 @@ public class SimpleNotePad extends JFrame implements ActionListener{
 				fr.close();
 			} catch (IOException e) {
 				e.printStackTrace();
-				System.out.println("오류나따");
+				System.out.println("오류");
 			}
 		}
 	}

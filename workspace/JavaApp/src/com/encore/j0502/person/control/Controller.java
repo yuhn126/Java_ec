@@ -85,7 +85,7 @@ public class Controller implements ActionListener{
 			//////////////////////////////////////////////////////////////
 			
 			int row = mainView.table.getSelectedRow();
-			if(row == -1) {
+			if(row == -1) {//데이터 선택 안했을때
 				JOptionPane.showMessageDialog(mainView, "수정할 데이터를 선택하세요");
 				return;
 			}
@@ -164,8 +164,8 @@ public class Controller implements ActionListener{
 			inForm.tf_age.setText("");
 			inForm.tf_job.setText("");
 		}else if(ob == upForm.bt_cancel) {
-//			upForm.tf_age.setText();
-//			upForm.tf_job.setText();
+			upForm.tf_age.setText("");
+			upForm.tf_job.setText("");
 		}
 	}
 

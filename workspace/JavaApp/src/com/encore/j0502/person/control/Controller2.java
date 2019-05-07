@@ -127,14 +127,20 @@ public class Controller2 implements ActionListener{
 			
 		}else if(ob == mainView.bt_del) {//메인뷰 : 삭제 버튼
 			String noStr = JOptionPane.showInputDialog(mainView,"삭제할 번호 : ");
-			
+			System.out.println(noStr);
 			int state = JOptionPane.showConfirmDialog(mainView, "렬루?");
 			//state = 0 : '예'클릭
+			if(noStr == "") {
+				JOptionPane.showMessageDialog(mainView, "번호를 입력하세요");
+				return;
+			}
 			
 			if(state == 0) {
 				Model2 m2 = new Model2(store);
-				m2.delete(Integer.parseInt(noStr));
-				
+				int rt = m2.delete(Integer.parseInt(noStr));
+				if (rt == 1) {
+					JOptionPane.showMessageDialog(mainView, "없음");
+				}
 				//벡터의 변경된 내용을 JTable에 반영
 				mainView.displayTable(m2.selectAll());
 			}

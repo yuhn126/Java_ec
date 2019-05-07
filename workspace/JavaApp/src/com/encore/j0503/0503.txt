@@ -91,8 +91,12 @@
  	---> 빈 값, 숫자							==> 유효성 검사!
  	
  6. [메인폼]삭제 - 벡터에 존재하지 않는 번호에 대한 처리.
- 
+
+
 =====================================================================================================
+
+
+
  <자바 I/O>
  - Stream(시내,파이프)이 기본
  ---> 8bit(1byte)로 구성된 데이터의 흐름.
@@ -105,24 +109,18 @@
  	출력		  OutputStream					Writer				 write()
  	
 =====================================================================================================
- 	
- 	
- 	
- 	
- 	
- 	
- 	
+ 
 
  표준 입력 : System.in
  표준 출력 : System.out, System.err(에러)
 
-객체직렬화???????
+객체직렬화??????? -----> 0507.txt
 
 
 InputStream : 모든 바이트스트림 입력 클래스의 부모 클래스로 추상클래스이다.
 	... available(), read(), read(byte[] b), read(byte[] b, int offset, int len), close(), seek() ...
 
-ByteArrayInputStream : 바이트배열로부터 읽어들이는 클래스이다.
+ByteArrayInputStream : 바이트 배열로부터 읽어들이는 클래스이다.
 
 FileInputStream : 파일을 읽어들이는 클래스이다. 먼저 파일이 존재하는지 살펴보는게 에러체킹에 유용하다.
 	File f = new File("won.txt");
@@ -136,5 +134,21 @@ BufferedInputStream : 데이터를 읽어들일 때 필터와 버퍼링 효과�
 ObjectInputStream : 객체를 읽어들일 수 있는 클래스이다.
 
 
+========================================================================================	
+	
+
+<라인단위입력>
+ 클래스 BufferedReader -------> 메소드 readLine()
+ API문서 정보 ===> BufferedReader(Reader in)
+ 		   ===> InputStreamReader(InputStream in)
+ 
+ 		A		 a	 = 	new A();
+ 	  Reader     r   =  new Reader(); (x) ---> 추상클래스 : 자식 ---> InputStreamReader
+ InputStream 	 is	 =  System.in;
+ Reader			 r   =  new InputStreamReader(is);
+ BufferedReader  br	 = 	new	BufferedReader(r);
+ 
+ BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+ public class BufferredReader extends Reader 
 
 
