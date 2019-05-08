@@ -1,0 +1,140 @@
+ <사용자 정의 예외>
+ - 예외의 발생은 JVM에 의해 실행 중 발생할 수도 있지만 사용자 프로그램에서 인위적으로 예외를 발생시킬 수 있다.(throw문을 제공)
+ 
+   형식)
+   	 throw 예외객체;
+   	 throw new 예외객체타입(매개변수);
+   	 
+  class MyException extends Exception{
+  	public MyException(String msg){
+  		super(msg);
+  	}
+  }
+  
+-----------------------------------------------------------------------------------------------------
+
+<자바상속>
+ - 부모클래스가 갖는 속성과 기능을 자식클래스에게 물려주는 것
+   (단, 부모의 private멤버와 부모의 생성자는 상속에서 제외)
+   
+-----------------------------------------------------------------------------------------------------
+ <오버라이딩(메소드 재정의) 규칙>
+ 
+ class Parent{
+ 
+ 	접근제한자 void hello() throws A,B,C{
+ 		
+ 	}
+ 
+ }
+ 
+ ※ 오버라이딩시 주의할 점
+ 	1. 접근제한자는 부모와 동일하거나 또는 확장해야 함
+ 	2. throws는 부모와 동일하거나 또는 축소해야 함
+ 
+ class Child extends Parent{
+ 
+ 	//오버라이딩 메소드!
+ 	접근제한자 void hello() throws A,B,C{
+ 		
+ 	}
+ 
+ }
+-----------------------------------------------------------------------------------------------------
+ 부모  public hello() {}	  --> 자식  public hello() {}
+ 부모 protected hello() {}  --> 자식  protected/public hello(){}
+ 부모 hello()				  --> 자식  생략/protected/public hello(){} 
+-----------------------------------------------------------------------------------------------------
+ 부모 public hello() throws AException, BException, CException{}
+
+ [정상 오버라이딩 throws]
+  ===> 자식  public hello() throws AException, BException, CException{ }
+  ===> 자식  public hello() throws AException, BException{ }
+  ===> 자식  public hello() throws AException{ }
+  ===> 자식  public hello() { }
+
+ [에러 오버라이딩 throws]
+  ===> 자식  public hello() throws AException, BException, CException, DException{ }
+  ===> 자식  public hello() throws Exception{ }
+
+======================================================================================================
+ <내부클래스> 중첩클래스, 포함, Nested
+ - 클래스내에 또 다른 클래스를 구성하는 것.
+ 
+ [public/final/abstract]class A{		//외부클래스, Outer클래스, Top-level클래스
+ 	//필드
+ 	//생성자
+ 	//메소드
+ 	//1차 자원 정의 
+ 	
+ 	B b = new B();	//내부클래스를 사용하려면 생성자선언후 사용
+ 	
+ 	[protected가능, static가능]class B{	//내부클래스, Inner클래스
+ 		//2차 자원 정의
+ 	}
+ }
+ ----------------------------------------------------------------------------------------
+ 종류)
+ 	정적 중첩 클래스 - static이 선언된 내부 클래스
+ 			            외부자원을 사용할 때 static붙는 인스턴스만 접근 가능.
+ 			            
+ 	비정적 중첩 클래스 - static이 선언되지 않은 내부클래스
+ 				       보통 Inner클래스라고 함.
+ 	
+ 저장)
+   A.java --------------- 컴파일(javac) ----------------> A.class 와 A$B.class 생성
+   
+   
+   
+==============================================================================================
+ 
+ * AWT (Abstract Window Toolkit)
+  - GUI(Graphic User Interface)환경을 구축하기 위한 class들의 묶음.
+  - GUI와 관련된 class들의 묶음. java.awt.*;
+  
+  1. Component : Menu, Button, Label, Choice, Checkbox, List
+  				 TextField, TextArea, Scrollbar...
+  				 
+  2. Container : Component의 객체를 생성한 후에 그 객체를 배치한다.
+  
+  					Object
+  					   |
+  				   Component
+  				       |
+  				   Container
+  			   	       |
+  	   		 ----------------------
+  	   		|                      |
+  	 	  Panel                  Window
+  	   		|                      |
+  	 	  Applet                 Frame
+  	 
+  	 default : FlowLayout		BorderLayout
+  	 
+  	 
+  	 	Panel : display(x), 한 영역에 두 개 이상의 컴포넌트를 붙일때 사용,
+   	  (작은도화지)				컴포넌트 속성을 지정하기 위해 사용
+  	 	Frame : display(o)
+  	  (큰 도화지)
+  	 	
+  	 	
+  3. Event 처리 : Component에 기능을 실제로 부여하는 것.
+  	 	
+ * Container의 배치방법(LayoutManager)
+    ----> 컴포넌트를 컨테이너에 어떻게 위치시킬지 방법을 정의.
+    
+  - FlowLayout(가운데정렬)
+     : 가운데를 기준으로 해서 Component들이 배치.
+       (Frame크기에 따라 배치가 변경)
+     	
+  - BorderLayout(방위정렬)
+     : 방위에 따라 사용자가 임의 배치 가능 (동,서,남,북,중앙)
+     : 상대적으로 큰 영역에 강조할 컴포넌트를 배치.
+     
+  - GridLayout(같은 크기 정렬, 행 열 표현 정렬)
+  	 : Container의 크기를 같은 크기로 나누어 Component를 붙인다.
+  	 
+  - CardLayout(같은 위치 정렬)
+     : 같은 위치에 여러개의 Component를 배치할 때 사용.
+ 
+ 

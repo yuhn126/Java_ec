@@ -1,0 +1,94 @@
+
+ <스레드>
+  - 프로세스내에서 순차적으로 동작하는 문장들의 단일 집합.(메소드)
+  - 사용 이유? 하나의 응용프로그램내에서 독립적인 실행(동시실행,기다리지않는 실행)을 해야하는 기능이 존재
+  - 구현 방법)
+  		클래스 Thread, 인터페이스 Runnable
+  		
+  		class MyThread1 extends Thread{
+  			public void member(){
+  				start();
+  			}
+  		
+  			public void run(){// <--- 스레드 메소드
+  			------>부모메소드 오버라이딩
+  				//동시 실행 할 문장들
+  			}
+  		}
+  		
+  		class MyThread2 implements Runnable{
+  		
+  			public void run(){// <--- 스레드 메소드
+  				//동시 실행 할 문장들
+  			}
+  			
+  			public void member(){
+  				Thread t = new Thread(this);
+  				t.start();
+  				----------------------------
+  				new Thread(this).start();
+  				
+  			}
+  		}
+  		
+  		
+  - 호출 방법) run()메소드를 직접 호출하지 않는다!
+  			start()메소드에게 위임
+  			------->스레드 스케줄러!
+  			
+  	질문) start()메소드는 어디 있는 메소드? Thread클래스에 존재!
+  	
+  	문제) 위의 두개의 run()메소드를 start()를 통해 호출하시오!
+  	
+  		 MyThread1 m1 = new MyThread1();	===>	스레드 객체
+  		 MyThread2 m2 = new MyThread2();	===>	Runnable객체
+  		 
+  		 m1.start();	(O)
+  		 
+  		 m2.start();	(X)
+  		 	---> 스레드 객체를 별도로 반드시 생성!
+  		 	---> Thread t = new Thread(Runnable객체의 위치);
+  		 	---> Thread t = new Thread(m2);
+  		 	---> 
+  		 	
+  		 	
+ ================================================================================
+
+ TVContribution.java	--->	방송국(main)
+ Customer.java			--->	경쟁적인 모금자
+ Account.java			--->	모금함(저금통)
+ 
+ ================================================================================
+
+ java.net.*;
+ 
+ <InetAddress>
+  - IP주소를 다루기 위한 클래스
+    XXX.XXX.XXX.XXX
+    XXX : 0 ~ 255
+
+	 주요메소드)
+	    byte[] getAddress()
+	    static InetAddress[] getAllByName(String host)
+	    static InetAddress getByName(String host)
+	    String getHostAddress()
+	    String getHostName()
+	    
+	<URL> Uniform Resource Location
+	
+	http://www.gildong.co.kr:80/test/hello.jsp?name=gildong&age=13&job=student#index1
+	
+	프로토콜 : 자원에 접근하기 위해 서버와 통신하는데 사용되는 통신규약(http)
+	호스트명 : 자원을 제공하는 서버의 이름   www.gildong.co.kr
+	포트번호 : 통신에 사용되는 서버의 포트번호    80
+	경로명    : 접근하려는 자원이 저장된 서버상의 위치    /test/
+	파일명    : 접근하려는 자원의 이름         hello.jsp
+	쿼리(query): URL에서 '?'이후의 부분   name=gildong&age=13&job=student
+	참조(anchor): URL에서 #이후의 부분
+	
+	<URLConnection>
+	- 어플리케이션과 URL간의 통신연결을 나타내는 클래스의 최상위 클래스
+	- URLConnection을 사용해서 연결하고자 하는 자원에 접근하고 읽고 쓰기를 할 수 있다.
+ 
+  	
+ ================================================================================

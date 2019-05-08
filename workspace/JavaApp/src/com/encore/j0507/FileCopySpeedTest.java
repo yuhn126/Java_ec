@@ -7,7 +7,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 
-public class FileCopySpeedTest {
+public class FileCopySpeedTest {//★★★★★★★★★★★★★★
 	//★파일 복사와 복사에 걸리는 시간을 체크!
 	// a.txt파일을 읽어서 b.txt에 출력 : FileCopy!
 

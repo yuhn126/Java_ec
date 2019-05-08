@@ -1,0 +1,43 @@
+
+ <Simple계산기 작성>
+  ---> MVC패턴으로 작성
+  	   (Model,view,controller)
+  	   
+ - 뷰 (calc.view)
+ 	CalcView.java	:	계산기 폼
+ 
+ - 모델
+ 	Calculator.java	:	더하기, 빼기, 곱하기, 나누기 기능
+ 
+ - 컨트롤러
+ 	CalcController.java	:	전체 프로그램 제어 (main()메소드 포함)
+ 	
+ =================================================================================
+ <mission>
+ 
+ PersonMenu를 MVC로 작성하기!
+	1. 모델 com.encore.person.model
+	    - Person.java (자바빈) : 필드(int no, String name, int age, String job)
+	    - Model.java (데이터 관련 기능을 정의) : 필드 (Vector<Person> - 데이터 저장소)
+	        ==> 메소드 : 추가 insert, 삭제 delete, 수정 update,  조회 select
+	        
+	2. 뷰 com.encore.person.view
+	    - MainView.java  (시작 뷰, JTable을 통해 사람정보 출력)
+	            필드 : JTable table
+	            JButton bt_insert, bt_del, bt_update, bt_exit
+	            
+	    - InputForm.java (사람정보 입력) - 타이틀: 입력폼
+	            필드 : JTextField tf_name, tf_age, tf_job
+	            JButton bt_submit, bt_cancel
+	                   bt_submit의 text - 입력
+	      (null 레이아웃)
+	            
+	    - UpForm.java (사람정보 수정) - 타이틀: 수정폼       
+	            필드 : InputForm.java와 동일
+	            bt_submit의 text - 수정     
+	      (이름 비활성화, 나이 직업만 수정)
+	                        
+	3. 컨트롤러 com.encore.person.control
+	    - Controller.java (전체 프로그램에 대한 흐름제어!!, main()포함)
+	 
+	 
