@@ -1,0 +1,94 @@
+ !플젝 패키지이름 클래스이름!
+ -----------------------------------------------------------------------------------------
+ 
+ <java.net.Socket> : 통신수단 (ex.핸드폰)
+  - 서로 다른 JVM간의 통신수단
+  - 스트림을 기반으로 하는 통신!
+  	Stream - InputStream (읽기작업)
+  		   - OutputStream (쓰기작업)
+  		   
+  - Socket s = new Socket();	--> 	(ex.핸드폰생김!!)
+ 		InputStream is = s.getInputStream();	//(데이터 읽어오기)
+ 		OutputStream os = s.getOutputStream();	//(데이터 전달하기)
+ 		
+ 		is.read();  //스트림으로부터 읽기 작업.
+ 		os.write();	//스트림에 쓰기 작업.
+ 		
+=====================================================================================================================
+ <클라이언트>	JVM 192.168.0.203						 	<서버>  JVM 192.168.0.96
+ - 아이객체												 - 엄마객체
+ - (서비스)요청객체											 - (서비스)응답객체
+ 													 
+ 														 1. ServerSocket ss = new ServerSocket(3000);//port:0~65535
+ 													    ---> ip96번 PC에서 소켓서비스를 준비하겠음!
+ 													 
+ 														 2. ss.accept(); //클라이언트 접속 대기(블로킹상태)
+ 													 
+ 3. Socket s = new Socket("192.168.0.96", 3000);			Socket s = ss.accept();
+ 	 // 1. ServerSocket ss = ...와 매핑					     접속한 클라이언트의 소켓정보 리턴!
+ 	 // "192.168.0.96" : 네트워트상에서 서비스PC 찾기
+ 	 // 3000 		    : 서비스 종류
+ 	
+ 	==> 접속 요청!
+ 	
+ 4. BufferedReader in 									4. BufferedReader in;
+ 	= new BufferedReader(
+ 	  new InputStreamReader(s.getInputStream()));
+ 	  
+ 	==> in : 서버가 전달한 메시지 읽기								==> in : 클라이언트가 전달한 메시지 읽기
+ 	
+ 	OutputStream out = s.getOutputStream();				   OutputStream out;					    
+ 
+  	==> out : 서버에게 메시지 쓰기								==> out : 클라이언트에게 메시지 쓰기
+ 
+ ------------------------------------------------------------------------------------------------------------------------
+ 					공통 : [5. 쓰기 6. 읽기]  [7. 쓰기  8. 읽기]  [ 9. 쓰기  10. 읽기 ]
+ 					
+ 					
+ 					
+ 										  n\olleh|001
+ tf값을 [스트림에 쓰기]  5.write 	----------------------------->	6. String str = readLine();
+ ---																	  ---
+ "hello" 															  "100|hello"
+  ---> "100|hello"													split후 "100"일 때 메시지
+ 										   hello\n
+ 8. String str = readLine();   <-----------------------------	7. write("hello\n")
+ 	 ta.append(str+"\n")
+ 
+ 
+ 										    n\동길|002
+ 대화명값을 [스트림에 쓰기]  9.write 	----------------------------->	10. String str = readLine();
+ ---																	   ---
+ "길동"																	 "200|길동"
+  ---> "200|길동"													split후 "200"일 때 대화명
+ 											길동\n
+ //12. String str = readLine(); <----------------------------- //11. write("길동\n")
+ //	 ta.append(str+"\n")
+ 																11. String nickName = "길동";
+ 															
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
