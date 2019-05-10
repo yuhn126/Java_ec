@@ -12,7 +12,7 @@ public class ObjectReadTest {
 		
 		@SuppressWarnings("unchecked")
 		Vector<Product> v = (Vector<Product>)ois.readObject();
-		p = v[0];
+		p = v.get(0);
 		System.out.println(p.name);
 		System.out.println(p.getName());
 				
