@@ -26,11 +26,11 @@ public class FileTest {
 		File f2 = new File("E:/hnyu/Java/Java_ec/workspace/JavaApp/a.txt");		//기본
 			 f2 = new File("a.txt");	//생략된 경로(이클립스 내에서 가능)
 			 f2 = new File(".");		// . 경로 : current directory(현재경로)
-			 f2 = new File("..");		// .. 경로 : parent directory(부모경로)
-			 f2 = new File("../..");
+//			 f2 = new File("..");		// .. 경로 : parent directory(부모경로)
+//			 f2 = new File("../..");
 			 
-		System.out.println("f2.getPath() : " + f2.getPath());
-		System.out.println("f2.getAbsolutePath() : " + f2.getAbsolutePath());
+		System.out.println("f2.getPath() : " + f2.getPath());						//파일의 경로를 문자열(string)로 가져옴
+		System.out.println("f2.getAbsolutePath() : " + f2.getAbsolutePath());		//절대경로를 가져옴
 		System.out.println("f2.getCanonicalPath() : " + f2.getCanonicalPath());		//실행 결과
 		System.out.println("======================================================================");
 		
@@ -57,8 +57,10 @@ public class FileTest {
 		String path = "song/gildong/juwon";
 		String fileName = "c.txt";
 		
-		File f4 = new File(path);
+		File f4 = new File(path);//f4는 디렉토리
 		
+		if(f4.isDirectory())
+			System.out.println("f4는 디렉토리");
 		
 		if(f4.exists()) {
 			System.out.println("#디렉토리가 이미 존재합니다.");
@@ -67,8 +69,10 @@ public class FileTest {
 			System.out.println("#디렉토리를 새로 생성함!");
 		}
 		
-		FileWriter fw = new FileWriter(path + "/" + fileName);
-		//명시된 파일을 생성!
+		File f5 = new File("d.txt");
+		
+		
+		FileWriter fw = new FileWriter(path + "/" + "d.txt");//명시된 파일을 생성!
 		fw.close();//자원반환
 		
 		/*
@@ -76,12 +80,12 @@ public class FileTest {
 			File과 DataBase 공통점? 데이터를 (서로 다른 프로그램, 개발자)공유!
 		 */
 		
-		File f5 = new File("song/gildong/juwon/c.txt");
-		System.out.println("c.txt파일 삭제 : " + f5.delete());
-		
-		
-		File f6 = new File("song/gildong/juwon");
-		System.out.println("f6 디렉토리 삭제 : " + f6.delete());// --> 빈 폴더 삭제 가능!
+//		File f5 = new File("song/gildong/juwon/c.txt");
+//		System.out.println("c.txt파일 삭제 : " + f5.delete());
+//		
+//		
+//		File f6 = new File("song/gildong/juwon");
+//		System.out.println("f6 디렉토리 삭제 : " + f6.delete());// --> 빈 폴더 삭제 가능!
 	}
 	
 	
