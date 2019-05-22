@@ -1,0 +1,54 @@
+<scanner사용한 콘솔 입력>
+Scanner scan = new Scanner(System.in);
+사용 : scan.nextInt();
+
+================================================================
+ <데이터가 저장되는 위치(자료형)에 따라 이름이(접근법) 달라요!>
+ 
+ 문제) 정수값을 화면에 출력하시오.
+ 
+ 1. 데이터 ---> 300
+ 	System.out.println(300);
+ 	
+ 2. 데이터 ---> int su = 300;
+ 	System.out.println(su);
+ 	
+ 3. 데이터 ---> int []su = {300};
+ 	System.out.println(su[0]);
+ 	
+ 4. 데이터 ---> Vector<Integer> v = new Vector<>();
+ 			  v.add(300);
+ 	System.out.println(v.get(0));
+ 	
+ 5. 데이터 ---> public class Person{
+ 				  public int su = 300;
+ 			  }
+ 			  
+ 	Person p = new Person();
+ 	System.out.println(p.su);
+ 	
+ 5_2. 데이터 ---> public class Person{
+ 					private int su = 300;
+ 					public int getSu(){
+ 						return su;
+ 					}
+  				}
+  	  Person p = new Person();
+  	  System.out.println(p.getSu());
+ 
+ 
+ 6. Person [] arr = {p, new Person()};
+ 	
+ 	System.out.println(arr[0].getSu());
+ 	
+
+ 7. Vector<Person> v = new Vector<>();
+ 	v.add(p);
+ 	v.add(new Person());
+ 	
+ 	System.out.println(v.get(0).getSu());
+ 	
+==============================================================
+		+ Map<Key,Value>
+
+ 	
