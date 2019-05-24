@@ -122,10 +122,10 @@
  <SQL> Structured Query Language (구조적인 질의어)
   종류)암기사항
   
-  1. 데이터 정의어(DDL) : Data Definition Language
+  1. 데이터 정의어(DDL) : Data(객체데이터) Definition Language
   		- 데이터베이스 관리자나 응용프로그래머가 데이터베이스의 논리적인 구조를 정의하기 위한 언어.
   		- 객체(예:table,view,sequence,trigger)에 대한 정의
-  		- 명령어 : CREATE, DROP, ALTER, TRUNCATE
+  		- 명령어 : CREATE, DROP, ALTER, RENAME, TRUNCATE
   		
   2. 데이터 조작어(DML) : Data Manipulation Language ★
   		- 데이터베이스에 저장된 데이터를 조작(추가, 삭제, 수정)하기 위해 사용하는 언어
@@ -246,10 +246,3 @@
  		SQL에서는 정수 실수 구분X
  
  
- 
- 
- 
- 
- 
-  
-  

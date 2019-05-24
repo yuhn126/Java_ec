@@ -1,0 +1,471 @@
+ - select
+ 
+  select 컬럼명		1(조건)
+  from 테이블명		2
+  where 조건식		3
+  order by 컬럼명;	4
+  
+  실행순서) 2 - 3- 1(조회,인출) - 4 - 출력
+  
+  SELECT [DISTINCT] 컬럼명1 [AS] 별명, 컬럼명2, 데이터, 산술연산, 컬럼명3 || 데이터
+  FROM 테이블명
+  WHERE 조건식
+  		-----
+  		(컬럼명 연산자 비교데이터)
+  			  -----
+  			 비교연산자 ( <		>	<=	>=	=	!=	^=	<> )
+  			  LIKE '패턴%_'
+  			  IN   (value_list)
+  			  BETWEEN 최소값 AND 최대값 : 최소값 이상 최대값 이하
+  ORDER BY 컬럼명 [ASC|DESC];
+  
+  NVL(인자1,인자2)함수 : NULL값을 특정값으로 변환하는 기능
+  	인자1 : NULL예상되는 컬럼명
+  	인자2 : 대체할 데이터
+  	주의사항 : 인자1과 인자2의 자료형이 같아야함.
+  	
+ =====================================================================================
+ 
+ <숫자함수>
+  - round함수 : 반올림(4이하는 버리고 5이상은 올림)
+  	형식) 
+  		round(기준데이터)
+  		round(기준데이터, 소수점 이하 자릿수 표현)
+  		
+		select round(45.56) from dual;
+		ROUND(45.56)
+		------------
+		  		46
+		  			 
+		select round(45.46) from dual;
+		ROUND(45.46)
+		------------
+		  		45
+		  			 
+		select round(45.573, 2) from dual;
+		ROUND(45.573, 2)
+		----------------
+		  		 45.57
+		  	
+		select round(45.575, 2) from dual;
+		ROUND(45.575, 2)
+		----------------
+		  		 45.58
+		  			 
+  - TRUNC함수 : 버림함수
+  		select trunc(45.56) from dual;
+  		TRUNC(45.56)
+  		------------
+  				 45
+  				 
+  		select trunc(45.568, 2) from dual;
+  		TRUNC(45.568, 2)
+  		----------------
+  				  45.56
+  
+  - FLOOR함수 : 소수점 이하 버림함수	(실수 ---> 정수)
+  		select floor(45.56) from dual;
+  		FLOOR(45.56)
+  		------------
+  				 45
+  				 
+  				 
+  - MOD함수 : 나머지 구하기
+  		mod(A, B) : A를 B로 나눈 나머지
+  		
+  		select 10/5 from dual;
+  		---> 2
+  		
+  		select 10/3 from dual;
+  		---> 3.3333
+  		
+  		select mod(10,5) from dual;
+  		---> 0
+  		
+  		select mod(10,3) from dual;
+  		
+  		문제) 10/3의 몫과 나머지를 구하시오!
+  			select floor(10/3) 몫, mod(10,3) 나머지
+  			from dual;
+  				        몫    		 나머지
+			---------- ----------
+			         3          1
+			   
+		문제) 사원번호가 짝수인 사원의 사원번호, 사원명을 출력하시오
+  			select empno, ename
+			from emp
+			where mod(empno,2) = 0;
+				컬럼명	 연산자  비교데이터
+				비교데이터	 연산자	  컬럼명
+				컬럼명	 연산자	  컬럼명
+				비교데이터	 연산자  비교데이터
+				
+ <문자함수>
+  - UPPER함수 : 대문자 변환 함수
+	  	select upper('Welcome to oracle') from dual;
+	  	
+	  	UPPER('WELCOMETOORACLE')
+		----------------------------------
+		WELCOME TO ORACLE
+	
+  - LOWER함수 : 소문자 변환 함수
+	  	select upper('WELCOME TO Oracle') from dual;
+	  	
+	  	UPPER('WELCOMETOORACLE')
+		----------------------------------
+		WELCOME TO ORACLE
+  	
+  - INITCAP : 이니셜에 대한 대문자 변환
+	  	select initcap('welcome to oracle') from dual;
+	  	
+	  	INITCAP('WELCOMETOORACLE')
+		----------------------------------
+		Welcome To Oracle
+	
+	문제) 30번 부서의 사원명과 사원번호를 출력하시오.
+		(단, 사원명의 첫 글자만 대문자로 출력)
+		
+		select initcap(ename) ename, empno
+		from emp
+		where deptno = 30;
+  
+  - LENGTH함수 : 문자열 길이(문자갯수)
+	  	select length('OracleSQL') from dual;
+	  	===> 9
+	  	
+	  	select length('나길동') from dual;
+	  	===> 3
+	  	
+	  	select lengthb('OracleSQL') from dual;
+	  	===> 9
+	  		
+	  	select lengthㅠ('나길동') from dual;
+	  	===> 9 (한글 3개 문자 x 3byte)
+	  	===> lengthB() : 바이트 수 표현
+  	
+  - INSTR함수 : 특정 문자가 출현하는 위치를 얻어오는 함수(자바의 indexOf('a'))
+  
+	  	형식)
+	  		instr(기준데이터, 특정문자)
+	  		instr(기준데이터, 특정문자, 시작인덱스, 출현횟수)
+  	
+	  	select instr('welcome to oracle', 'o')		 -- 첫번째'o'
+	  	from dual;
+	  	===> 5
+  	
+	  	데이터 : 'welcome to oracle'
+	  	인덱스 :  12345678901234567
+	  	
+	  	select instr('welcome to oracle', 'o', 1, 2) -- 두번째'o'
+	  	from dual;
+	  	===> 10
+	  	
+  - SUBSTR : 문자열 일부분 추출, 부분 문자열 얻기
+  
+	  	형식)
+	  		substr( 기준문자열, 시작인덱스, 부분 문자열 갯수 )
+	  		
+	  	select substr('welcom to oracle', 12, 6)	 -- 12번째 문자부터 6개의 문자를 얻어오기
+	  	from dual;
+  	
+  - LPAD : 오른쪽 정렬 후 왼쪽 공백에 특정 문자 채우기.
+	  	형식)
+	  		lpad(기준문자열, 전체길이, 채울문자)
+	  	
+  		select lpad('oracle', 10, '#') lpad from dual;
+  	
+  	
+  - RPAD : 왼쪽 정렬 후 오른쪽 공백에 특정 문자 채우기.
+	  	형식) 
+	  		rpad(기준문자열, 전체길이, 채울문자)
+  		
+  		select rpad('oracle', 10, '♥') rpad from dual;
+  	
+  	
+  - LTRIM : 왼쪽 (연속된) 공백 또는 (연속된) 특정문자 제거
+	  	문자열 : '    oracle   ' 앞에 4개의 공백, 뒤에 3개의 공백
+	  	select ltrim('    oracle   ') "ltrim" from dual;
+  	
+  	
+  - RTRIM : 오른쪽쪽 (연속된) 공백 또는 (연속된) 특정문자 제거
+	  	문자열 : '    oracle   ' 앞에 4개의 공백, 뒤에 3개의 공백
+	  	select rtrim('    oracle   ') "rtrim" from dual;
+	  	
+	  	select length(rtrim('    oracle   ')) "오른쪽공백제거" from dual;
+	  	====> 10
+	  	
+	  	select rtrim('oracleaaaaaaaaaaaaaaaaa', 'a') "rtrim" from dual;
+	  	====> oracle
+  	
+  - TRIM함수 : 좌우의 연속된 공백을 제거해 주는 함수
+	  	select length(trim('    oracle   ')) from dual;
+	  	====> 6
+  	
+  		문제) 사원번호와 사원명, 입사일을 출력하되 입사일은 년도만 출력하시오.
+  			(예: '80/12/17' ---> '80')
+  			select empno, ename, substr(to_char(hiredate),1,2) hiredate
+  								 substr(hiredate,1,2) --자동 형변환
+  			from emp;
+  
+<날짜 함수>
+  - sysdate ★ : 현재 날짜 구하기
+  	select sysdate 현재날짜 from dual;
+  	
+  	현재 날짜
+  	--------
+  	19/05/24
+  	
+  	문자) 내일 날짜를 구하시오
+  	select sysdate + 1 내일날짜 from dual;
+  	
+  - MONTH_BETWEEN함수 : 날짜와 날짜 사이의 개월을 계산해 주는 함수(개월수)
+  		형식)
+  			MONTH_BETWEEN(큰 DATE, 작은 DATE)
+  			
+  	문제) 각 사원의 사원명, 입사일, 현재까지 근무한 개월 수를 출력하시오.
+  		SELECT ENAME, HIREDATE, MONTHS_BETWEEN(SYSDATE, HIREDATE) "근무월수"
+  		FROM EMP;
+			
+  		SELECT ENAME, HIREDATE, MONTHS_BETWEEN(SYSDATE, HIREDATE)/12 "근무년수"
+  		FROM EMP;
+  		
+  		SELECT ENAME 사원명, HIREDATE 입사일,
+  			ROUND(MONTHS_BETWEEN(SYSDATE, HIREDATE)) 근무개월수,
+  			ROUND(MONTHS_BETWEEN(SYSDATE, HIREDATE)/12) 근무년수
+  		FROM EMP;
+
+	문제) 우리 클래스가 개강한 이후 현재까지의 달수를 출력하시오!
+		select months_between(sysdate, '2019/04/08') from dual;
+		
+  - ADD_MONTHS  : 특정 날짜에 개월을 더한 날짜 계산
+  		SELECT SYSDATE 오늘날짜, ADD_MONTHS(STSDATE, 1) 한달후 FROM DUAL;
+		
+		SEELCT ADD_MONTHS('2019/01/31', -1) "전 달" FROM DUAL;
+		
+  - LAST_DAY  : 월의 마지막 날짜를 계산
+  		SELECT LAST_DAY(SYSDATE) "LASTDY" FROM DUAL;
+  		
+  		
+  	문제) 다음 달의 마지막 날짜는?
+  			==> 19/06/30
+  			==> '다음 달의 마지막 날짜는 6월 30일 입니다'
+  			
+  		SELECT '다음 달의 마지막 날짜는 ' || SUBSTR(LAST_DAY(ADD_MONTHS(SYSDATE,1)), 4, 2) ||
+  			'월 ' || SUBSTR(LAST_DAY(ADD_MONTHS(SYSDATE,1)),7,2) || '일 입니다.' "날짜정보"
+  		FROM DUAL;
+  		
+  - NEXT_DAY  : 특정 날짜 후의 첫 요일의 날짜를 계산
+  
+  	문제) 다음 주 월요일의 날짜?
+  		SELECT NEXT_DAY(SYSDATE, '월') FROM DUAL;
+  		
+  	문제) 사원들이 입사한 달의 마지막 날짜를 출력하시오.
+  		SELECT ENAME, HIREDATE, LAST_DAY(HIREDATE) FROM EMP;
+  		
+=========================================================================================
+ <형변환함수>
+ 	
+ 					 	TO_CHAR					 TO_CHAR
+ 				  ---------------->		 	 <---------------
+ 			NUMBER					CHARACTER				 DATE
+ 				  <----------------			 --------------->
+					  TO_NUMBER					 TO_DATE
+					  
+	형식) TO_CHAR (number|date)
+		 TO_CHAR (number|date ,  'format)
+		 
+	포맷형식)
+		YYYY(년도 4자리)	YY(년도 2자리).
+		MM(월),	DD(일),	DAY 또는 DY(요일),
+		HHm, HH12(1~12)	HH24(0~23)
+		MI(분), SS(초)
+		
+	문제) 오늘 날짜를 출력하시오.
+		select sysdate "오늘날짜" from dual;
+		
+		select to_char(sysdate, 'yyyy') "오늘날짜" from dual;
+		
+	문제) 오늘 날짜를 '2019년 05년 24일' 형태로 출력하시오
+		select to_char(sysdate, 'yyyy"년 "mm"월 "dd"일"') "오늘 날짜" from dual;
+		
+	문제) 오늘 날짜를 '2019년 05년 24일 13시 12분 30초 (금요일)' 형태로 출력하시오
+		select to_char(sysdate,'yyyy"년 "mm"월 "dd"일 "hh24"시 "mi"분 "ss"초("dy"요일)"') "오늘 날짜" from dual;
+				
+	문제) 오늘 날짜에서 2019년 4월 8일을 빼시오. (날짜차이구하기)
+		select sysdate - 2019/04/08
+		from dual;
+		
+		SYSDATE-
+		--------
+		19/03/22
+		
+		select sysdate - '2019/04/08'
+		from dual;		
+		===>에러
+		
+  - TO_DATE()
+  
+  	형식)
+  		TO_DATE(문자 [, '포맷'])
+  		
+  		select sysdate - to_date('2019/04/08')
+  		from dual;
+  		
+  		select sysdate - to_date('2019/04/08', 'yyyy/mm/dd')
+  		from dual;
+=================================================================================================
+ <논리연산자>
+  - AND : 두 조건 모두 만족하는 검색			
+			
+	a, b, c, d : 숫자저장 컬럼(number) 3, 5, 7, 9
+	WHERE a>b AND c<d
+	 	 <-------------
+	 	 	SQL문 실행순서!
+	 	 	
+	 	 
+	----> c<d 비교연산을 할까? 정답 : 한다
+	----> 이유 : sql에서는 뒤에서부터 조건식을 검사하기 떄문!
+	
+	문제) 10번 부서에 근무하고 직책이 CLERK인 사원의  사원번호, 사원명, 부서번호, 직책을 출력.
+		select empno, ename, deptno, job
+		from emp
+		where deptno=10 and job='CLERK';	
+			
+  - OR : 둘 중 하나라도 만족하는 행을 검색.
+  
+  	문제) 10번 부서에 근무하거나 또는 직책이 CLERK인 사원의 사원번호, 사원명, 부서번호, 직책을 출력.
+  		select empno, ename, deptno, job
+  		from emp
+  		where deptno = 10 or job = 'CLERK';
+  		
+  - NOT연산자 : 조건에 만족하지 못하는 행을 검색, 조건식 앞에 사용(in,like,between,null 앞에 사용)
+  
+  	문제) 30분 부서에 근무하는 사원의 정보(사원번호, 사원명, 부서번호, 직책)를 출력하시오.
+  		select empno, ename, deptno, job
+  		from emp
+  		where not deptno = 30;
+  
+  	문제) 이름에 'A'를 포함하지 않는 사원의 사원번호, 사원명, 부서번호를 출력하시오.
+  		select empno, ename, deptno
+		from emp
+		where ename not like '%A%';
+  
+	문제) 급여가 1600 미만이고 3000 초과인 사원의 사원번호, 사원명, 급여를 출력.
+  		select empno, ename, sal
+  		from emp
+  		where not (sal>=1600 and sal<=3000);
+  
+  		select empno, ename, sal
+  		from emp
+  		where not sal between 1600 and 3000;
+  		
+====================================================================================
+ <그룹함수> ★ 집계함수
+  - 전체 데이터를 그룹별로 구분하여 통계적인 결과를 구하기 위해 사용.
+  - 결과값은 항상 단행!
+  - 그룹함수와 단순컬럼은 함께 사용하는 것이 불가능!
+  	(만약 그룹함수와 함께 사용하고자 하는 컬럼이 그룹으로 묶여질 수 있다면 group by절과 함께 사용하는 것이 가능)
+  - NULL은 결과값에서 제외
+  
+	종류)
+		SUM(총합), AVG(평균), COUNT(행갯수), MIN(최소값), MAX(최대값),
+		STDDEV(표준편차), VARIANCE(분산)
+		
+	형식)
+		그룹함수명(컬럼명)
+		
+	문제) 사원들의 전체 급여 총합을 구하시오.
+		select sum(sal)
+		from emp;
+		
+	문제) 전체 사원들 중 가장 적은 급여와 가장 많은 급여를 출력하시오.
+		select min(sal) 최소급여, max(sal) 최대급여
+		from emp;
+		
+	문제) 부서번호와 급여 평균을 출력하시오.
+	
+	
+	DQL 형식)
+		1. select	조회 컬럼명
+		2. from		테이블명
+		3. where	(전체행에 대한)조건식
+		4. group by (그룹을 묶을 수 있는 조건을 가진)컬럼명
+		5. having	(그룹에 대한)조건식
+		6. order by	정렬컬럼명
+		
+	★실행순서 : 2 - 3 - 4 - 5 - 1(조회) - 6
+		
+  		select deptno, avg(sal)
+  		from emp
+  		group by deptno;	--부서별로 그룹을 묶겠음
+  							--그룹함수와 컬럼
+	
+	문제1)사원들의 직급 종류는 몇 개(=몇 행)인지 출력하시오.
+			select count(distinct job)
+			from emp;
+		===================직업 별 인원수==================
+			select job, count(*)
+			from emp
+			group by job;
+			
+			select distinct job, count(*)
+			from emp
+			group by job;
+			
+			select distinct count(job) ---> 나온 수에서 중복 제거!!
+			
+			COUNT(JOB)
+			----------
+         			1
+         			2
+         			4
+         			3
+	
+	문제2) 전체 사원의 수(=전체 행의 갯수)를 구하시오.
+			select count(*)
+			from emp;
+	
+	문제3) 가장 오래 근무한 사원의 입사일을 구하시오.
+			select min(hiredate)
+			from emp;
+			
+	문제4) 부서별 평균 급여를 구하시오. (부서번호가 작은 부서부터 출력)
+			select deptno, avg(sal)
+			from emp
+			group by deptno
+			order by deptno;
+			
+	문제5) 부서의 평균 급여가 2000 이상인 부서의 부서번호와 평균 급여를 출력하시오.
+			select deptno, avg(sal)
+			from emp
+			group by deptno
+			having avg(sal)>2000;
+	
+	문제6) 평균급여(==> 2073.21429)보다 더 많은 급여를 받은 사원의 사원번호, 사원명, 급여를 출력하시오.
+			select empno, ename, sal
+			from emp
+			where sal > (select avg(sal) from emp)
+			order by sal desc;
+	
+	문제7) 급여가 1000이상인 사원들에 대해서만 부서별로 평균을 구하고
+		    이 중에 평균 급여가 2000이상인 부서의 부서번호와 평균 급여를 출력하시오.
+			select deptno, avg(sal)
+			from emp					-- 14행
+			where sal >= 1000			-- 12행	(SMITH, JAMES사원 제외)
+			group by deptno;			-- 3행(10번, 20번, 30번 부서)
+  			==> 첫번째 조건 적용
+  			
+  			select deptno, avg(sal)
+  			from emp					-- 14행
+  			where sal>=1000				-- 14행(전체행)에 대한 조건 후 12행(SMITH, JAMES사원 제외)
+  			group by deptno				-- 3행
+  			having avg(sal) >=2000		-- 3행(그룹행)에 대한 조건 후 2행`	
+  
+  
+  
+  
+  
+  			
+				
+  				 			 
+  		
