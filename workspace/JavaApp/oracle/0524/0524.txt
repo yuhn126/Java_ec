@@ -459,11 +459,13 @@
   			from emp					-- 14행
   			where sal>=1000				-- 14행(전체행)에 대한 조건 후 12행(SMITH, JAMES사원 제외)
   			group by deptno				-- 3행
-  			having avg(sal) >=2000		-- 3행(그룹행)에 대한 조건 후 2행`	
+  			having avg(sal) >=2000		-- 3행(그룹행)에 대한 조건 후 2행
   
   
   
-  
+--------------------------------------------------------------------------------
+
+	SELECT ENAME,EMPNO,ROWID FROM EMP;  ----> ROWID : 내부식별자!
   
   			
 				

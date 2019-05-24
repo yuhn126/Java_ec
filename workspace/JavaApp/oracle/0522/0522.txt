@@ -13,7 +13,7 @@
    Java - SQL - JDBC - iBatis(MyBatis)
    
  <DB접속>
-  - 접속 툴 : 토드. SQL Developer(오라클 제공), 이클립스, SQL*PLUS
+  - 접속 툴 : 토드, SQL Developer(오라클 제공), 이클립스, SQL*PLUS
   - SQL*PLUS 통한 접속
   		1. sqlplus 계정명/패스워드
   		2. sqlplus 
@@ -126,6 +126,7 @@
   		- 데이터베이스 관리자나 응용프로그래머가 데이터베이스의 논리적인 구조를 정의하기 위한 언어.
   		- 객체(예:table,view,sequence,trigger)에 대한 정의
   		- 명령어 : CREATE, DROP, ALTER, RENAME, TRUNCATE
+  		- drop, delete, truncate의 차이점 : https://wikidocs.net/4021	
   		
   2. 데이터 조작어(DML) : Data Manipulation Language ★
   		- 데이터베이스에 저장된 데이터를 조작(추가, 삭제, 수정)하기 위해 사용하는 언어
