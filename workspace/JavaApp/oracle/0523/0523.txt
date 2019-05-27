@@ -14,23 +14,37 @@
 ==========================================================================================================
  <SQL> - Structured Query Language
  
- 1. DQL
+ 1. DQL(데이터 조회, 검색, 출력)
   - select --> 열 제어
+  
+  	DQL문법)
+  		select
+  		from
+  		where
+  		group by
+  		having
+  		order by
+  		
+  	실행순서) 2 - 3 - 4 - 5 - 1(DB로 부터의 조회, 인줄) - 6 - 1(정렬된 결과를 출력)
   
    select distinct(중복제거) 컬럼명1 별명, 컬럼명2 "별 명", 데이터, '안녕하세요', 300, 2*3
    from 테이블명;
    
- 2. DML
+ 2. DML(데이터 조작 - 추가, 수정, 삭제)
   - insert, delete, update
   
- 3. DDL
+ 3. DDL(데이터[객체 - table, view, sequence, trigger] 정의)			: Auto Commit
   - create, drop, alter, rename, truncate
+  				  -----
+  				 구조변경(컬럼수 변경 - emp테이블에 email컬럼을 추가
+  				 				- ename 15byte를 30byte로 변경)
   
- 4. DCL
-  - grant, revoke
+ 4. DCL(DB관리자가 일반사용자에게 권한 부여, 권한 회수)
+  - grant(권한 부여), revoke(권한 회수)
   
  5. TCL
-  - commit, rollback, savepoint
+  - 논리적인 (DML)작업단위 : transaction
+  - commit(DB에 물리적인 반영), rollback, savepoint
 ==========================================================================================================
  
  SQL*PLUS 명령어 : 접속 툴 내에서 출력 형식을 지정하는 등 환경설정.

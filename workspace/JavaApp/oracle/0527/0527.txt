@@ -1,0 +1,392 @@
+<SQL> - Structured Query Language
+ 
+ 1. DQL(데이터 조회, 검색, 출력)
+  - select --> 열 제어
+  
+  	DQL문법)
+  		1. select	컬럼명
+  		2. from		테이블명
+  		3. where	조건식
+  		4. group by	컬럼명
+  		5. having	조건식
+  		6. order by	컬럼명;
+  		
+  	실행순서) 2 - 3 - 4 - 5 - 1(DB로 부터의 조회, 인줄) - 6 - 1(정렬된 결과를 출력)
+  
+		select distinct 컬럼명1 [as] 별명, 컬럼명2 "별 명", 데이터, '안녕하세요', 300, 2*3
+	   		  함수호출(예 : length(ename)), 그룹함수호출(count(), sum(), max(), min(), avg())
+	   		  
+		from	테이블명
+		where	조건식
+	   			----
+	   		  컬럼명	연산자	데이터
+	   		  		----
+	   		  	  비교연산자(>	<	>=	<=	=	!=	^=	<>)
+	   		  	  like		'패턴&_'
+	   		  	  in		(value_li st)
+	   		  	  between
+		group by (그룹 묶을 수 있는)컬럼명
+		having	 조건식
+		order by 컬럼명; 
+   
+ 2. DML(데이터 조작 - 추가, 수정, 삭제)
+  - insert, delete, update
+  
+ 3. DDL(데이터[객체 - table, view, sequence, trigger] 정의)			: Auto Commit
+  - create, drop, alter, rename, truncate
+  				  -----
+  				 구조변경(컬럼수 변경 - emp테이블에 email컬럼을 추가
+  				 				- ename 15byte를 30byte로 변경) 
+  
+ 4. DCL(DB관리자가 일반사용자에게 권한 부여, 권한 회수)
+  - grant(권한 부여), revoke(권한 회수)
+  
+ 5. TCL
+  - 논리적인 (DML)작업단위 : transaction
+  - commit(DB에 물리적인 반영), rollback, savepoint
+  
+  
+==================================================================================================
+ <DECODE함수>
+	형식)
+ 		DECODE(컬럼명,
+ 						비교데이터1, 결과데이터1
+ 						비교데이터2, 결과데이터2
+ 						비교데이터3, 결과데이터3........)
+ 						
+ 	문제) 사원들의 사원번호(empno), 사원명(ename), 부서번호(deptno), 부서명(dname)을 출력하시오.
+ 		select empno, ename, deptno, decode(deptno,
+ 													10,'ACCOUNTING',
+ 													20,'RESEARCH',
+ 													30,'SALES',
+ 													40,'OPERATIONS') 부서명
+ 		from emp;	
+ 		
+ 		    EMPNO ENAME                    DEPTNO 부서명
+		---------- -------------------- ---------- --------------------
+		      7369 SMITH                        20 RESEARCH
+		      7499 ALLEN                        30 SALES
+		      7521 WARD                         30 SALES
+		      7566 JONES                        20 RESEARCH
+		      7654 MARTIN                       30 SALES
+		      7698 BLAKE                        30 SALES
+		      7782 CLARK                        10 ACCOUNTING
+		      7788 SCOTT                        20 RESEARCH
+		      7839 KING                         10 ACCOUNTING
+		      7844 TURNER                       30 SALES
+		      7876 ADAMS                        20 RESEARCH
+		      7900 JAMES                        30 SALES
+		      7902 FORD                         20 RESEARCH
+		      7934 MILLER                       10 ACCOUNTING
+		    
+	문제) 사원들의 사원번호(empno), 사원명(ename), 부서번호(deptno), 부서명(dname), 사원번호에 대한 홀수 또는 짝수를 출력하시오.
+		==>decode함수 2개 사용!
+		
+		select empno, ename, deptno,
+		decode(deptno, 10, 'ACCOUNTING', 20, 'RESEARCH', 30, 'SALES', 40, 'OPERATIONS') 부서명,
+		decode(mod(empno,2),0,'짝수',1,'홀수') 홀짝
+		from emp;
+		 
+		 
+ <CASE함수>
+	형식)
+ 		CASE WHEN 조건식1 THEN 결과데이터1
+ 			 WHEN 조건식2 THEN 결과데이터2
+ 			 WHEN 조건식3 THEN 결과데이터3
+ 			 ELSE 결과데이터n
+ 		END(영역괄호 끝괄호)
+ 		
+ 	문제) 사원들의 사원번호(empno), 사원명(ename), 부서번호(deptno), 부서명(dname), 사원번호에 대한 홀수 또는 짝수를 출력하시오.
+ 		==> CASE문 사용!
+ 		
+ 		select empno, ename, deptno,
+ 			case
+ 				when deptno=10 then 'ACCOUNTING'
+ 				when deptno=20 then 'RESEARCH'
+ 				when deptno=30 then 'SALES'
+ 				--when deptno=40 then 'OPERATIONS'
+ 				else 'OPERATIONS'
+ 			end "부서명",
+ 			case
+ 				when mod(empno,2) = 0 then '짝수사원번호'
+ 				else '홀수사원번호'
+ 			end "짝홀"
+ 		from emp;
+ 			
+ 		     EMPNO ENAME                    DEPTNO 부서명              			 짝홀
+		---------- -------------------- ---------- -------------------- ----------------
+		      7369 SMITH                        20 RESEARCH             홀수사원번호
+		      7499 ALLEN                        30 SALES                홀수사원번호
+		      7521 WARD                         30 SALES                홀수사원번호
+		      7566 JONES                        20 RESEARCH             짝수사원번호
+		      7654 MARTIN                       30 SALES                짝수사원번호
+		      7698 BLAKE                        30 SALES                짝수사원번호
+		      7782 CLARK                        10 ACCOUNTING           짝수사원번호
+		      7788 SCOTT                        20 RESEARCH             짝수사원번호
+		      7839 KING                         10 ACCOUNTING           홀수사원번호
+		      7844 TURNER                       30 SALES                짝수사원번호
+		      7876 ADAMS                        20 RESEARCH             짝수사원번호
+		      7900 JAMES                        30 SALES                짝수사원번호
+		      7902 FORD                         20 RESEARCH             짝수사원번호
+		      7934 MILLER                       10 ACCOUNTING           짝수사원번호	
+ 			 
+===================================================================================================================== 			 
+ ★<조인> JOIN★
+  - 한 개 이상의 테이블에서 데이터를 조회하기 위해 사용.
+  - 두 개 이상의 테이블을 참조해서 데이터를 검색.
+  
+  - from 뒤에 두 개 이상의 테이블을 명시.
+  	예) from emp, dept
+  	   from emp, emp			 
+ 			 
+	문제) SCOTT사원이 근무하는 부서의 부서번호와 부서명, 부서위치를 출력하시오.
+		select ename,dname	-- 56행 2열
+		from emp, dept		-- 14행 8열 * 4행 3열 = 56행 11열
+		==>결과행 : 56행
+			---> 특정한 조건을 주지 않는다면 조인시 각 테이블이 갖는 행의 수를 곱한 형태의 결과가 출력.
+															 -------
+															 CROSS JOIN
+															 14 * 4
+		
+		from emp, dept, salgrade; -- 몇 행 출력? 14*4*5
+		
+		select ename, deptno, dname, loc
+		from emp. dept;
+		==> 에러 : select 또는 where절에 명시된 컬럼이 두 개 이상의 테이블에 공통으로 정의되어 있을 떄
+		
+		select emp.ename, emp.deptno, dept, dname, dept.loc
+		from emp, dept;
+		
+		select ename, emp.deptno, dept, dname, loc
+		from emp, dept;
+		==> 56행 4열 출력 (사원 1명과 부서 4개 행을 매핑)
+		
+		select ename, emp.deptno, dname, loc
+		from emp, dept
+		where emp.deptbo = dept.deptno;
+		==> 14행 4열 출력 (사원 1명과 부서 1개 행을 매핑)
+		
+		select ename, emp.deptno, dept, dname, loc
+		from emp, dept;
+		where ename = 'SCOTT' and emp.deptbo = dept.deptno;
+		==> 14행 4열 출력 (사원 1명과 부서 1개 행을 매핑)
+		
+	문제) MILLER사원이 근무하는  부서정보를 아래와 같이 출력하시오.    
+		==> MILLER사원은 10번 부서에 근무하고 부서명은 ACCOUNTING이고 위치는 NEW YORK입니다.
+   			
+		select ename || ' 사원은'|| emp.empno||'번 부서에서 근무하고 부서명은 '||dname||'이고 위치는 '||loc||'입니다.'
+		from emp,dept
+		where ename = 'MILLER' and emp.deptno=dept.deptno;
+		
+ <EQUI JOIN>
+	- 조인 대상이 되는 두 테이블에서 공통적으로 존재하는 컬럼의 값이  일치하는 행을 연결하여 결과를 생성하는 조인.
+		  
+	※ 참고 : select * from emp,dept;
+		===> 특별한 조건없이 두 테이블을 곱(14행 * 4행)의 형태로 출력: CROSS JOIN  
+		
+	문제) 'NEW YORK'에서 근무하는 사원의 이름과 급여를 출력하시오.
+		select ename, sal
+		from emp, dept
+		where dept.deptno = emp.deptno and loc = 'NEW YORK';
+		
+	문제) ACCOUNTING부서 소속 사원들의 이름과 입사일(YYYY/MM/DD)을 출력하시오.
+		select ename, to_char(hiredate, 'yyyy/mm/dd') HIREDATE
+		from emp,dept
+		where emp.deptno=dept.deptno and dname='ACCOUNTING';
+		
+	문제) 직급이 MANAGER인 사원의 이름, 부서명을 출력하시오.  
+		select ename, dname, sal
+		from emp, dept
+		where job='MANAGER' and emp.deptno=dept.deptno;
+		
+
+ <Non-Equi JOIN>
+  - 특정 범위 내에 있는 값을 조회하기 위해 (대소)비교 연산자를 사용.
+  
+	문제) 각 사원의 사원번호, 사원명, 급여, 급여등급(1~5등급)을 출력하시오.
+ 		select empno,ename, sal, grade
+		from emp, salgrade
+		where sal between losal and hisal;
+		
+	문제) ALLEN사원의 사원번호, 사원명, 급여, 급여등급, 부서명을 출력하시오.
+		select empno, ename, sal, grade, dname
+ 		from emp, salgrade, dept
+		where ename='ALLEN' and dept.deptno=emp.deptno and sal between losal and hisal;
+		
+ <Self JOIN>
+  - 마치 같은 테이블이 두개인 것 처럼 자기 자신 테이블과 조인하는것.
+  
+  	문제) SCOTT사원의 사원번호, 사원명, 급여, 직속상사명을 출력하시오.
+  		select e1.empno, e1.ename, e1.sal, e2.ename
+  		from emp e1, emp e2
+  		where e1.ename = 'SCOTT' and e1.mgr = e2.empno;
+  	
+  	문제) SCOTT사원과 동일한 근무지(부서)에서 근무하는 사원(동료 사원)의 이름을 출력하시오.
+  		select e1.ename 기준사원명, e2.ename 동료사원명
+  		from emp e1,emp e2
+  		where e1.ename='SCOTT' and e1.deptno = e2.deptno and e1.ename != e2.ename;		
+
+ <Outer JOIN>
+  - 테이블 조인 중 한쪽 테이블에 존재하지 않는 데이터로 인해서 출력되지 않는 행을 출력하고 싶을 때 사용.
+  - '(+)'기호 사용
+  
+	문제) 각 사원의 이름과 그 사원의 직속 상사 이름을 출력하시오.
+		select e1.ename 사원명, e2.ename 직속상사명
+		from emp e1, emp e2
+		where e1.mgr = e2.empno;	-- 예상 출력행의 수 : 14
+		===> 13행 출력 (e1.mgr이 NULL인 KING사원은 배제/NULL은 대입, 연산, 할당 불가능)
+  
+  		select e1.ename 사원명, e2.ename 직속상사명
+		from emp e1, emp e2
+		where e1.mgr = e2.empno(+);
+		
+	문제) 각 사원의 이름과 부서번호, 부서명, 부서위치를 출력하시오.
+		select ename, d.deptno, dname, loc
+		from emp e, dept d
+		where e.deptno(+) = d.deptno;
+		
+		====>14명 사원에 매핑되지 않은 부서정보(40번부서)도 함께 출력하고 싶다!
+		
+===============================JOIN문제==========================================
+문제1) 사원들의 이름, 부서번호, 부서이름을 출력
+	select ename, e.deptno, dname
+	from emp e, dept d
+	where e.deptno=d.deptno;
+	
+문제2) 부서번호가 30번인 사원들의 이름, 직급, 부서번호, 부서위치를 출력
+	select ename, job, e.deptno, loc
+	from emp e, dept d
+	where e.deptno=30 and e.deptno=d.deptno;
+	
+문제3) 커미션을 받는 사원의 이름, 커미션, 부서이름, 부서위치 출력(커미션 0은 제외)
+	select ename, comm, dname, loc
+	from emp e, dept d
+	where comm != 0 and comm is not null and e.deptno=d.deptno;
+	
+	select ename, comm, dname, loc
+	from emp e, dept d
+	where comm > 0 and e.deptno=d.deptno;
+	
+문제4) DALLAS에서 근무하는 사원들의 이름, 직급, 부서번호, 부서이름을 출력
+	select ename, job, d.deptno, dname
+	from emp e, dept d
+	where loc='DALLAS' and e.deptno=d.deptno;
+	
+문제5) 사원이름에 'A'가 들어가는(포함하는) 사원들의 이름과 부서이름을 출력
+	select ename, dname
+	from emp e, dept d
+	where ename like '%A%' and e.deptno=d.deptno;
+	
+문제6) 사원이름과 직급, 급여, 급여등급을 출력
+	select ename, job, sal, grade
+	from emp e, salgrade s
+	where sal between losal and hisal;
+
+문제7) 사원들의 이름과 그 사원과 같은 부서에 근무하는 사원의 사원명, 부서번호를 출력
+       ===> 자기 이름을 제외한 동료(56행) 정보 출력!!
+	select e1.ename, e2.ename, e2.deptno
+	from emp e1, emp e2
+ 	where e1.ename!=e2.ename and e1.deptno=e2.deptno
+ 	order by e1.ename;
+ 
+ 	select e1.ename, e2.ename, e2.deptno
+	from emp e1, emp e2
+ 	where e1.empno!=e2.empno and e1.deptno=e2.deptno
+ 	order by e1.ename;
+ 
+=========================================================================================
+ ANSI조인 ==> DBMS종류와 상관없이 실행되는 표준 조인!
+ 
+ <ANSI Cross JOIN> 표즌 조인(9i부터) 
+ 
+	 from 테이블명1, 테이블명2
+	 ---> 콤마 제거!
+	 
+	 select empno, ename, dname
+	 from emp, dept;
+	 ---> 14행 * 4행 : 56행 (오라클 조인)
+	 
+	 select empno, ename, dname
+	 from emp cross join dept; 	
+	 ---> 56행
+ 
+ <ANSI Inner Join>
+  - 테이블 사이에 inner join사용
+  	동등 조건식 ON(조건절!!) 뒤에 사용
+  - where절을 추가하는 것이 가능
+  - on절은 반드시 추가!
+  - on절에 동등비교와 추가적인 조건식을 기술 가능
+	
+	문제) 전체 사원에 대한 사원번호, 사원명, 부서명을 출력하시오
+		select empno, ename, dname
+		from emp inner join dept;
+		--->ORA-00905: missing keyword (on조건절 명시)
+		
+		select empno, ename, dname
+		from emp inner join dept
+		on emp.deptno = dept.deptno;
+		
+	문제) JAMES사원에 대한 사원번호, 사원명, 부서명을 출력하시오.
+		select empno, ename, dname
+		from emp inner join dept
+		on emp.deptno = dept.deptno -- 공통 컬럼 매핑
+		where ename = 'JAMES';	
+	
+ <Inner Join에 USING절 사용하기>
+ 	---> 형식) USING(공통컬럼명)
+ 	
+ 		select empno, ename, dname
+ 		from emp inner join dept
+ 		USING (deptno);
+ 		===> 14행 출력	
+	
+	※USING절 사용 시 공통된 컬럼에 대해 emp.deptno 또는 dept.deptno 사용 불가!
+							---> 특정 테이블이 아닌 USING절에서 정의한 deptno컬럼명만 사용!
+ 		select empno, ename, emp.deptno, dname -- 에러발생
+ 		from emp inner join dept
+ 		USING (deptno);
+	
+		select empno, ename, deptno, dname		-- 실행 OK
+		from emp inner join dept
+		USING (deptno);
+	
+		select empno, ename, dname		-- 실행 OK
+		from emp inner join dept
+		USING (deptno)
+		where ename = 'JAMES';
+		
+ <Natural Join>
+ 		select empno, ename, dname
+ 		from emp natural join dept;	-- 두 테이블이 갖는 컬럼 중 공통된 이름의 컬럼을 동등조건해줌		
+		===> 14행 출력
+	
+	문제) ADAMS의 사원번호, 사원명, 부서명을 출력
+		select empno, ename, dname
+		from emp natural join dept
+		where ename='ADAMS';
+ 
+ <ANSI Outer Join>
+ 	형식)				(많은 쪽)
+ 		from 테이블명1 (LEFT|RIGHT|FULL) [OUTER] JOIN 테이블명2
+ 		--->조건절은 ON!
+ 		
+ 	문제) 각 사원의 이름과 그 사원의 직속 상사 이름을 출력하시오.
+ 		select e1.ename "사원명", e2.ename "직속상사명"
+ 		from emp e1 left join emp e2
+		on e1.mgr = e2.empno;
+			null	 null없음
+	
+	문제) 각 사원의 이름과 부서번호, 부서명, 부서위치를 출력하시오.
+		(14명 사원이 속하지 않은 40번 부서에 대해 출력)
+		
+		select ename, dept.deptno, dname, loc
+		from emp right join dept
+		on emp.deptno = dept.deptno;
+	
+		select ename, deptno, dname, loc
+		from emp right outer join dept
+		using (deptno);
+	
+	
+	
+	
