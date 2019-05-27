@@ -45,7 +45,6 @@
   - 논리적인 (DML)작업단위 : transaction
   - commit(DB에 물리적인 반영), rollback, savepoint
   
-  
 ==================================================================================================
  <DECODE함수>
 	형식)
@@ -92,9 +91,9 @@
 	형식)
  		CASE WHEN 조건식1 THEN 결과데이터1
  			 WHEN 조건식2 THEN 결과데이터2
- 			 WHEN 조건식3 THEN 결과데이터3
+ 			 WHEN 조건식3 THEN 결과데이터3 ...
  			 ELSE 결과데이터n
- 		END(영역괄호 끝괄호)
+ 		END(영역괄호 끝 괄호)
  		
  	문제) 사원들의 사원번호(empno), 사원명(ename), 부서번호(deptno), 부서명(dname), 사원번호에 대한 홀수 또는 짝수를 출력하시오.
  		==> CASE문 사용!
@@ -151,7 +150,7 @@
 		from emp, dept, salgrade; -- 몇 행 출력? 14*4*5
 		
 		select ename, deptno, dname, loc
-		from emp. dept;
+		from emp, dept;
 		==> 에러 : select 또는 where절에 명시된 컬럼이 두 개 이상의 테이블에 공통으로 정의되어 있을 떄
 		
 		select emp.ename, emp.deptno, dept, dname, dept.loc
@@ -208,6 +207,10 @@
 		from emp, salgrade
 		where sal between losal and hisal;
 		
+		select empno, ename, sal, grade
+		from emp, salgrade
+		where sal>=losal and sal<=hisal;
+		
 	문제) ALLEN사원의 사원번호, 사원명, 급여, 급여등급, 부서명을 출력하시오.
 		select empno, ename, sal, grade, dname
  		from emp, salgrade, dept
@@ -220,12 +223,17 @@
   		select e1.empno, e1.ename, e1.sal, e2.ename
   		from emp e1, emp e2
   		where e1.ename = 'SCOTT' and e1.mgr = e2.empno;
-  	
+  		
+  		※ select e1.empno, e1.ename, e1.sal, e2.ename
+		  from emp e1, emp e2
+		  where e1.mgr(+)=e2.empno;
+  		  	===> e2.ename에 직속 후배가 없는 사원의 이름도 한번씩 출력됨
+  		 	
   	문제) SCOTT사원과 동일한 근무지(부서)에서 근무하는 사원(동료 사원)의 이름을 출력하시오.
   		select e1.ename 기준사원명, e2.ename 동료사원명
   		from emp e1,emp e2
   		where e1.ename='SCOTT' and e1.deptno = e2.deptno and e1.ename != e2.ename;		
-
+															 e2.ename != 'SCOTT';
  <Outer JOIN>
   - 테이블 조인 중 한쪽 테이블에 존재하지 않는 데이터로 인해서 출력되지 않는 행을 출력하고 싶을 때 사용.
   - '(+)'기호 사용
