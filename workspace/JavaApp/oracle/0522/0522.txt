@@ -102,7 +102,7 @@
 		 DEPTNO   (사원이 속한 부서 번호)                         NUMBER(2)
 	  
 	  
-	  SQL> desc dept	===>	(부서 테이블
+	  SQL> desc dept	===>	(부서 테이블)
 		 Name                                      Null?    Type
 		 ----------------------------------------- -------- ----------------------------
 		 DEPTNO  (부서번호)                          NOT NULL NUMBER(2)
