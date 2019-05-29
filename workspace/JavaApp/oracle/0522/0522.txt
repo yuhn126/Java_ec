@@ -67,7 +67,7 @@
      ---> no rows selected (검색된 테이블 정보 없음)
      
   <예제 테이블 정보 가져오기(복사하기)>
-  imp scott/tiger file=E:\hnyu\Java\Java_ec\workspace\JavaApp\oracle\0522\scottTable.dmp fromuser=scott touser=scott constraints=y commit=y ignore=y tables=dapt,emp,salgrade
+  imp scott/tiger file=E:\hnyu\Java\Java_ec\workspace\JavaApp\oracle\0522\scottTable.dmp fromuser=scott touser=scott constraints=y commit=y ignore=y tables=dept,emp,salgrade
   	
   ※주의) SQL>_프롬프트상태에서는 SQL관련 명령어만 입력 --> imp는 sql명령어가 아님.
   	====> C:\User\Playdata>_프롬프트상태에 imp입력!
