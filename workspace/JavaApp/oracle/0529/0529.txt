@@ -326,6 +326,7 @@
 	문제) 30번 부서의 급여를 10% 인상해라
 	 	update emp3
 	 	set sal = sal*1.1;
+	 	where deptno = 30;
 	 	
  <서브쿼리를 이용한 데이터 수정>
  	drop table dept4;
