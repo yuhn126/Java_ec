@@ -1,0 +1,426 @@
+ <뷰> VIEW
+  - 물리적인 테이블을 근거한 논리적인 가상테이블.
+  	(가상 : 실질적으로 데이터를 저장하고 있지 않는다.)
+  	---> 독립적인 테이블은 아니다!
+  	
+  - 기본 테이블에 대한 하나의 쿼리문 (text를 저장하는 객체)
+  - 자주 사용되는 복잡하고 긴 쿼리문을 저장하는 객체
+  - 특정 컬럼만 보여지게끔하여 보안을 목적으로 사용
+  
+  - DML제한, SELECT만 가능
+  
+  형식)CREATE VIEW 뷰_이름
+  	 AS select_statement;
+  	 
+  	 create view emp_copy
+  	 as select * from emp;
+  	 -->ORA-01031: insufficient privileges
+  	 
+  	 
+  <권한 부여> - 관리자
+  	형식) GRANT system_privilege TO user_name;
+  	
+  <권한 회수> - 관리자
+  	형식) REVOKE system_privilege FROM user_name;
+  	
+ 
+ - 관리자 계정 연결
+ 	conn system/oracle     conn /as sysdba
+ 	
+ - 뷰 객체 생성 권한 ---> scott
+   grant create view to scott;
+   
+   conn scott/tiger
+   
+   <데이터베이스 관리자가 가지는 시스템권한>
+   	CREATE
+   	
+   <데이터베이스 관리 권한>
+  	CREATE SESSION - 데이터베이스에 접속할 수 있는 권한
+	CREATE TABLE - 사용자 스키마에서 테이블을 생성할 수 있는 권한.
+	CREATE VIEW - 사용자 스키마에서 뷰을 생성할 수 있는 권한.
+	CREATE SEQUENCE - 사용자 스키마에서 시퀀스을 생성할 수 있는 권한.
+	CREATE PROCEDURE - 사용자 스키마에서 함수을 생성할 수 있는 권한.
+  
+ 문제)30번 부서 사원들의 정보(사원번호, 사원명, 급여, 부서번호)를 출력(emp_copy뷰객체 통해서)
+ 	select empno, ename, sal, deptno from emp_copy;
+ 문제)emp테이블(원본, 물리적테이블)에 홍길동 사언을 추가하시오!
+	insert into emp(empno, ename, sal, deptno)
+	values(8000, '홍길동', 3000, 30);
+	
+	--> emp_copy는 기준 테이블(emp)을 참조하는(바라보는) 논리적인 테이블이기 때문
+	
+	DBMS에서는 user들이 만드는 객체에 대해 '시스템테이블'
+	
+	desc user_views;
+	
+	select view_name, text from user_views;
+	
+ 문제)30번 부서에 근무하는 사원의 사원번호, 사원명, 급여를 자주 조회한다. 이를 뷰로 생성하시오.
+ 	
+ 	
+ <VIEW형식>
+ 	CREATE [OR REPLACE] [FORCE|NOFORCE] VIEW 뷰이름 [(alias)]
+ 	AS select_statement
+ 	[WITH CHECK OPTION [CONSTRAINT 제약명]]
+ 	[WITH READ ONLY [CONSTRAINT 제약명]];
+ 	
+ 	 ---> 뷰 EMP30에 입사일, 부서번호 추가!
+ 	 	create view emp30
+ 	 	as select empno, ename, sal, hiredate, deptno
+ 	 	from emp
+ 	 	where deptno=30;
+ 	 	---> 이미 객체이름을 사용 중!
+ 	
+		creat OR REPLACE view emp30
+			-- 존재하지 않는 뷰는 새로 생성하고 존재하는 뷰의 경우에는 text내용만 변경
+ 	 	as select empno, ename, sal, hiredate, deptno
+ 	 	from emp
+ 	 	where deptno=30;
+ 	 	
+	 문제)abc테이블(존재하지 않는 테이블)의 모든 컬럼을 조회하는 뷰를 생성하시오. (뷰명:abc_view)
+	 	create or replace view abc_view
+	 	as select * from abc;
+  
+  ※20번 부서의 정보를 조회하는 뷰 생성!
+  	create view emp20
+  	as select empno, ename, sal, depno
+  		from emp_copy
+  		where deptno=20
+  	with read only;
+  	-->(읽기 전용 : DML불가)뷰 생성
+  	
+  	
+ <뷰 통한 입력>
+ 	insert into emp20 values(9000, '김주원', 900, 20);
+ 	
+ <뷰 통한 삭제>
+ 	delete from emp20;
+ 	
+ <뷰 통한 수정>
+ 	update emp30 set sal=9999;
+ 	
+ <뷰에 별명주기!!>
+ 	create or replace view emp20 (나별명)
+ 	as select empno, ename, sal, deptno
+ 	from emp_copy
+ 	where deptno = 20;
+ 	---> 뷰이름 다음에 명시되는 alias는 컬럼에 대한 별명임!
+ 	
+ 	create or replace view emp20(사원번호, 사원명, 급여, 부서번호)
+ 	as select					 empno,ename,sal,deptno
+ 	from emp_copy
+ 	where deptno=20;
+ 	--->뷰 생성 성공!
+ 	
+ 문제)emp20뷰에서 사원번호와 사원명만 조회하시오!
+ 	select empno, ename
+ 	from emp20;
+ 	-->에러, 뷰 생성시 별명을 정의했다면 조회시에는 별명만 사용해야함!
+ 	
+ 	select 사원번호, 사원명
+ 	from emp20;
+ 	
+ 문제) 'ADAMS'사원을 10번 부서로 이동하시오.(emp20뷰를 통해)
+ 	update emp20 set 부서번호 = 10
+ 	where 사원번호 = 7876;
+ 
+ 문제) '김유신'사원을 30번 부서에 추가하시오.(emp20뷰를 통해)
+	insert into emp20 values(8004, '김유신', 2000, 30);
+  
+ 문제) 'FORD'사원을 10번 부서로 이동하시오.(emp20뷰를 통해)
+ 	update emp20 set 부서번호 = 10
+ 	where 사원번호=7902; 
+  
+======================================================================
+ <인라인 뷰>
+  - 서브쿼리문에서 바깥쪽 select문의 from절에 사용된 서브쿼리문.
+  - 내부에 사용되는 서브쿼리는 별칭이 부여, 이렇게 부여된 별칭이 뷰처럼 사용.
+  
+  	select ....,		---> 메인쿼리
+  			(select...)	---> 서브쿼리
+  	from ...(select...  ---> 서브쿼리, 인라인 뷰!
+			) Alias  	
+  	where (select...)	---> 서브쿼리
+  	....;
+  
+ 
+ <Top-N 구하기>
+ 	rowid : 주소로서 row가 실제로 저장되어있는 공간을 표시.
+ 	rownum : 번호로서 row의 주소 순서대로 출력되어짐. 출력되는 행에 대해 첫 행 부터 순차적인 번호를 부여
+ 										(1, 2, 3, ...)
+ 	
+ 	
+ 문제)가장 급여를 많이 받는 3명의 사원정보(사원번호, 사원명, 급여)를 출력하시오.
+ 	-->rownum 사용
+ 	
+ 	select empno, ename, sal
+ 	from emp
+ 	order by sal desc;
+ 	▶     	     EMPNO ENAME                       SAL
+		---------- -------------------- ----------
+			  7839 KING                       5000
+      		  7902 FORD                       3000
+      		  7788 SCOTT                      3000
+			  7566 JONES                      2975
+			  7698 BLAKE                      2850
+			  7782 CLARK                      2450
+			  7499 ALLEN                      1600
+			  7844 TURNER                     1500
+			  7934 MILLER                     1300
+			  7521 WARD                       1250
+			  7654 MARTIN                     1250
+			  7876 ADAMS                      1100
+			  7900 JAMES                       950
+			  7369 SMITH                       800
+ 	
+ 	
+ 	select empno, ename, sal		-- 실행 3
+ 	from emp						-- 실행 1
+ 	where rownum between 1 and 3	-- 실행 2
+ 	order by sal desc;				-- 실행 4
+ 	▶	     EMPNO ENAME                       SAL
+		---------- -------------------- ----------
+	    	  7499 ALLEN                      1600
+	      	  7521 WARD                       1250
+	          7369 SMITH                       800
+	          
+	==> 코드 실행 순서 때문에 원하는 결과와 다름
+ 	
+ 	
+ 	select empno, ename, sal
+ 	from (select empno, ename, sal	-- 실행2
+ 		  from emp					-- 실행1
+ 		  order by sal desc)		-- 실행3
+ 	where rownum between 1 and 3;	-- 실행4
+ 	
+ 	
+ 문제)가장 오래된(오래 근무한) 사원 3명의 사원번호, 사원명, 입사일을 출력하시오
+ 	<정답> SMITH, ALLEN, WARD
+ 	
+ 	select empno, ename, hiredate
+	from (select empno, ename, hiredate
+		  from emp
+		  order by hiredate)
+	where rownum between 1 and 3;
+ 	
+ 	
+ 문제)급여를 4번째로 많이 받는 사원부터 6번째까지 사원의 정보(사원번호, 사원명, 급여)를 출력하시오.
+ 	<정답> JONES(2975), BLAKE(2850), CLARK(2450)
+ 	
+ 	select empno, ename, sal, rownum
+	from (select empno, ename, sal
+		  from emp
+		  order by sal desc)
+	where rownum between 4 and 6;
+ 	-->no rows selected(조회 결과 없음)
+ 			--> 이유)rownum을 항상 1부터 1씩 증가하는 값을 카운트해야 함!
+ 			--> 해결)rownum을 먼저 1부터 출력하게 하고 그 결과에서 중간 번호(1이 아닌 값)를 조회
+ 	
+ 	
+ 	select empno, ename, sal -- , rownum ra
+ 	from (select empno, ename, sal, rownum rb -- 1,2,3,4,5,6번호 출력
+  		  from (select empno, ename, sal, rownum rc
+  		  		from emp
+  		  		oder by sal desc
+  		  		)  -- 1차 : 정렬
+  		  ) salNum -- 2차 : 출력된 행에 1부터 순차적인 번호를 부여! 
+  	where rb between 4 and 6; -- 3차 : rb눈 1~14까지 이미 출력된 번호
+  		 
+=======================================================================
+ <SEQUENCE 시퀀스> : 자동 번호 부여
+  - 숫자값이 일정한 규칙에 의해서 연속적으로 자동 증가.
+  - 테이블에 종속적이지 않다(테이블과 독립적)
+  
+  형식)
+  CREATE SEQUENCE sequence_name
+  			[INCREMENT BY]증가치
+  			[START WITH]초기값
+  			[MAXVALUE n|NOMAXVALUE]
+  			[MINVALUE|NOMINVALUE]
+  			[CYCLE|NOCYCLE]
+  			[CACHE|NOCACHE];
+  
+  
+ 사용법)
+      시퀀스명.nextval  ==> 발생된 번호값(그다음)
+      시퀀스명.currval  ==> 현재 번호값
+    
+	create sequence test_seq;    -- 기본 1부터 시작해서 1씩 증가되는 숫자값
+	---> 시퀀스 생성
+
+	drop sequence test_seq;
+	create sequence test_seq
+	             start with 1
+	             increment by 1
+	             nocycle
+	             nocache;
+	---> 시퀀스 생성
+
+ - 현재 숫자 보기(조회)
+	select test_seq.currval
+	from dual;
+	  
+ - 자동 번호(숫자) 얻어오기
+ 	select test_seqw.nextval from dual;
+ 	select test_seqw.nextval from dual;
+ 	select test_seqw.nextval from dual;
+ 	select test_seqw.nextval from dual;
+ 	select test_seqw.nextval from dual;
+	  
+ - 현재 숫자 보기(조회)
+ 	select test_seq.currval
+ 	from dual;
+ 	
+	테이블에 적용한 사례)
+		alter table dept3
+		drop primart key cascade;
+		
+		drop table dept3;
+		
+		create table dept3
+		as select * from dept
+		where 1 = 0;
+		
+	<dept3테이블 deptno에 primary key설정>
+		alter table dept3
+		add constraint dept3_pk primary key(depeno);
+		
+	<행 데이터 입력>
+		insert into dept3 values(10, '영업부', '서초');
+		insert into dept3 values(20, '자재부', '대전');
+		insert into dept3 values(10, '개발부', '남터');
+		
+		select * from emp3;
+		
+		
+	
+ 문제)dept3테이블내이 deptno에 적용할 시퀀스 객체를 생성하시오.
+ 	(10부터 시작해서 10씩 증가)
+ 	
+ 	create sequence dept3_seq
+ 				start with 10
+ 				increment by 10
+ 				nocycle
+ 				nocache;
+ 				
+---------------------------------------------------------------------------	
+ * Oracle 11g에서 시퀀스 사용시 주의할 점!!
+  deferred_segment_creation=true(기본값) ===> false로 변경
+  
+  alter system set deferred_segment_creation=false;    
+  ORA-01031: insufficient privileges ==> 권한불충분
+
+	SQL> conn system/oracle      
+	Connected.
+	
+	SQL> alter system set deferred_segment_creation=false;
+	System altered.
+	
+	SQL> conn scott/tiger
+	Connected.     
+===================================================================
+ <PL/SQL>
+  - SQL의 장점은 쿼리문 하나로 원하는 데이터를 검색 조작할 수 있다는 점인데, SQL문 자체는 비절차적 언어이기 때문에
+  	몇개의 쿼리문 사이에 어떠한 연결 및 절차성이 있어야 하는 경우는 사용할 수 없다 
+  	
+  	if(select 결과가 내가 원하는 값이라면){
+  		insert into ~ values ~ ;
+  	} 
+  	
+  - 이 점을 극복하기 위해 SQL언어에 절차적인 프로그래밍 언어를 가미해 만든 것이 PL/SQL
+  
+ <PL/SQL구조>
+ 	DECLARE SECTION (선언부)
+		- PL/SQL에서 사용하는 모든 변수나 상수를 선언.
+		
+ 	EXECUTABLE SECTION (실행부)
+ 		- 절차적형식으로 SQL을 실행할 수 있도록 절차적인 요소인 제어문, 반복문
+ 		- 함수 정의 등 로직 기술
+ 	
+ 	EXCEPTION SECTION (예외 처리)
+  		- 실행 중 발생되는 에러를 해결하기 위한 문장으로 구성.
+  		
+-----------------------------------------------------------------------
+ <변수 선언>
+	변수명			    자료형;
+   vempno		number(4);
+   vempno2		emp.empno%type;  --> 존재하는 emp테이블의 empno컬럼이 갖는 자료형을 참조하겠음
+
+ <레퍼런스 변수>
+ 	- %type(한 개의 컬럼), %ROWTYPE(한 행을 구성하는 모든 컬럼 참조)
+ 	
+ 	vemp	emp%ROWTYPE;
+ 			--> emp테이블이 갖는 모든 컬럼의 자료형을 vemp변수로 참조하겠음
+
+-----------------------------------------------------------------------
+ 문제)화면 콘솔에 '안녕, PL/SQL~!!'을 출력하시오.
+ 	
+ 	declare	-- 선언부
+ 	 -- () 변수 선언
+ 	
+ 	begin	-- 실행부{
+	 -- SQL문
+	 
+	 dbms_output.put_line('안녕, PL/SQL~!!');
+	
+	end;	-- }
+	/
+	
+	==> 화면 출력 설정 : set SERVEROUT on
+	
+==> sqlplus접속툴을 열 때 마다 set SERVEROUT off 기본값으로 자동 설정!
+==> C:\oraclexe\app\oracle\product\11.2.0\server\sqlplus\admin
+		==> 해결 : set SERVEROUT on 추가
+
+
+--------------------------------------------------------------------------------
+<PL/SQL 형식>
+	declare -- 선언부
+ 		실행부에서 사용할 변수 선언;             
+           
+	begin   -- 실행부 시작
+		SQL문(DQL,DML)!! 
+           
+		select empno, ename, sal  into 변수명1, 변수명2, 변수3
+		from  emp;
+           
+		---> 이 영역에서 empno,ename,sal의 대한 정보가 사라짐!!
+		---> 조회된 결과 데이터를 저장할 변수 정의가 필요!!
+           
+		insert문, delete문, update문
+           
+		조건문 또는 반복문과 함게 하는 SQL문 작성!
+			
+		함수 호출           
+        
+ 	end;    -- 실행부 끝
+	/
+
+========================================================================
+ <조건문 if>
+ 	형식)
+ 		if( 조건식 )
+ 			then -- { 시작을 표현
+ 			
+ 			
+ 		end if;  -- } 끝을 표현
+
+		---> if_test.sql
+		---> 두 수를 비교해서 크다, 작다를 출력!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 	
+  	
