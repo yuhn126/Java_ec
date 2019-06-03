@@ -1,0 +1,278 @@
+ <PL/SQL>
+     ※ 실행 : @0603\if_else_test.sql
+  - SQL언어에 절차적인 프로그래밍 언어 요소(조건문,반복문)를 가미해 만든 것
+  - 여러개의 SQL문(DQL,DML) 사이에 연결관계를 표현
+
+	select 컬럼명     into  변수명    
+	from   테이블명
+
+	if 변수명 < 10
+		then insert into~
+	end if; 
+
+
+ 
+ 
+ <PL/SQL구조>
+ 
+ 	declare -- 선언부
+ 	
+ 		실행부에서 사용하는 변수에 대한 선언!
+ 		a	number(4);		-- 변수선언
+ 		b	emp.ename%type	-- 변수 선언(존재하는 테이블 안의 컬럼이 갖는 자료형을 참조)
+ 		c	number(2):=20;
+ 		
+ 	begin	-- 실행부 시작
+ 	
+ 		a := 300;
+ 		
+ 		SQL문1 작성
+ 		SQL문2 작성
+ 		SQL문3(DQL, DML) 작성
+ 		      ---
+ 		             주의 : select empno, ename, sal, into a, b, c
+ 		           from emp;
+ 		           
+ 			dbms_output.put_line(empno); (x) ==> 조회된 컬럼명 empno 인식 불가
+ 			dbms_output.put_line(a); 	 (o) ==> 조회된 사원번호를 begin ~ end 사이에서 a변수로 사용!
+ 	
+ 		if(조건식)
+ 			then SQL문4;			--> 0, 1번 실행
+ 		end if;
+ 		
+ 		for(){
+ 			SQL문5;				--> 0 ~ 무한대 실행
+ 		}
+ 		
+ 	end;	-- 실행부 끝
+ 	
+=====================================================================================================
+ <조건문>
+  1. if문
+  	
+  	형식)
+  		if 조건식
+  			then		-- if 시작
+  				 조건식 결과가 참 일때 실행할 문장;
+  		end if;			-- if 끝 
+  					
+ 	
+  2. if ~ else문
+  
+  	형식)
+  		if 조건식
+  			then 조건식 결과가 참 일때 실행 할 문장;
+  			else 조건식 셜과가 거짓일때 실행 할 문장;
+  		end if;
+ 	
+	문제)특정 사원이 커미션을 받는지 안 받는지 구분해서 출력하시오.
+		예)사번 7788은 SCOTT사원이고 커미션을 받지않습니다.
+		     사번 7654는 MARTIN사원이고 커미션을 1400받습니다ㅏ.
+		
+		
+	문제) 특정사원 한 명의 사원번호, 사원명, 연봉을 출력하시오.
+     (연봉계산은 급여*12+comm)
+     
+    ==> where empno=7788;   where empno=7654;
+    ==> 예) 사번 7788은 SCOTT사원이고 연봉은 36000입니다.
+    
+    ==> emp_sal.sql	
+		
+ 	
+  3. if ~ elsif ~ else문
+  	형식)
+  		if (조건식1)
+  			then 조건식1 참 일때 실행 할 문장;
+	  		elsif (조건식2)
+	  			then 조건식1이 거짓이고 조건식2  참일때 실행 할 문장;
+	  		elsif (조건식3)
+	  			then 조건식1, 조건식2가 거짓이고 조건식3  참일때 실행 할 문장;
+	  		else
+	  			조건식 1,2,3이 거짓일때 실행할 문장;
+  		end if;
+ 	
+	문제)특정 사원의 사원번호, 사원명, 소속된 부서명을 출력하시오.
+		예)사원 7788은  SCOTT사원이고  RESEARCH부서에 근무합니다.
+		
+ <반복문>
+  1. loop(반복문)
+  	형식)
+  		LOOP
+  			반복 실행 할 문장1;
+  			반복 실행 할 문장2;
+  			반복 실행 할 문장3;
+			EXIT[WHEN 조건식]; --반복문 탈출 조건
+		END LOOP;
+		
+	문제)1 부터 10까지 출력하시오.
+		-->loop_test.sql
+		
+  2. for loop
+	형식)
+		FOR 변수 IN [REVERSE] 최소값..최대값
+		LOOP
+			반복 실행 할 문장;
+		END LOOP;
+		
+	문제)화면에 '나는 SQL이 좋아요!'를 10번 출력하시오.
+		---> for_test.sql
+	
+	문제)3단에서 5단까지 출력하시오.
+		---> for_dan.sql
+	
+	문제)위의 구구단 결과를 gugudan테이블에 저장!
+	
+		create table gugudan(
+			dan     number(2),
+			i       number,
+			result  number
+		);	
+		
+  3. while loop
+  	형식)
+  		WHILE 조건식
+  		LOOP
+  			반복 실행 할 문장;
+  		END LOOP;
+  		
+  	문제) 1~10까지 더한 값을 화면에 출력하시오.
+  		(while을 사용)
+  		1+2+3+4+.....+9+10
+  		---> while_test.sql
+  	
+	
+===============================================================
+ <저장 프로시저> ★ Store Procedure
+  - 자주 사용되는 DML, DQL을 모듈화 시켜서 DB에 저장했다가 필요할 때 호출해서 사용!
+  - JAVA의 메소드와 같음
+	형식)
+		CREATE [OR REPLACE] PROCEDURE 프로시저명 (변수명1 [IN|OUT] 자료형, 변수명2 자료형)
+		IS
+			변수선언;
+		BEGIN
+			실행 할 문장1;
+			실행 할 문장2;
+			실행 할 문장3;
+			-- 초기화, SQL문, 함수호출, 절차적요소(조건문, 반복문)
+			
+ 		END;
+ 		/
+ 		
+	실행방법) EXECUTE 프로시저명();
+	
+	문제)부서테이블(dept3)에서 40번 부서를 삭제하시오.(프로시저 사용)
+		--->pro_test.sql
+		
+		drop table dept3;
+		create table dept3
+		as select * from dept;
+		
+ <바인드변수>
+ 	선언 ==> variable tom varchar2(15);
+ 	사용 ==> :변수명
+ 	호출 ==> exec del_dept(40, :tom)
+ 	확인 ==> print tom;
+ 	
+ 	
+ 	SQL> @0603\pro_test
+ 	SQL> exec del_dept(10, :tomorrow)
+ 	SQL> print :tomorrow
+ 	
+ 	
+	문제)사원 테이블(emp3)에서 특정 사원명을 (매개변수)입력을 통해 삭제하는 프로시저를 작성하고 현재 사원수를  출력하시오.
+	
+	--> pro_test2.sql
+	--> 프로시저 정의: del_ename
+	
+	--> 실행결과)
+			del_ename('SMITH');
+			# SMITH사원이 삭제되었고 총 사원수는 13명 입니다!
+			
+ 	실행 ==> 1. 작성된 프로시저를 DB에 저장(생성)
+             @0603/pro_test2.sql
+         2. 저장된 프로시저 이름을 호출(실행)             
+            exec[ute] del_ename('SMITH');
+            
+    --> 개선1)
+    	if then과 else의 select문을 한번만 정의해서 출력.
+    	
+    --> 개선2)
+    	del_ename('ADAMS')
+    	del_ename('adams') 상관없이 일치하는 사원 삭제.
+ 	
+ 	
+====================================================================================
+ <저장 함수> Stored Function
+  - 실행(함수 호출)후 결과를 되돌려 받을 수 있는 return 데이터; 를 반드시 명시해야 함!
+  
+  	형식)
+  		CREATE [OR REPLACE] FUNCTION 함수명(매개변수 선언)
+  		RETURN 자료형
+  		IS
+  			변수 선언
+  		BEGIN	
+  			(순차적으로)실행 할 SQL문
+  			....
+  			RETURN 데이터;
+  		END;
+  		/
+  		
+  	사용법)
+  		1. CREATE FUNCTION~(함수를 DB에 저장) -- 함수 생성
+  		2. VARIABLE 바인드변수명 자료형;		-- 변수 선언
+  		3. EXEC[UTE] :바인드변수명 := 함수명()  -- 함수호출, 결과값 저장
+  		4. PRINT 바인드변수명;			    -- 저장값 확인
+  		
+  
+	참고)
+		void hello(String name){
+			System.out.println("안녕,"+name);
+		}
+		------>Stored Procedure(리턴 없고)
+		
+		String hi(){
+			return "좋은 하루~!!";
+		}
+		------> Stored Fnction(리턴 키워드 있고)
+		
+------------------------------------------------------------------------------------------------------		
+ 문제)특정 사원에게 보너스를 지급하려고 하는데 급여의 200%에 해당하는 비용을 지급하려 한다.
+	이 보너스 금액을 FUNCTION을 통해 구하시오.
+	
+	---> fun_test.sql
+	---> 함수명 : call_bonus('SMITH');
+	
+	SQL> @0603/fun_test
+
+	Function created.
+	
+	SQL> variable bonus number;
+	SQL> exec :bonus := call_bonus('SMITH')
+	
+	PL/SQL procedure successfully completed.
+	
+	SQL> print bonus
+	
+	     BONUS
+	----------
+	      1600
+	      
+	      
+	      
+	      
+ 미션) call_bonus2 Function을 정의하고 매개변수로 1.사원명과 2.보너스 비율을 넣어서 보너스 금액을 출력하시오.
+ 
+ 	예)call_bonus('SMITH',300);
+	
+		
+		
+		
+		
+		
+		
+		 	
+ 	
+ 	
+ 	
+ 	
+ 	
