@@ -293,14 +293,52 @@
 		insert into emp4 (empno, ename, sal, mgr, deptno, gender)
 		values(8000, '홍길동', 1000, 8001, 10, 'F');
 		
+		insert into emp4 (empno, ename, mgr, deptno)
+		values(8001, 1000, 8001, 10); -- ename = '무명'
+		
+		insert into emp4 (empno, ename, sal, mgr, deptno, gender)
+		values(8002, '길라임', 1001, 8001, 10, 'F'); -- check에러/sal --> 500~1000
+		
+		insert into emp4 (empno, ename, sal, mgr, deptno, gender)
+		values(8003, '김주언', 1000, 8001, 10, '남');
+											 'Y'	-- check에러 / gender --> 'F' or 'M'
+		
+		
+	※참고)
+		create table emp5(
+			deptno number(2) references 참조테이블명(참조컬럼명)on delete cascade
+				-- 부모 (부서)테이블에서 특정 번호(예 : 10번부서)를 삭제했을 때
+				       자식 (사원)테이블에서 10번 부서에 근무하는 사원들을 삭제!
+		);
+		
+		create table emp5(
+			deptno number(2) reference 참조테이블명(참조컬럼명) on delete set null
+				-- 부모(부서)테이블에서 특정 번호 (예 : 10번부서)를 삭제했을때
+				      자식 (사원)테이블에서 10번 부서에 근무하는 사원들의 deptno를 null값으로 변경!
+		
 		
 ==========================================================================
- <데이터 딕셔너리>DD 시스템 테이블
+ <데이터 딕셔너리> DD 시스템 테이블
   - 데이터베이스 자원을 효율적으로 관리하기 위한 다양한 정보를 저장하는 시스템 테이블.
   - 사용자가 테이블을 생성하거나 사용자를 변경하는 등의 작업을 할 때 데이터베이스 서버에 의해 자동으로 개인되는 테이블.		
  
  <제약조건 확인하기>
-  - 
+  - user_constraints
+  - desc user_constraints
+  
+  OWNER	   		    : 제약조건을 소유한 사용자명
+  CONSTRAINT_NAME   : 제약조건명
+  CONSTRAINT_TYPE   : 제약 조건 타입
+  TABLE_NAME	    : 제약이 속한 테이블명
+  SEARCH_CONDITION  : check제약일 경우 조건으로 사용되어지는 설명.
+  R_CONSTRAINT_NAME : foreign key경우 어떤 primary key를 참조했는지 정보.
+  
+ <CONSTRAINT_TYPE>
+	P : primary key
+	R : foreign key
+	U : unique
+	C : check, not null
+  
  	
 =========================================================================
  ※ALTER 정리
@@ -338,16 +376,4 @@
   	MODIFY 컬럼명 [CONSTRAINT 제약명] NOT NULL|NULL;
   
 ========================================================================= 
-  
-  
-  
-  
-   	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
+ 
