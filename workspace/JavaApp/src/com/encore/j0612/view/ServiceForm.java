@@ -1,17 +1,24 @@
 package com.encore.j0612.view;
 
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import com.encore.j0612.model.vo.MembershipVO;
@@ -33,8 +40,40 @@ public class ServiceForm extends JFrame {
 	JMenu menu_admin;
 	JMenuBar bar;
 	
+	//첫째 패널에 위치할 컴포넌트 ==> 라디오 버튼 3개
+	JRadioButton radio_id, radio_name, radio_addr;
+	ButtonGroup group;
+	
+	//둘째 패널에 위치할 컴포넌트 ==> 라벨, 텍스트필드
+	JTextField tf_search;
+	JPanel panel_first, panel_second, panel_option;
+	
 	public ServiceForm() {
 		setTitle("Display Data");
+		
+		radio_id = new JRadioButton("아이디", true);
+		radio_name = new JRadioButton("이름");
+		radio_addr = new JRadioButton("주소");
+		
+		group = new ButtonGroup();
+		group.add(radio_id);
+		group.add(radio_name);
+		group.add(radio_addr);
+		
+		panel_first = new JPanel();
+		panel_first.add(radio_id);
+		panel_first.add(radio_name);
+		panel_first.add(radio_addr);
+		
+		tf_search = new JTextField();
+		panel_second = new JPanel();
+		panel_second.add(new JLabel("검색어 : "));
+		panel_second.add(tf_search);
+		
+		panel_option = new JPanel();
+		panel_option.setLayout(new GridLayout(2, 1));
+		panel_option.add(panel_first);
+		panel_option.add(panel_second);
 		
 		item_confirm = new JMenuItem("인증");
 		menu_admin = new JMenu("관리자");
@@ -83,6 +122,32 @@ public class ServiceForm extends JFrame {
 	public int showConfirm(String msg) {
 		return JOptionPane.showConfirmDialog(this, msg);
 	}// showConfirm
+	
+	public Map<String, String> showOption() {
+		//String []options = {"확인", "취소"};
+		int t = JOptionPane.showOptionDialog(this, panel_option, "Search", JOptionPane.OK_CANCEL_OPTION,
+											 JOptionPane.PLAIN_MESSAGE, null, null/*배열*/, null);
+		//t ==> 확인, 취소, X : 0, 1, -1
+		
+		String keyword = tf_search.getText();
+		String title = ""; //만약 라디오 버튼 중 아이디가 선택되었다면 title = "아이디";
+					  //= "아이디", "이름", "주소"
+		
+		//문제! >>> 리턴에 keyword와 title을 동시에 담고 싶다!
+		//해결1) String []배열 사용
+		//해결2) VO객체에 두 개의 변수를 담기
+		//해결3) Map객체에 두 개의 변수를 담기 << 새로운 VO를 만드는 것이 부담스러울 때
+		//								 VO객체 내에 정의된 변수(필드)보다 아주 적은 변수 갯수를 사용할 때
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("title", title);
+		
+		return map;
+		
+		
+	} //showOption
+	
 
 	// ArrayList안에 저장된 MembershipVO정보를 JTable에 출력하는 기능.
 	// {"ID","이름","나이","성별","전화번호","주소","직업"};

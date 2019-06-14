@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Properties;
 
 import com.encore.j0612.model.vo.MembershipVO;
@@ -290,6 +291,35 @@ public class MembershipDAO {
 			disconnect();
 		}
 		return 0;
+	}
+	
+	//(이름패턴)회원 정보 조회
+	public ArrayList<MembershipVO> findSearch(Map<String, String> map){
+		connect();
+		ArrayList<MembershipVO> list = new ArrayList<MembershipVO>();
+		//컬럼 : id, pass, name, ssn1, ssn2, phone, addr, job
+		
+		String title = map.get("title");
+		String keyword = map.get("keyword");
+		
+		try {
+			String sql = "select id, name, ssn1, ssn2, phone, addr, job from membership";
+			
+			if(title.equals("아이디"))
+				sql += "where id like ?";
+			else if(title.equals("이름"))
+				sql += "where name like ?";
+			else if(title.equals("주소"))
+				sql += "where addr like ?";
+			
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, "%"+keyword+"%");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 	
 
