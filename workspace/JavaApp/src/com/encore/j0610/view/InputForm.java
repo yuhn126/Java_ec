@@ -1,8 +1,7 @@
-package com.encore.j0502.person.view;
+package com.encore.j0610.view;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Label;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -10,21 +9,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class UpForm extends JFrame { //조회된 결과를 출력할 때 사용
+public class InputForm extends JFrame{
 	public JTextField tf_name, tf_age, tf_job;
 	public JButton bt_submit, bt_cancel;
 	JLabel lb_name, lb_age, lb_job;
 	JPanel namep, agep, jobp, btp;
 	
-	public int upNo; //메인폼에서 선택된 행의 no를 저장하기 위한 변수
-
-	public UpForm() {
-		setTitle("수정폼");
+	public InputForm() {
+		setTitle("입력폼");
 		tf_name = new JTextField(10);
-		tf_name.setEditable(false);
 		tf_age = new JTextField(10);
 		tf_job = new JTextField(10);
-
+		
 		lb_name = new JLabel("이름");
 		lb_age = new JLabel("나이");
 		lb_job = new JLabel("직업");
@@ -41,14 +37,14 @@ public class UpForm extends JFrame { //조회된 결과를 출력할 때 사용
 		  jobp.setLayout(new FlowLayout());
 		  jobp.add(lb_job);
 		  jobp.add(tf_job);
-
-		bt_submit = new JButton("수정");
+		
+		bt_submit = new JButton("입력");
 		bt_cancel = new JButton("취소");
 		btp = new JPanel();
 		  btp.setLayout(new FlowLayout());
 		  btp.add(bt_submit);
 		  btp.add(bt_cancel);
-
+		
 		setLayout(new GridLayout(6,1,10,10));
 		setSize(250,300);
 		add(new JLabel());
@@ -58,5 +54,12 @@ public class UpForm extends JFrame { //조회된 결과를 출력할 때 사용
 		add(btp);
 		//setVisible(true);
 		//setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+	}
+	
+	public void init() {
+		tf_name.setText("");
+		tf_age.setText("");
+		tf_job.setText("");
 	}
 }

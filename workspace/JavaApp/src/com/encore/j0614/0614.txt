@@ -1,0 +1,12 @@
+ <Java Collection Framework(JCF)>
+  - 데이터(참조 데이터)를 담는 바구니
+  - JCF는 구조를 정의하기 위해 인터페이스를 사용함
+  		(Collection. List. Set. Map)
+  - 배열보다 더 편리하게 객체를 다를 수 있다.
+  
+ <JCF내의 클래스> - java.util.*
+     ★List	: 순차적 나열 순서 지정이 가능한 요소들의 집합.
+  Set	: 중복을 허용하지 않는 요소들의 집합.
+  SortedSet : 값들이 정렬된 Set.
+     ★Map 	: 키와 키에 대응하는 값으로 이루어진 구조.
+  SortedMap : 키가 정렬된 Map.

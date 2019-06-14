@@ -1,4 +1,4 @@
-package com.encore.j0502.person.view;
+package com.encore.j0610.view;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -10,13 +10,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class UpForm extends JFrame { //조회된 결과를 출력할 때 사용
+public class UpForm extends JFrame {
 	public JTextField tf_name, tf_age, tf_job;
 	public JButton bt_submit, bt_cancel;
 	JLabel lb_name, lb_age, lb_job;
 	JPanel namep, agep, jobp, btp;
 	
-	public int upNo; //메인폼에서 선택된 행의 no를 저장하기 위한 변수
+	public int upNo;
 
 	public UpForm() {
 		setTitle("수정폼");

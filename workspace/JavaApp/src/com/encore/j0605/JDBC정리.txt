@@ -1,0 +1,36 @@
+Connection
+Statement
+ResultSet
+
+1. 드라이버 로딩 driver loading (=제품군 선택!)
+Class.forName("드라이버 클래스명");
+
+2. 연결 객체 생성
+Connection conn = DriverManager.getConnection(
+
+----DML-----
+3. 실행 객체 생성 
+Statement stmt = conn.createStatement();
+
+String sql = "sql문(dml문)";
+
+stmt.executeUpdate(sql); //sql문 실행 시점
+(int t = stmt.executeUpdate(sql) ==> t에 sql문의 영향을 받은 행의 수가 담김)
+
+
+----DQL----
+sql = "select ~ (DQL문)";
+
+ResultSet rs = stmt.excuteQuery(sql);
+
+자료형 변수명1 = rs.getInt(1);
+자료형 변수명2 = rs.getString(2);
+....
+
+while(rs.next()){
+	deptno = rs.getInt("deptno");
+	dname= rs.getString("dname");
+	loc = rs.getString(3);
+	.....
+
+}

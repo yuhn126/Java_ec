@@ -32,11 +32,11 @@ public class Car {
 		this.velocity = velocity;
 	}//equals
 
-//	public String toString() {	// to ~ 메소드 : 변환메소드, toString() : 문자열 변환 메소드
-//		//---> 객체의 상태를 표현하는 메소드()
-//		String str = "이 차는 " + this.carName + "이고 바퀴 수는 " + wheelNum + ", 속도는" + velocity + "입니다";
-//		return str;
-//	}//toString
+	public String toString() {	// to ~ 메소드 : 변환메소드, toString() : 문자열 변환 메소드
+		//---> 객체의 상태를 표현하는 메소드()
+		String str = "이 차는 " + this.carName + "이고 바퀴 수는 " + wheelNum + ", 속도는" + velocity + "입니다";
+		return str;
+	}//toString
 	
 	
 

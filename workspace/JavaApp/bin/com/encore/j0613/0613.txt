@@ -1,0 +1,137 @@
+ 2. 회원 가입
+ 	==> DB에 입력!! ---> insert
+	==> 필요한 요소?
+		- 회원정보 입력할 UI (view)
+			InputForm
+			JoinForm
+			
+			getText() 10번! ---> 변수 갯수? 10개
+			
+			
+		- DB테이블과 연결된 객체
+			PersonDAO
+			MembershipDAO
+			===> DB전담클래스(sql실행)
+				  1          		2
+				void create ( 8개 변수 혹은 1개의 변수 ){
+						3	  			--------
+							  			 VO객체
+					String sql = "insert문 values (데이터)";
+							sql에 대한 실행 요청!!
+				}
+				---> 메소드의 실행 순서? 2 - 3 - 1
+		
+		
+		- 회원 정보를 저장할 DB테이블
+			person
+			membership
+				==> 컬럼 수 ? 8개
+				
+				
+		- UI 회원 정보를 보관할(한개의 변수명으로 저장할)객체  MembershipVO
+						
+		
+		UI					MembershipDAO				DB테이블
+		
+		액션				ArrayList<VO> findAll()		  membership
+		
+		
+		
+	
+		
+=========================================================================
+5. 서비스 폼(JTable) : 회원 정보 수정
+	5-1. --> 이전에 저장된 데이터 조회!
+		- 입력 대화 상자 통해 수정 아이디 입력!
+		- MembershipDAO : find()
+						  ---> 예상sql? select ~ from ~ where id=?
+						  findById(String id) <-- 파라미터
+						  VO findById(String id) <-- 리턴
+		- 리턴 데이터를 출력할 UI ---> 수정폼(UpdateForm)
+								 ===> 뷰 이동(서비스폼 ---> 수정폼)
+						  
+	5-2. --> 이전 데이터 수정!
+		- 아래 SQL에 필요한 데이터 ==> getText() : 서비스폼으로부터
+		- MembershipDAO : modify()
+						  ---> 예상sql? update ~ set addr=? job=? .... where id=?
+						  
+						  modify(VO) <==== 매개변수
+						  boolean modify(VO) <==== 리턴
+						  
+		- 리턴에 의한 뷰 이동
+		
+=======================================================================
+ 6. 서비스폼(JTable) : 회원 삭제(탈퇴) //modify랑 비슷
+ 		- 입력 대화 상자 통해 삭제 아이디 입력!
+ 		
+ 		- MembershipDAO : remove()호출
+ 		
+ 		- 리턴에 의한 뷰 이동 : 서비스폼에 상황 메시지 출력(성공 시 JTable에 데이터 반영)
+ 		
+ 7. 서비스폼(JTable) : 이름 검색(입력된 문자를 포함하는) //findAll이랑 똑같!
+ 	- 입력 대화 상자 통해 조회 이름 입력!
+ 		- MembershipDAO : findByName()호출
+ 						  >> 예상되는 sql?		select ~ from ~
+ 						  					where name like ?
+ 						  					
+ 						  	findByName(String name) <==== 매개변수
+ 						  	
+ 	 ArrayList<MembershipVO>findByName(String name) <==== 리턴
+	
+	- 리턴에 의한 뷰 이동 : 서비스폼에 상황 메시지 출력(성공 시 JTable에 데이터 반영)	
+
+	
+ 8. 회원 정보 입력(회원가입창) : 중복 확인 (중복 아이디 체크)
+ 	
+ 	※중복 체크 할 아이디 얻기
+ 		- 회원가입폼.tf_id.getText()
+ 		- 만약 중복 확인 버튼 클릭 시 ----> 새로운 프레임 오픈 :    tf_id
+ 												    bt_confirm
+ 												    
+ 		- 회원 가입 폼의 tf_id에 keyListener를 적용해서 문자 입력될 때 마다 중복 체크해서 결과 보이기
+ 	//---------------------------------------------------------
+	- MembershipDAO : findExistId()
+						>> 예상되는 sql ? select count(*) from ~
+									    where id = ?
+									    
+					  findExistId(String id) <=== 파라미터
+				  int findExistId(String id) <=== 리턴 0, 1
+ 	//---------------------------------------------------------
+					  
+=============================================================================
+
+<기능추가>
+ 1. 입력폼(JoinForm)을 두 번 이상 호출했을 때
+        이전에 입력된 데이터가 보이지 않게 설정.
+      
+   - initForm()메소드를 추가하여 각 JTextField에 대한 tf.setText("");
+   - new JoinForm() !!     
+       ==> eventUp()메소드에서 NullPointerException발생
+             ==> eventUp_join()메소드를 새로 생성하여
+                               회원가입폼과 관련된  add~Listener()호출 들을  옮김.
+                              예) private void eventUp_join(){
+                        joinForm.tf_id.addActionListener(this);
+                        ......
+                    }
+       ==> actionPerformed()메소드에서 NullPointerException발생
+             ==> null체크하는 코드 추가
+                              예) if(ob == joinForm.tf_id)  ---> 에러발생               
+                    if(joinForm!=null && ob == joinForm.tf_id)  ---> 실행^^               
+                    
+ 2. [관리자] 로그인 했을때 회원에 대한 삭제 또는 수정 실행
+         ----> DB에 관리자 아이디,비번 입력 (admin/manager)
+    [사용자] 로그인 했을때 본인 정보에 대한 수정 또는 삭제 실행.
+   
+   JMenuItem '인증' 클릭시
+        ---> admin아이디 로그인 상태이면 '인증되었습니다!!'
+        ---> 회원들에 대한 수정 또는 삭제 실행( 수정 또는 삭제할 아이디 묻기)
+        
+        ---> admin아이디가 아니라면(gildong,lime,juwon,....)
+               '관리자 로그인이 필요합니다'
+        ---> '관리자로 로그인하시겠습니까?'  ---> '예' ---> 로그인 폼 이동
+        
+   JMenuItem '인증'되지 않은 상태
+        ---> 수정 또는 삭제 버튼 클릭 (수정 또는 삭제할 아이디 묻지 않고 
+                                                         로그인한 사용자에 대한 수정 또는 삭제 처리)  
+                                                         
+                                                          					  
