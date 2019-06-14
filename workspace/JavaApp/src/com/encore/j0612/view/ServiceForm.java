@@ -131,7 +131,7 @@ public class ServiceForm extends JFrame {
 		
 		String keyword = tf_search.getText();
 		String title = ""; //만약 라디오 버튼 중 아이디가 선택되었다면 title = "아이디";
-					  //= "아이디", "이름", "주소"
+					       //= "아이디", "이름", "주소"
 		
 		//문제! >>> 리턴에 keyword와 title을 동시에 담고 싶다!
 		//해결1) String []배열 사용
