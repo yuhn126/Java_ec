@@ -1,0 +1,50 @@
+<HTML 관련 사이트>
+
+- http://www.w3.org		            ---->    웹 표준 사이트
+- http://www.trio.co.kr                ---->    수업 테스트 
+- http://www.w3schools.com     ---->    참조 사이트
+
+ <태그>
+ 	h1 ~ h6 : 제목 태그			<h1></h1>
+ 	button  : 버튼 생성			<button></button>
+ 	br		: 줄 바꿈(break)		<br>
+ 	font	: 글자 관련			<font color="tomato" size="7" face="궁서체">글자</font>
+ 													 size : 1 ~ 7
+	b		: 글자 강조(bold)		<b>강조할 글자</b>
+	u		: 글자에 밑줄 설정		<u>글자</u>
+	i		: 글자 기울기 설정		<i>글자</i>
+	del		: 취소선				<del>취소선</del>
+	sup		: 위로 작게..!			5<sup>2</sup>
+	sub		: 아래로 작게..		log<sub>2</sub>
+	
+	
+	-- 문단 태그 : 태그 안의 문장을 하나의 문단으로 표시
+	p		: 줄 바꿈 됨, 줄 사이 간격 넓음
+	div		: 줄 바꿈 됨, 줄 사이 간격 좁음 
+	span	: 한 줄로 나옴
+	
+	hr		: 단락 구분선 			<hr>
+								<hr width="300" color="red">
+	pre		: 블럭모드, 공백(space, tab, enter)유지해 브라우저에 표현
+	img		: 이미지 첨부 태그		- src : 이미지 경로, 
+								- alt : 이미지를 위한 대체텍스트 정의
+	a(anchor) : 링크 연결			- href : 목적지 url  / href="#name" ---> "name"이라는 이름을 가진 태그로 이동
+								- target : 보여질 위치
+								- name : 'a'태그 이름 지정 
+	
+		
+	-- 리스트 태그
+	dl
+		dt	: dl의 타이틀
+		dd	: dl의 목록
+	
+	ul		: 번호X 리스트 태그		<ul type="circle, square, disc(기본타입)"></ul>
+	
+	ol		: 번호 리스트 태그		<ol type="1(기본타입), A, ..."></ol>
+	
+	li		: ol, ul의 리스트 목록 태그
+	
+	
+	
+			  			
+	

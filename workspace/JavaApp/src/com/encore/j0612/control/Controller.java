@@ -7,6 +7,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Map;
 
 import com.encore.j0612.model.dao.MembershipDAO;
 import com.encore.j0612.model.vo.MembershipVO;
@@ -237,9 +239,16 @@ public class Controller implements ActionListener {
 				}
 			}
 		} else if (ob == serviceForm.bt_sel_name) { //서비스폼 : 이름 검색 클릭 시
-			String name = serviceForm.showInput("검색할 이름 : ");
+			//서비스폼: '이름검색' 버튼 클릭시   ----> '검색' 버튼 클릭시
+			//String name = serviceForm.showInput("조회할 이름:");
+			Map<String,String> map = serviceForm.showOption();
+			//-----------------------------------------------
 			MembershipDAO dao = new MembershipDAO();
-			serviceForm.displayTable(dao.findByName(name));
+			// ArrayList<MembershipVO> list = dao.findByName(name);
+			ArrayList<MembershipVO> list = dao.findSearch(map);
+			//-----------------------------------------------
+			//조회된 결과를 뷰(JTable)에 반영
+			serviceForm.displayTable(list); 
 		} else if (ob == serviceForm.bt_exit) {
 			System.exit(0);
 		} else if (ob == joinForm.bt_reset) {

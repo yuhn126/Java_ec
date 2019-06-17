@@ -22,7 +22,7 @@ public class MembershipDAO {
 	ResultSet rs;
 
 	Properties pro;// DB접속관련 정보 저장 객체
-	
+
 	public MembershipDAO() {
 		try {
 			pro = new Properties();// 속성 담는 객체 (속성0개)
@@ -226,7 +226,7 @@ public class MembershipDAO {
 		}
 		return vo;
 
-	}//findById
+	}// findById
 
 	public boolean remove(String id) {
 		connect();
@@ -243,7 +243,7 @@ public class MembershipDAO {
 			disconnect();
 		}
 		return false;
-	}//remove
+	}// remove
 
 	public ArrayList<MembershipVO> findByName(String name) {
 		connect();
@@ -251,9 +251,9 @@ public class MembershipDAO {
 		try {
 			String sql = "select id, name, ssn1, ssn2, phone, addr, job from membership where name like ?";
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1,  "%" + name + "%");
+			stmt.setString(1, "%" + name + "%");
 			rs = stmt.executeQuery();
-			while (rs.next()) { //행 뽑기
+			while (rs.next()) { // 행 뽑기
 				MembershipVO vo = new MembershipVO();
 				vo.setId(rs.getString("id"));
 				vo.setName(rs.getString("name"));
@@ -271,8 +271,8 @@ public class MembershipDAO {
 			disconnect();
 		}
 		return list;
-	}//findByName
-	
+	}// findByName
+
 	public int findExistId(String id) {
 		connect();
 		try {
@@ -292,36 +292,53 @@ public class MembershipDAO {
 		}
 		return 0;
 	}
-	
-	//(이름패턴)회원 정보 조회
-	public ArrayList<MembershipVO> findSearch(Map<String, String> map){
+
+	// (이름패턴)회원 정보 조회
+	public ArrayList<MembershipVO> findSearch(Map<String, String> map) {
 		connect();
 		ArrayList<MembershipVO> list = new ArrayList<MembershipVO>();
-		//컬럼 : id, pass, name, ssn1, ssn2, phone, addr, job
-		
+		// 컬럼 : id, pass, name, ssn1, ssn2, phone, addr, job
+
 		String title = map.get("title");
 		String keyword = map.get("keyword");
-		
+
 		try {
-			String sql = "select id, name, ssn1, ssn2, phone, addr, job from membership";
-			
-			if(title.equals("아이디"))
+			String sql = "select id,name,ssn1,ssn2,phone,addr,job from membership ";
+
+			if (title.equals("아이디"))
 				sql += "where id like ?";
-			else if(title.equals("이름"))
+			else if (title.equals("이름"))
 				sql += "where name like ?";
-			else if(title.equals("주소"))
+			else if (title.equals("주소"))
 				sql += "where addr like ?";
-			
+
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, "%"+keyword+"%");
+			stmt.setString(1, "%" + keyword + "%");
+			rs = stmt.executeQuery();// sql문 실행요청(실행시점!!)
+			//덩어리
 			
+			while (rs.next()) {// 행얻기
+				// 열데이터 얻기
+				MembershipVO vo = new MembershipVO();
+				// 7개의 관련있는 속성데이터를 묶어주기 위해 사용.
+				vo.setId(rs.getString("id"));
+				vo.setName(rs.getString("name"));
+				vo.setSsn1(rs.getInt("ssn1"));
+				vo.setSsn2(rs.getInt("ssn2"));
+				vo.setPhone(rs.getString("phone"));
+				vo.setAddr(rs.getString("addr"));
+				vo.setJob(rs.getString("job"));
+
+				list.add(vo);
+			} // while
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			disconnect();
 		}
-		
-		return null;
+
+		return list;
 	}
-	
 
 	private void connect() {// 연결객체생성
 		try {
