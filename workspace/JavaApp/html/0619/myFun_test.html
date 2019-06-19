@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+		<title>사용자 정의 함수</title>
+		<script type="text/javascript">
+		//함수정의
+		function test(){
+			alert('함수테스트');
+		}
+		
+		function hello(){
+			alert('안녕~!!');
+		}
+		
+		function hello(name){
+			alert('씬짜오,' + name + '!');
+		}
+		
+		function hello(name,age){
+			alert('봉쥬르, ' + name + "!!\n당신의 나이는 " + age + "살 입니다.");
+		}
+		
+		function hello(name, age){
+			if(name == undefined) //인자(name, age)가 전달되지 않았다면
+				alert('안녕~!');
+			else if(age == undefined)
+				alert('신짜오, ' + name + '!!');
+			else 
+				alert('봉쥬르, ' + name + "!!\n당신의 나이는 " + age + "살입니다.");
+		}
+		</script>
+	</head>
+	
+	<!-- myFun_test.html -->
+	<body>
+		<h3>사용자 정의 함수 테스트</h3>
+		<hr>
+		<!-- on~ 시작하는 속성 : 이벤트 속성!
+			 onclick = "자바스크립트 코드"
+		-->
+		<input type="button" value="test()호출" onclick="test();"><br>
+		<button onclick="hello()">hello()호출</button><br>
+		<button onclick="hello('길동')">hello()호출</button><br>
+		<button onclick="hello('주원', 13)">hello()호출</button><br>
+	</body>
+</html>

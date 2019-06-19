@@ -39,3 +39,12 @@ workspace/JavaApp/.metadata/.plugins/org.eclipse.ui.intro/introstate
 workspace/.metadata/.plugins/org.eclipse.jdt.core/externalFilesCache
 workspace/.metadata/.plugins/org.eclipse.jdt.core/externalFilesCache
 *.pdf
+*.class
+*.class
+workspace/.metadata/.plugins/org.eclipse.jdt.core/savedIndexNames.txt
+*.class
+*.class
+*.class
+*.jpg
+*.class
+workspace/JavaApp/.tern-project

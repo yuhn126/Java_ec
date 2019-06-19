@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+		<title>Insert title here</title>
+	</head>
+	<body>
+		<h3>폼 태그 테스트(input태그)</h3>
+		<hr>
+		<h4>(단순)페이지 이동</h4>
+		<a href="../0617/hello.html">hello.html문서로 이동</a>
+		<!-- 
+			.  ==> 현재(위치) 폴더		==> 0618폴더
+			.. ==> 부모(위치) 폴더		==> html폴더
+		-->
+		<hr>
+		
+		<h4>(폼데이터전송과 함께)페이지 이동</h4>
+		<form action="../0617/hello.html"><!-- name="" method="get" enctype="multipart/from-data"
+															  "post"	  -->
+															
+			<!--
+				form태그 역할 : 1. form내의 입력 데이터를 action속성에 명시한 URL페이지에게 전달.
+								보통 url페이지에는 서버 페이지가 표시(.jsp, .php, .asp, .do등)
+							 2. 페이지 이동
+			-->
+			기본 input : <input><br><!-- 기본 type은 text -->
+			아이디 : <input type="text" value="기본아이디" name="id"><br>
+			비밀번호 : <input type="password" name="pwd"><br>
+					 <!-- 화면에 입력된 내용이 보이지 않게 할 때 사용 -->
+			주민번호 : <input type="text" size="6" maxlength="6" name="jumin1">
+					 - 
+					 <input type="password" size="7" maxlength="7"><br>
+					 <!-- size속성 : 너비 지정, maxlength : 입력 글자 제한 -->
+			좋아하는 과일 : <input type="checkbox">사과
+						<input type="checkbox">딸기
+						<input type="checkbox">바나나
+						<br>
+			당신의 강의실 : <input type="radio" name="room">1강의실
+						<input type="radio" name="room">2강의실
+						<input type="radio" name="room">3강의실
+						<input type="radio" name="room">4강의실			
+						<br>
+			나 보여?	   	<input type="hidden" value="나데이터">
+						<!-- 보이지 않게 데이터를 전달하는 용도로 사용 -->
+						<br>
+			파일 업로드    : <input type="file">
+						<br>
+						
+			운동 : <select>
+					<option>배구</option>
+					<option>축구</option>
+					<option>농구</option>			
+					<option selected>야구</option>
+				 </select>
+				 <br>
+			비고 : <textarea rows="5" cols="10">기본내용</textarea>
+				  <br>
+				
+				
+			<!-- 버튼 종류 -->
+			<input type="button" value="버튼1(type=button)">
+			<!-- 아무 반응 없는 눌려지는 버튼(JavaScript를 통해 기능정의 가능 -->
+			
+			<button type="submit">버튼2(button태그)</button>
+			<!-- button태그의 기본 type속성의 값은 submit
+				 <button type="submit"> 기본값
+				 즉, form태그 안에 사용하면 <input type="submit">과 같은 기능 가짐 
+			-->
+			
+			<input type="submit" value="버튼3(type=submit)">
+			<!-- form태그 내의 submit버튼의 경우 action속성의 URL이동 -->
+			
+			<input type="reset" value="버튼4(type=reset)">
+			<!-- form태그 내의 reset버튼의 경우 폼 내의 데이터를 초기화하는 기능 -->
+		</form>
+		
+		<!-- 
+			만약, <input>태그를 브라우저 화면에 보익만 하는 것이 목적이라는 굳이 <form>이라는
+			태그 안에 정의 할 필요 없음.
+			<input>태그를 <form>태그 안에 정의하는 이유? 
+						ㄴ> form단위로 데이터를 특정 페이지에게 전달하기 위해
+		 -->
+	</body>
+</html>

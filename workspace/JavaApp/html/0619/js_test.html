@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+		<title>자바 스크립트 테스트</title>
+	</head>
+	<body>
+		<h3>자바스크립트 테스트</h3>
+		<hr>
+		<script>
+			//프로그램 영역
+			//document.write(브라우저에 출력될 데이터, HTML태그 텍스트);
+			document.writeln("<font color=blue>자바스크립트</font> 안녕~!");
+			//기능정의객체 ==> 함수(function), 메소드
+			//writeln(데이터);	==> 데이터를 화면에 출력한 후 new line기능 실행
+			//						new line(white space)은 브라우저에 한 칸으로 출력 
+			
+			document.write('<br>안녕, 길동~!');
+			
+			//문제) 브라우저에 "여기는 남부터미널입니다."를 출력하시오.
+			//		단, '남부터미널'을 인용부호와 함께 출력하시오.
+			document.write("<br>여기는 '남부터미널'입니다.");
+			document.write("<br>여기는 \"남부터미널\"입니다.");
+			
+			//문제) 데이터 10과 3에 대한 사칙연산 결과를 화면에 출력하시오.
+			var su1 = 10;
+				su2 = 3;
+			document.write('<br>su1+su2=' + (su1+su2));
+			document.write('<br>su1-su2=' + (su1-su2));
+			document.write('<br>su1*su2=' + (su1*su2));
+			document.write('<br>su1/su2=' + (su1/su2)); //3.33333
+			document.write('<br>parsrInt(su1/su2)=' + parseInt(su1/su2)); //3
+			document.write('<br>su1%su2=' + (su1%su2));
+			document.write('<br>----------------------------------');
+			
+			var su3 = 100;
+			var su4 = 200;		//number타입
+			var su5 = "200";	//String타입
+			
+			//su3과 su4비교
+			document.write('<br>su3&lt;su4 : ' + (su3<su4));
+			document.write('<br>su3&gt;su4 : ' + (su3>su4));
+			document.write('<br>su3==su4 : ' + (su3==su4));
+			document.write('<br>su3!=su4 : ' + (su3!=su4));
+			document.write('<br>su4==su5 : ' + (su4==su5));
+			document.write('<br>su4==su5 : ' + (su4===su5));
+			document.write('<br>----------------------------------');
+			
+			var str1 = 'javascript';
+			var str2 = "JAVASCRIPT";
+			var str3 = 'javascript';
+			
+			document.write('<br>str1과 str2의 문자열 비교 : ' + (str1 == str2));
+			document.write('<br>str1과 str3의 문자열 비교 : ' + (str1 == str3));
+			
+			
+		</script>
+	</body>
+</html>

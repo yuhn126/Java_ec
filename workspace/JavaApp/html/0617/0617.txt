@@ -5,7 +5,7 @@
 - http://www.w3schools.com     ---->    참조 사이트
 
  <태그>
- 	h1 ~ h6 : 제목 태그			<h1></h1>
+ 	h1 ~ h6 : 제목(heading)		<h1></h1>
  	button  : 버튼 생성			<button></button>
  	br		: 줄 바꿈(break)		<br>
  	font	: 글자 관련			<font color="tomato" size="7" face="궁서체">글자</font>
@@ -28,7 +28,8 @@
 	pre		: 블럭모드, 공백(space, tab, enter)유지해 브라우저에 표현
 	img		: 이미지 첨부 태그		- src : 이미지 경로, 
 								- alt : 이미지를 위한 대체텍스트 정의
-	a(anchor) : 링크 연결			- href : 목적지 url  / href="#name" ---> "name"이라는 이름을 가진 태그로 이동
+								
+	★a(anchor) : 링크 연결			- href : 목적지 url  / href="#name" ---> "name"이라는 이름을 가진 태그로 이동
 								- target : 보여질 위치
 								- name : 'a'태그 이름 지정 
 	

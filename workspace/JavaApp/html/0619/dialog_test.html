@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+		<title>대화상자 테스트</title>
+	</head>
+	
+	<!-- dialog_test.html -->
+	<body>
+		<h3>대화상자 테스트</h3>
+		<hr>
+		<script>
+			//메시지 대화 상자 : alert(출력 할 데이터);
+			//alert('전\t달\n메시지');
+			
+			a=10;
+			b=20;
+			
+			document.write('a + b = ' + (a+b));
+			//alert('a + b = ' + (a+b)); //a와 b를 더한
+			
+			//확인 대화상자 : confirm(메시지) ===> 삭제 전 '확인'에서 많이 사용
+			//alert(confirm()); //확인, 취소, x버튼 ==> true, false, false
+			/*
+			if(confirm('정말 탈퇴하시겠습니까?')){
+				alert('그동안 이용해 주셔서 감사합니다.');
+			} else {
+				alert('탈퇴 취소되었습니다.');
+			}
+			*/
+			//입력 대화상자(잘 사용하지 않음)
+			//prompt('출력할 메세지'); prompt('출력할 메시지', '텍스트필드의 기본 text');
+			var fruit = prompt('좋아하는 과일은?', '');
+			
+			if(fruit != null){ //최소 또는 x를 누르지 않았을 때, 확인 버튼을 클릭했을 때
+				if(fruit == '')//빈 값 체크 : str == '' 또는 str.length == 0
+				{
+					alert('과일을 입력하세요!');
+				} else {
+					document.write('<br>당신이 좋아하는 과일은 [' + fruit + ']입니다.' );
+				}
+			}
+		</script>
+	</body>
+</html>
