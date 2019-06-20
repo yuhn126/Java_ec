@@ -1,0 +1,33 @@
+ <플러그인 설치방법>
+ 
+  1. 설치된 eclipse폴더 
+	- plugins폴더
+	- features폴더
+	==> 두 폴더안에 필요한 jar파일 복사
+   
+  2. Help메뉴
+	- Install New Software
+	- Add버튼
+	- Name설정과 Location위치
+  
+  3. Help매뉴
+ 	- Eclipse Marketplace
+ 	- 검색
+
+ <자바스크립트, jQuery 관련 플러그인 설치 - TERN 플러그인>
+  ===> 인스톨 : 2번째 방법으로! (http://marketplace.eclipse.org 에서 얻음)
+	  ===> URL입력: http://oss.opensagres.fr/tern.repository/1.2.0
+	  	   Name입력: TERN
+	  	   			----
+	  	   		이클립스 내에서 식별 할 이름
+	  	   		
+  ===> 프로젝트 적용
+  	  ===> 프로젝트명 오른쪽 마우스 클릭
+  	  		- Configure
+  	  		- Convert to Tern Project
+  	  		
+  ===> 프로젝트 Properties
+  			- JavaScript
+  			- Tern
+  			- Modules
+  				==> Browser, CKEditor, jQuery체크

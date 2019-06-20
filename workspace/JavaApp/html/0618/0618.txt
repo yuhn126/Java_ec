@@ -28,7 +28,7 @@
  	JSP(Java)  : 서버					스크립트 : JVM에서 실행!
  	
  2. JavaScript의 위치 ---> HTML문서 내에 포함되어서 실행.
- 						(HTML문서 내의 어떤 위치라도 정의 가능)
+ 					   (HTML문서 내의 어떤 위치라도 정의 가능)
  						
  	<html>
  		<head>
