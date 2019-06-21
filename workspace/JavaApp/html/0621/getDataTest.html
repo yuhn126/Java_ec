@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>데이터값 얻어오기</title>
+		<script type="text/javascript">
+			function printData(){
+				//폼 내의 데이터 얻기 ===> document.폼이름.설정한이름.value
+				//document.frm.id.value = //setValue의 의미!
+				//=document.frm.id.value  //getValue의 의미!
+				var id = document.frm.id.value;
+				var pwd = document.frm.pwd.value;
+				
+				var fruit = document.frm.fruit;
+				var selectFruit='';
+				for (var i = 0; i < fruit.length; i++) {
+					if (fruit[i].checked) {
+						selectFruit += fruit[i].value + ' ';
+					}
+				}
+				//f.apple ===> 데이터 타입? <input>엘리먼트!
+				//f.fruit ===> 데이터 타입? <input>엘리먼트들! ---> Array!
+				//f.fruit[0] ===> 데이터 타입? <input>엘리먼트들! ---> Array!
+				
+				var room = document.frm.room;
+				var selectRoom='';
+				for (var i = 0; i < room.length; i++) {
+					if (room[i].checked) {
+						selectRoom = room[i].value;
+						break;//radio는 단일 선택이기 때문
+					}
+				}
+				
+				var hid = document.frm.hid.value;
+				var file = document.frm.file.value;
+				var sports = document.frm.sports.value;
+				var etc = document.frm.etc.value;
+				alert('아이디 > '+ id + '\n비번 > ' + pwd + '\n좋아하는과일 > '+selectFruit+'\n강의실 > '+selectRoom+'\n히든 > '+hid+'\n파일 > '+file+'\n운동 > '+sports+'\n비고 > '+etc);
+			}
+		</script>
+	</head>
+	
+	<!-- getDataTest.html -->
+	<body>
+		<h3>데이터값 얻어오기</h3>
+		<hr>
+		<!-- 0618/form_test.html문서 안에 있는 form태그 복사 -->
+		<form name="frm" action="getDataTest.html">
+			아이디 : <input type="text" name="id"><br>
+			비밀번호 : <input type="password" name="pwd"><br>
+					 <!-- 화면에 입력된 내용이 보이지 않게 할 때 사용 -->
+			좋아하는 과일 : <input type="checkbox" name="fruit" value="사과">사과
+						<input type="checkbox" name="fruit" value="딸기">딸기
+						<input type="checkbox" name="fruit" value="바나나">바나나
+						<br>
+			당신의 강의실 : <input type="radio" name="room" value="1강의실">1강의실
+						<input type="radio" name="room" value="2강의실">2강의실
+						<input type="radio" name="room" value="3강의실">3강의실
+						<input type="radio" name="room" value="4강의실">4강의실			
+						<br>
+			<!-- <input type="text" name="hide" value="백설공주" disabled> -->
+ 			<!-- disable은 전달 x readonly는...어쩌구,,, -->
+			나 보여?	   	<input type="hidden" value="나데이터" name='hid'>
+						<br>
+			파일 업로드    : <input type="file" name="file">
+						<br>
+						
+			운동 : <select name="sports">
+					<option>배구</option>
+					<option value='football'>축구</option>
+					<option>농구</option>			
+					<option selected>야구</option>
+				 </select>
+				 <br>
+			비고 : <textarea rows="5" cols="10" value="나밸류" name="etc"></textarea>
+			<br>
+			<button type="button" onclick="printData()">등록</button>
+		</form>
+	</body>
+</html>

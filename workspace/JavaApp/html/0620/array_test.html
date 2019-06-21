@@ -100,6 +100,18 @@
 			}
 			
 			
+			var persons = [
+				{name:"홍길동"}, {age:13}, {job:"학생"},
+				{name:"길라임"}, {age:15}, {job:"학생"},
+				{name:"김주원"}, {age:13}, {job:"학생"},
+			];
+			
+			//persons데이터를 브라우저에 출력하시오.
+			for(var i=0; i<persons.length; i++){
+				var p = persons[i]; //p==JSON
+				document.write('<hr color=blue>이름 : ' + p.name + ", 나이 : "+ p.age);
+			}
+			
 		</script>
 	</body>
 </html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>이미지 테스트</title>
+			<script>
+				//이미지 기본 사이즈 : 가로(400), 세로(500)
+				function largeImage(){
+					//문서내의 이미지 객체 얻어오기 : document.이미지명!
+					document.img1.width *= 1.5;
+				}
+				
+				function smallImage(){
+					document.img1.width /= 1.5;
+				}
+				//-----------------------------------
+				var w = 500; //가로길이
+				//var h = 500; //세로길이
+				function changeImageSize(size){
+					//size = 'S' 또는 'M' 또는 'L'
+					var image = document.img1;
+					if(size == 'L'){
+						image.width *= 1.5;
+					}else if(size == 'S'){
+						image.width /= 1.5;
+					}else{
+						image.width = w;
+					}
+				}
+				//---------------------------------
+				function imageChange(){
+					//변수(데이터), 속성 확인!
+					//document.write(변수명 또는 속성명)
+					console.log(document.img2.src);
+					var imgSrc = document.img2.src;
+					//"file://E:/hnyu/....../won.jpg"
+					var startIdx = imgSrc.lastIndexOf('/');
+					var endIdx = imgSrc.lastIndexOf('.');
+					var fileName= imgSrc.substring(startIdx+1);//'won.jpg'
+					//var fileName = imgSrc.subString(startIdx + 1, endIdx);
+					
+					//if(document.img2.src == 'young.jpg'){
+					if(fileName == 'young.jpg'){
+						//현재 img2.src가 'young.jpg'와 같다면
+						document.img2.src='../image/won.jpg';
+					}else{
+						//if()현재 img2.src가 'won.jpg'와 같다면
+						document.img2.src='../image/young.jpg';
+					}
+				}
+					
+				/*
+					var flag = false;
+					function imageChange(){
+						if(flag)
+							document.
+					}
+				*/
+			</script>
+	</head>
+	
+	<!-- image_test.html -->
+	<body>
+		<h3>자바스크립트를 통한 이미지 조작</h3>
+		<hr>
+		<img alt="대체문자열" title="도움말" src="../image/won.jpg" width="500" name="img1">
+		<br><br>
+		
+		<!-- 
+		<button onclick="largeImage()">크게</button>
+		<button onclick="smallImage()">작게</button>
+		-->
+		
+		<button onclick="changeImageSize('L')">크게</button>
+		<button onclick="changeImageSize('S')">작게</button>
+		<button onclick="changeImageSize('M')">원래대로</button>
+		<hr>
+		<!-- 
+		문제) 원빈 이미지(img2)를 클릭하면 이나영 이미지(young.jpg)로 변경, 이나영 이미지를 클릭하면 원빈 이미지로 변경하는 함수
+			 imageChange()를 정의하시오.
+		 -->
+		<img name="img2" src="../image/won.jpg" width="500" onclick="imageChange()">
+		
+		
+		
+		
+		<div id="hana"></div>
+		<script type="text/javascript">
+			document.getElementById("hana").style.display = "none";
+		</script>
+		
+		
+		
+	</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>문자열 테스트</title>
+	</head>
+	<body>
+		<h3>문자열 테스트</h3>
+		<hr>
+		<script type="text/javascript">
+			var str = 'JavaScript~!!'; //자바스크립트 문자열(String)은 '', ""
+			//인덱스         0123456789012
+			
+			document.write('str문자열길이 : '+str.length);
+			//주의 : length뒤에 괄호() 사용X
+			document.write('<br>S의 인덱스 : ' + str.indexOf('S'));
+			document.write('<br>s의 인덱스 : ' + str.indexOf('s'));
+			document.write('<br>첫번째 a의 인덱스 : ' + str.indexOf('a'));
+			var idx = str.indexOf('a');
+			document.write('<br>두번째 a의 인덱스 : ' + str.indexOf('a', idx+1));
+			document.write('<br>마지막 a의 인덱스 : ' + str.lastIndexOf('a'));
+			
+			//str의 문자를 각각 출력
+			for(i=0; i<str.length; i++){
+				//str문자열의 인덱스 표현
+				document.write('<br>' + i + " : " + str.charAt(i));
+			}
+			document.write('<hr>');
+			//var str = 'JavaScript~!!';
+			//str문자열에서 'Script'뽑아오기
+			document.write(str.substr(4,6));
+			document.write('<br>str.substr(str.indexOf(\'S\'),6)) : ' + str.substr(str.indexOf('S'),6));
+			document.write('<br>str.substr(str.indexOf(\'S\'),str.indexOf("~"))) : ' + str.substr(str.indexOf('S'),str.indexOf("~")));
+			
+			var str2 = '  script'; //'script'앞에 두 개의 공백(space)존재
+			//문제)str2의 공백을 제거하시오!
+			document.write('<br>str2의 문자열 길이 : ' + str2.length);
+			//str2 = str2.trim();
+			//str2 = str2.replace(' ', '');
+			//str2.replace(pattern, replacement);
+			str2 = str2.replace(/ /g, ''); // g==>grobal match
+			//         .replace('\t', '');
+			//         .replace('\n', '');
+			document.write('<br>공백 제거 후 str2의 문자열 길이 : ' + str2.length);
+			
+			var str3 = '010-1234-5678';
+			//문제) '-'을 구분자로 해서 010, 1234, 5678을 각각 출력하시오.
+			
+			var arr = str3.split('-'); //arr : 문자열배열!
+			/*
+				<개선된 for문>
+				- for문에서 표현하는 인덱스가 필요없고 단지 데이터만 필요할 때 사용
+				- 자바)
+					for(변수 선언 : 배열명){}
+					for(String str : arr){
+						System.out.println(str)
+					}
+					
+				- 자바스크립트)
+					for(변수명 in 배열명){}
+					for(str in arr){
+						document.write(str);
+					}
+			*/
+			document.write('<hr>');
+			for (i in arr) {
+				document.write('<br>' + arr[i]);
+			}
+			
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
