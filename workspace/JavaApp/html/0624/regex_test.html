@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>정규식 테스트</title>
+	</head>
+	
+	<!-- regex_test.html -->
+	<body>
+		<h3>RegExp테스트</h3>
+		<script type="text/javascript">
+			//RegularExpression : 정규식(정규표현식)
+			var str = '   scr ipt  '; //맨 앞 공백 3칸, 뒤에 공백 2칸
+			//[미션]str의 앞뒤 공백(WhiteSpace)을 제거하기
+			document.write('str의 문자열 길이 = ' + str.length);
+			document.write('<br>str의 문자열 길이(trim) = ' + str.trim().length);
+			
+			//str.replace(pattern, replacement)
+			//pattern		==> (변경 할 old문자열)String 또는 RegExp
+			//replacement	==> (대체 할 new문자열)String
+			document.write('<br>str의 문자열 길이(replace) = ' + str.replace(/ /g, '').length);
+			
+			document.write('<br>str의 문자열 길이(replace) = ' + str.replace(/(^\s+)|(\s+$)/g, '').length);	
+			//																^ : 문장 시작
+			//																$ : 문장 끝
+			
+			//패턴 검사! (데이터 검사 - 문자, 숫자, 길이)
+			//횟수관련부호 ==> ? : (0,1)	* : (0 ~ 무한대)		+ : (1 ~ 무한대)
+			var a = ' '; var b = []; var c = {}; var d = /표현식/; var e = new RegExp("패턴");
+			//자료형? a는 String, b는 배열, c는 JSON, d,e는 RegExp객체
+					
+			var str2 = 'abcA';
+			//str2 영문자 검사!
+			var regExp1 = /^[a-zA-Z]+$/;
+			//var regExp1 = /패턴/플래그;
+			//패턴내의 '^' : 문장의 시작,  '$' : 문장의 끝
+			//참고) [^abc] : a 또는 b 또는 c 문자를 제외하고!
+			//	   ^[abc] : a 또는 b 또는 c 문자로 시작하는~
+			
+			document.write('<br>영문자 검사 : ' + regExp1.test(str2));
+			//str2 문자열을 regExp1패턴에 검사해서 일치하면 true리턴
+			
+			var str3 = '12345';
+			//str3 숫자 검사!
+			var regExp2 = new RegExp('^[\\d]+$'); //==> /^[\d]+$
+			
+			document.write('<br>숫자 검사 : ' + regExp2.test(str3));
+			
+			var jumin1='960302';
+			//주민번호 검사 ---> 숫자 조합, 자리수
+			
+			var juminPattern1 = /^[\d]{3,6}$/;
+			//{m,n} : m : 최소값, n : 최대값
+			//{3,6} : 횟수 3 이상 6 이하 {6} : 6회  {3,} : 3회 이상
+			document.write('<br>주민번호 앞자리 검사 : ' + juminPattern1.test(jumin1));
+			
+			//문제)아이디를 검사할 수 있는 패턴 idPattern을 정의하시오.
+			//idPattern ==> RegExp객체!
+			//아이디조건 ==> (8~12자리, 영문자와 숫자조합, 영문자 시작)
+			var id = 'gildong1004';
+			//var idPattern1 = /^[a-zA-Z0-9]{8,12}$/;
+			var idPattern = new RegExp('^[a-zA-Z]{1}[a-zA-Z0-9]{7,11}$');
+			document.write('<br>아이디 검사 : ' + idPattern.test(id));
+			
+			//문제) 비밀번호 검사(5자리,영문자와 숫자와 특수문자(!@#$*))
+			//반드시 각각 1개 이상 ==> passPattern
+			//JavaScript탐색 : 전방탐색(lookahead) ==> '?=' 뒤에 일치할 패턴을 입력
+			// '.' : 문자 한 개(any character) 
+			//var passPattern = new RegExp('^[a-zA-Z\\d!@#$*]{5}$');
+			var passPattern=/^(?=.+[a-zA-Z])(?=.+[\d])(?=.+[!@#$*])[a-zA-Z\d!@#$*].{5}$/;
+			var pass='98#a2';
+			document.write('<br>비밀번호 검사 : ' + passPattern.test(pass));
+			
+			/*
+				<정규표현식 참조사이트>
+				https://regexr.com
+				https://rubular.com
+			*/
+			
+		</script>
+		
+	</body>
+	
+</html>

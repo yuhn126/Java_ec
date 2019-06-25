@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>오늘의 날짜 출력</title>
+	</head>
+	
+	<!-- today_print.html -->
+	<body onload="">
+		<h3>오늘의 날짜 출력</h3>
+		<hr>
+		<!-- 
+			브라우저 화면에 현재시각 '2019년 6월 24일 10시 3분 30초 (월요일)'을 출력하시오.
+			==> koxo.com에서 Data()객체 참조
+		 -->
+		 <script type="text/javascript">
+		 	today = new Date();
+		 	var weekstr='일월화수목금토';
+		 	document.write((today.getYear()+1900) + "년 " + (today.getMonth()+1) + "월 " + today.getDate() + "일 " + today.getHours() + "시 " + 
+		 					today.getMinutes() + "분 " + today.getSeconds() + "초 (" + weekstr.substr(today.getDay(), 1) + "요일)");
+		 	
+		 	document.write('<br><br>');
+		 	
+		 	var dayStr = ['일', '월', '화', '수', '목', '금', '토'];
+		 	var year = today.getFullYear();
+		 	var month = today.getMonth();
+		 	var date = today.getDate();
+		 	var h = today.getHours();
+		 	var m = today.getMinutes();
+		 	var s = today.getSeconds();
+		 	var day = today.getDay();
+		 	
+		 	/*
+	          document.write(year+'년 '+month+'월 '+date+'일 '+
+	        		  h+'시 '+m+'분 '+s+'초 ('+dayStr[day]+'요일)');
+	          
+	          document.write('<br>'+year+'년 '+month+'월 '+date+'일 '+
+	        		  h+'시 '+m+'분 '+s+'초 ('+dayStr.substr(day,1)+'요일)');
+	          
+	          document.write('<br>'+year+'년 '+month+'월 '+date+'일 '+
+	        		  h+'시 '+m+'분 '+s+'초 ('+dayStr.charAt(day)+'요일)');
+	        */
+		 </script>
+	</body>
+</html>

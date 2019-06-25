@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>innerHTML테스트</title>
+		<script type="text/javascript">
+			function changP(){
+				//할 일 : <p>태그와 </p>태그 사이의 값(inner)을 변경
+				//		---> 1. <p>엘리먼트 객체를 자바스크립트영역으로 얻어와야 함.
+				//		---> 2. 엘리먼트객체는 innerHTML속성을 사용 할 수 있다. ★
+				var p1 = document.getElementById("p1");
+				//p1 자료형? Element! ==> innerHTML속성 사용 가능
+				alert('p1.innerHTML : ' + p1.innerHTML);
+				p1.innerHTML = '<font size=10 color=red>즐거운 화요일~!!</font>';
+				//p1.innerText = '<font size=10 color=red>즐거운 화요일~!!</font>';
+			}
+			var i = 0;
+			
+			//var htmlTxt = '';
+			var names = ['길동','라임', '주원', '유신'];
+			var idx=0;
+			function addButton(){
+				var div = document.getElementById("div");
+				/* if(i == 0){
+					div.innerHTML += '<button>길동</button>';
+					i++;
+				} else if (i == 1) {
+					div.innerHTML += '<button>라임</button>';
+					i++;
+				} else if (i == 2){
+					div.innerHTML += '<button>주원</button>';
+					i++;
+				} else if (i == 3){
+					div.innerHTML += '<button>유신</button>';
+					i = 0;
+				} */
+				
+				//htmlTxt += '<button>'+names[idx]+'</button>';
+				//div.innerHTML = htmlTxt;
+				div.innerHTML += '<button>'+names[idx]+'</button>';
+				idx++;
+				if(idx == 4){idx=0;}
+			}
+			
+			function addButton2(){
+				var div = document.getElementById('div');
+				var b = document.createElement("Button"); //<Button></Button>
+				// b 자료형?	---> Element객체!
+				b.innerHTML='번쩍길동';
+				div.appendChild(b); //<부모><자식></자식></부모>
+			}
+			
+			function removeButtons(){
+				document.getElementById('div').innerHTML = '';
+			}
+		</script>
+	</head>
+	<!-- innerHTML.html -->
+	<body>
+		<h3>innerHTML테스트</h3>
+		<hr>
+		<p id='p1'><strong>자바스크립트</strong></p>
+		<button onclick="changP()">클릭!</button>
+		<!-- 
+			문제) '클릭!'을 눌렀을때 <p>태그의 값을 '<font size=10 color=red>즐거운 화요일~!!</font>로 변경
+		-->
+		<br>
+		<hr>
+		<button onclick="addButton()">버튼생성</button>
+		<button onclick="addButton2()">버튼생성2</button>
+		<button onclick="removeButtons()">전체버튼지우기</button>
+		<div id="div"></div>
+		<!-- 
+			문제)'버튼생성'을 눌렀을 때 <div>태그안에 새로운 버튼을 생성하시오.
+				==>버튼 text는 ['길동', '라임', '주원', '유신']이 번갈아 가면서 생성.
+		 -->
+	</body>
+</html>

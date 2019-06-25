@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>자바스크립트 페이지 이동</title>
+		<style type="text/css">
+			a:link {color: yellow;}
+			a:visited {color: green;}
+		</style>
+		<script type="text/javascript">
+			function welcome1(){
+				//현재 문서의 위치 정보?
+				alert('현재문서위치 : ' + document.location); //document.location     //getLocation
+				
+				//document.location		//setLocation
+				document.location = '../0624/welcome.html';
+			}
+			
+			function welcome2(){
+				//자바스크립트 페이지 이동 시 주로 많이 사용
+				alert('현재위치(링크) : ' + location.href);
+				location.href = '../0624/welcome.html';
+			}
+			
+			function welcome3(){
+				alert('현재위치(링크) : ' + location.replace()                                                                                                                     );
+				location.replace('../0624/welcome.html');
+			}
+			
+			var flag = true;
+			function changeTitle(){
+				if(flag)document.title='즐거운 화요일........';
+				else document.title='자바스크립트 페이지 이동';
+				
+				flag = !flag;
+			}
+			
+			document.linkColor='yellow';
+		</script>
+		
+	</head>
+	
+	<!-- change_page.html -->
+	<body>
+		<h3>자바스크립트 페이지 이동</h3>
+		<hr>
+		<a href="../0624/welcome.html">welcome.html이동</a><br>
+		<form action="../0624/welcome.html">
+			<input type="text" name="username">
+			<button type="submit">welcome.html이동(폼데이터포함)</button>
+		</form>
+		<hr>
+		<h4>JavaScript페이지이동</h4>
+		<!-- form태그의 button클릭 시 함수를 호출하고 함수 내에서 document.폼이름.submit();
+				==> 폼 이름에 해당하는 form태그의 action속성의 값(URL)으로 페이지 이동. -->
+		<button onclick="welcome1()">welcome.html이동</button><br>
+		<button onclick="welcome2()">welcome.html이동</button><br>
+		<button onclick="welcome3()">welcome.html이동</button><br>
+		<button onclick="changeTitle()">제목바꾸기(document사용)</button>
+	</body>
+</html>

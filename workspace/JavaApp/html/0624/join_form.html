@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>회원 가입</title>
+	<script>
+		/*
+			'등록'버튼 클릭 시 validCheck()호출 ----> 유효성 검사
+			
+			1. 아이디, 비번, 비번확인, 이름, 주민번호, 주소에 대한 빈 값 체크
+				----> 빈값일때 입력메시지(alert)출력
+			2. 비번과 비번확인 일치 체크
+			3. 주민번호의 숫자값과 자릿수 체크
+			4. 직업을 선택했는지 체크
+			
+			===> 1 ~ 4 체크가 잘 되었을 때 welcome.html페이지로 이동!
+			===> <form>태그의 속성 action에 명시된 url이동!  ---> submit()함수 사용.
+			===> document.form명.submit();
+		
+		*/
+		
+		function validCheck(){
+			//폼 태그 내의 데이터 가져오기 : document.폼이름.지정이름.value
+			var f = document.joinForm;
+			//var id = document.joinForm.id.value;
+			var id = f.id.value;
+			var pwd1 = f.pwd1.value;
+			var pwd2 = f.pwd2.value;
+			var name = f.name.value;
+			var ssn1 = f.ssn1.value;
+			var ssn2 = f.ssn2.value;
+			var addr = f.addr.value;
+			
+			if(id === ''){
+				alert("아이디를 입력하세요!");
+				f.id.focus();
+			} else if(pwd1 === ''){
+				alert("비밀번호를 입력하세요!");
+				f.pwd1.focus();
+			} else if(pwd2 === ''){
+				alert("비번확인을 입력하세요!");
+				f.pwd2.focus();
+			} else if(name === ''){
+				alert("이름을 입력하세요!");
+				f.name.focus();
+			} else if(ssn1 === '' || ssn1 === ''){
+				alert("주민번호를 입력하세요!");
+				f.ssn1.focus();
+			} else if(addr === ''){
+				alert("주소를 입력하세요!");
+				f.addr.focus();
+			} else if(pwd1 !== pwd2){
+				alert("비밀번호와 비번확인이 일치하지 않습니다.");
+				f.pwd1.value='';
+				f.pwd2.value='';
+				f.pwd1.focus();
+			} else if(isNaN(ssn1) || isNaN(ssn2) || ssn1.length != 6 || ssn2.length != 7){
+				alert("주민번호를 정확히 입력해주세요!");
+				f.ssn1.value='';
+				f.ssn2.value='';
+				f.ssn1.focus();
+			} else if (f.job.value == '==선택=='){
+				alert('직업선택!');
+				f.job.focus();
+			} else {
+				f.submit(); //form
+			}
+			
+		}
+	
+	</script>
+</head>
+<body>
+	<center>
+	<h3>회원 가입 폼</h3>
+	<form name="joinForm" action="welcome.html">
+		<table cellpadding="5">
+			<tr>
+				<td>I&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D : </td>
+				<td><input type="text" name="id"> <input type="button" value="중복확인" tabindex="-1" ></td>
+				<!-- 
+					<input>태그의 속성
+					readonly ==> 읽기 전용(쓰기 금지)
+				 -->
+			</tr>
+			<tr>
+				<td>비밀&nbsp;번호 : </td>
+				<td><input type="password" name="pwd1"></td>
+			</tr>
+			<tr>
+				<td>비번&nbsp;확인 : </td>
+				<td><input type="password" name="pwd2"></td>
+			</tr>
+			<tr>
+				<td>이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름 : </td>
+				<td><input type="text" name="name"></td>
+			</tr>
+			<tr>
+				<td>주민&nbsp;번호 : </td>
+				<td><input type="text" name="ssn1" size="6" maxlength="6"> - <input type="password" name="ssn2" size="7" maxlength="7"></td>
+			</tr>
+			<tr>
+				<td>전화&nbsp;번호 : </td>
+				<td><input type="text" name="tel1" size="4"> - <input type="text" name="tel2" size="4"> - <input type="text" name="tel3" size="4"></td>
+			</tr>
+			<tr>
+				<td>주&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소 : </td>
+				<td><input type="text" name="addr" size="30"></td>
+			</tr>
+			<tr rowspan>
+				<td>직&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;업 : </td>
+				<td><select style="width: 117px;" name="job">
+					<option selected>==선택==</option>
+					<option>학생</option>
+					<option>공무원</option>
+					<option>언론/출판</option>
+					<option>군인/경찰</option>
+					<option>일반사무직</option>
+					<option>영업직</option>
+					<option>기술/전문</option>
+					<option>보건/의료</option>
+					<option>자영업</option>
+					<option>주부</option>
+					<option>기타</option>
+				</select></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+				<!-- 
+					<button type="submit"
+					
+				 -->
+				<button type="button" onclick="validCheck()">등록</button>
+		   		<button type="reset">취소</button>
+				</tr>
+		</table>
+	</form>
+</body>
+</html>
