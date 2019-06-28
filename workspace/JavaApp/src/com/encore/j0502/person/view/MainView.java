@@ -28,7 +28,7 @@ public class MainView extends JFrame implements Runnable {
 		bt_upd = new JButton("수정");
 		bt_del = new JButton("삭제");
 		bt_ex = new JButton("종료");
-		
+		 
 		time = new JLabel();
 		
 		bt_pn = new JPanel();

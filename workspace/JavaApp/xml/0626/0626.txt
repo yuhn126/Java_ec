@@ -1,0 +1,203 @@
+ <XML> 
+ 	==> (표준)(text) 데이터
+ 	==> 데이터를 담는 문서
+ 	==> XML에서의 데이터 표현?
+ 		1. 태그 안
+ 			<시작태그>내용</끝태그>
+ 					 ---
+ 					Content <--- 데이터
+ 					
+ 			<사람나이>23</사람나이>
+ 		===> 23 : 데이터
+ 		===> 태그명 : 데이터에 대한 서술, 설명
+ 		
+ 		
+ 		2. 속성 안
+ 			<시작태그 속성명='속성값'>
+ 			<빈태그 속성명="속성값"/>
+ 			
+ 			<사람 이름="나길동">
+ 				===> 나길동 : 데이터
+ 				===> 속성명 : 데이터에 대한 서술, 설명
+ 				
+=======================================================
+ DTD(Document Type Definition)
+ 	 -------- ---- ----------
+ 	  XML문서  태그,속성  정의
+ 	  
+	1. 태그(엘리먼트)정의
+		
+		<!ELEMENT 태그명 (자식요소에 대한 표현)>
+						---------------
+						 Content Model
+		
+		<!ELEMENT person (x)>
+		==> <person>
+				<x/>
+			</person>	---> 유효한(valid) 문서
+			
+			<person>
+				<x/>
+				<x/>
+			</person>	---> 유효하지 못한(not valid)문서
+		
+		<!ELEMENT person (x|y)>
+		==> x
+		==> y
+		
+		<!ELEMENT person (x,y)>
+		==> x	y
+		
+		<!ELEMENT person (x,y?)>
+		==> x
+		==> x	y
+		
+		<!ELEMENT person (x,y)?>
+		==> (빈 자식)
+		==> x	y
+		
+		<!ELEMENT person (x,y,z)>
+		==> x	y	z
+		
+		<!ELEMENT person (x,(y|z))>
+		==> x	y
+		==> x	z 
+				
+		<!ELEMENT person (x,(y|z)*)>
+		==> x
+		==> x	y
+		==> x	z
+		==> x	y	y	y	y	y
+		==> x	z	z	z	z	z
+		==> x	z	y	z	z	y	y	z
+		
+		<!ELEMENT person (#PCDATA)>
+		==> <person>
+				안녕하세요
+				사람~!
+			</person>
+
+			
+			
+	2. 속성 정의
+		<!ATTRIBUTE 속성명 자료형>
+			==> (X) : 속성은 엘리먼트에 종속적이기 때문에 엘리먼트와 함께 정의를 해야함.
+			
+		<!ATTLIST 태그명
+				속성명1 속성자료형 추가특성
+				속성명2 속성자료형 추가특성
+				속성명3 속성자료형 추가특성>
+				
+		<!ATTLIST my car
+				  is_blue		(yes|no)	"yes"
+				  				--------
+				  				열거형 데이터(속성값이 정해진 경우 사용)
+				  				
+				  brandname		ID			#REQUIRED
+				  				---
+				  				제한적인 텍스트 (예: 숫자로 시작하지 않는 텍스트)
+				  				
+				  description	CDATA		#IMPLIED 
+				  				-----
+				  				텍스트데이터
+				  				
+				  abs			(yes|no)	#FIXED		"yes">
+				  
+		
+		#REQUIED : 필수요소		 
+		#IMPLIED : 선택요소		 
+		#FIXED	 : 고정값 표현		 
+
+		<mycar is_blue="yes"			==> (X) 열거형 데이터만 값으로 설정
+			   brandname="5삼성"			==> (X) ID데이터는 숫자 시작x
+			   decription="좋아요"
+			   abs="no"					==> (X) 고정값 "yes"가 아니기 떄문.
+			   />
+			   
+		===> 자바 프로그램 연동 : SAXParseException 발생
+
+====================================================================================
+
+ [1]  document		::=  prolog element Misc*
+	 XML문서의 구성	==>   선언       엘리먼트    기타*
+					==>	  선언과 엘리먼트가 반드시 존재해야 함.
+					
+ [22] prolog   ::= XMLDecl?  MISC*  (doctypedecl Misc*)?
+ 				       생략가능      생략가능				 생략가능
+					
+ [23] XMLDecl  ::= '<?xml' VersionInfo EncodingDecl? SDDecl? S? '?>'
+ 				   '<?xml'	version='1.0'		    			'?>'
+ 					  시작										  끝 
+ 					  	     버전은 생략 불가  인코딩과 SD선언은 생략 가능
+
+	전체 정의 시 순서 주의
+	===> <?xml version="1.0" encoding="utf-8"?> (O)
+	===> <?xml encoding="utf-8" ?> 				(X)
+	===> <?xml version="1.0" encoding="utf-8"?> (O)
+	
+ [3]	s	::= (#x20 | #x9 | #xD | #xA)+
+ 				-----	---	  ---	---
+ 				space	tab	  CR	LF
+ 				
+ [15]	Comment  ::=   '<!--' ((Char - '-') | ('-' (Char - '-')))* '-->'
+ 							  -------------
+ 						<!--	   설명문								-->
+ 					
+ 		<!-- comment    -->	 (O)
+ 		<!-- com-ment   -->	 (O)
+ 		<!-- com-me-nt  -->	 (O)
+ 		<!-- com--ment  -->	 (X)
+ 		<!-- com- -ment -->	 (O)
+ 		
+ 		
+ 	※ CDSect란? Character Data Section!! 문자 데이터를 표현하는 영역!
+ 		<![CDATA[			★			]]>
+ 		---------						---
+ 		     시작							 끝
+ 		     
+ 		     
+	<mapper>
+		<select id="selemp"><![CDATA[
+			select empno, ename, sal
+			from emp
+			where sal < 2000
+		]]></select>
+	</mapper>
+	
+ 
+ [14] 	CharData	::=	[^<&]* - ([^<&]* ']]>' [^<&]*)
+ 		제외문자 ==> '<', '&', ']]>'
+ 				  ---------------
+ 				  왜? 예약된 문자이기 때문
+ 				'<'   : 시작태그에 예약
+ 				'&'   : XML 엔티티에 예약
+ 				']]>' : CDATA섹션에 예약
+ 				
+	
+	
+	
+=======================================================================================
+ <XML Schema>
+ 	---> DTD같은 개념(XML문서의 형식 : 문서 내에 어떤 태그와 속성을 사용할 것인지 정의)
+ 	---> 업그레이드된 DTD
+ 			---> 여러 자료형을 정의할 수 있다. (사용자 정의 자료형)
+ 			---> 태그의 출현 횟수를 정의하는 것이 편리
+ 		예) DTD통해 <root>태그내에 자식태그<a>가 최소 1번, 최대 5번 출현하는 것을 정의
+ 		<!ELEMENT root (a, a?, a?, a?, a?)>
+ 		==> Schema에서는 속성 minOccurs = "1" maxOccurs="5"
+ 	
+ 	---> 확장자.xsd사용
+ 	---> XML문법 사용
+ 	---> 작성법) 1. simpleType : 태그 내의 자료형(숫자, 문자, 
+ 			   2. complexType : 
+ 	
+ 			
+ 			
+ 			
+ 			
+ 			
+ 				
+	
+	
+	
+

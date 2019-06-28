@@ -29,7 +29,7 @@ public class JoinForm extends JFrame{
 		tf_ssn1 = new JTextField();
 		tf_phone1 = new JTextField();
 		tf_phone2 = new JTextField();
-		tf_phone3 = new JTextField();
+		tf_phone3 = new JTextField(); 
 		tf_addr = new JTextField();
 		la_checkid = new JLabel();
 

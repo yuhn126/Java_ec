@@ -47,7 +47,7 @@ public class ServiceForm extends JFrame {
 	// 둘째 패널에 위치할 컴포넌트 ==> 라벨, 텍스트필드
 	JTextField tf_search;
 	JPanel panel_first, panel_second, panel_option;
-
+ 
 	public ServiceForm() {
 		setTitle("Display Data");
 
