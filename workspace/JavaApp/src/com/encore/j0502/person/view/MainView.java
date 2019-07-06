@@ -111,7 +111,7 @@ public class MainView extends JFrame implements Runnable {
 
 	
 	
-	//벡터 안에 저장된 Person정보를 JTable에 출력하는 기능.
+	//벡터 안에 저장된 Peryson정보를 JTable에 출력하는 기능.
 	public void displayTable(Vector<Person> personv) {	
 		dtm.setRowCount(0);//새로 addRow되는 행 데이터를 0 인덱스부터 출력하겠음.
 						   //이전에 JTable에 출력된 내용을 clear하는 역할!

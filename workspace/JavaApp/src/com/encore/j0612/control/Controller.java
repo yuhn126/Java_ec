@@ -10,7 +10,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Map;
 
-import com.encore.j0612.model.dao.MembershipDAO;
+import com.encore.j0612.model.dao.MembershipDAO2;
 import com.encore.j0612.model.vo.MembershipVO;
 import com.encore.j0612.view.JoinForm;
 import com.encore.j0612.view.LoginForm;
@@ -43,7 +43,7 @@ public class Controller implements ActionListener {
 		joinForm.tf_id.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				MembershipDAO dao = new MembershipDAO();
+				MembershipDAO2 dao = new MembershipDAO2();
 				int i = dao.findExistId(joinForm.tf_id.getText());
 				if (i == 0) {
 					joinForm.la_checkid.setText("사용 가능 ID");
@@ -112,7 +112,7 @@ public class Controller implements ActionListener {
 			 */
 
 			// 3. 모델호출
-			MembershipDAO dao = new MembershipDAO();
+			MembershipDAO2 dao = new MembershipDAO2();
 			if (dao.findLogin(id, pass)) {
 				loginForm.showMsg("로그인 성공^O^*");
 				loginForm.initText();
@@ -153,8 +153,8 @@ public class Controller implements ActionListener {
 			MembershipVO vo = new MembershipVO(id, pass, name, Integer.parseInt(ssn1), Integer.parseInt(ssn2), phone,
 					addr, job);
 
-			MembershipDAO dao = new MembershipDAO();
-
+			MembershipDAO2 dao = new MembershipDAO2();
+			
 			// ★
 			if (dao.create(vo)) { // DB입력이 성공했다면(회원가입성공)
 				joinForm.showMsg("회원가입성공!");
@@ -168,7 +168,7 @@ public class Controller implements ActionListener {
 			loginForm.setVisible(false);
 			joinForm.setVisible(true);
 		} else if (ob == serviceForm.bt_sel_all) {
-			MembershipDAO dao = new MembershipDAO();
+			MembershipDAO2 dao = new MembershipDAO2();
 			serviceForm.displayTable(dao.findAll());
 		} else if (ob == serviceForm.bt_up) {
 			String id;
@@ -181,7 +181,7 @@ public class Controller implements ActionListener {
 				id = serviceForm.loginID;
 			}
 			//----------------------------------------------
-			MembershipDAO dao = new MembershipDAO();
+			MembershipDAO2 dao = new MembershipDAO2();
 			MembershipVO vo = dao.findById(id);
 			//----------------------------------------------
 			if(vo == null) {
@@ -206,7 +206,7 @@ public class Controller implements ActionListener {
 			vo.setAddr(updateForm.tf_addr.getText());
 			vo.setJob(updateForm.cb_job.getSelectedItem().toString());
 			//-------------------------------------------------------------
-			MembershipDAO dao = new MembershipDAO();
+			MembershipDAO2 dao = new MembershipDAO2();
 			if(dao.modify(vo)) {
 				serviceForm.displayTable(dao.findAll());
 				updateForm.setVisible(false);
@@ -229,7 +229,7 @@ public class Controller implements ActionListener {
 			}
 			
 			
-			MembershipDAO dao = new MembershipDAO();
+			MembershipDAO2 dao = new MembershipDAO2();
 			if(serviceForm.showConfirm("정말 삭제하시겠습니까?") == 0) {
 				if(dao.remove(id)) {
 					serviceForm.showMsg("삭제 성공");
@@ -243,7 +243,7 @@ public class Controller implements ActionListener {
 			//String name = serviceForm.showInput("조회할 이름:");
 			Map<String,String> map = serviceForm.showOption();
 			//-----------------------------------------------
-			MembershipDAO dao = new MembershipDAO();
+			MembershipDAO2 dao = new MembershipDAO2();
 			// ArrayList<MembershipVO> list = dao.findByName(name);
 			ArrayList<MembershipVO> list = dao.findSearch(map);
 			//-----------------------------------------------
@@ -254,11 +254,11 @@ public class Controller implements ActionListener {
 		} else if (ob == joinForm.bt_reset) {
 			joinForm.initText();
 		} else if(ob == updateForm.bt_reset) {
-			MembershipDAO dao = new MembershipDAO();
+			MembershipDAO2 dao = new MembershipDAO2();
 			MembershipVO vo = dao.findById(serviceForm.loginID);
 			updateForm.initText(vo);
 		} else if(ob == serviceForm.item_confirm) {
-			MembershipDAO dao = new MembershipDAO();
+			MembershipDAO2 dao = new MembershipDAO2();
 			System.out.println(serviceForm.loginID);
 			if(serviceForm.loginID.equals("admin")) {
 				serviceForm.showMsg("인증되었습니다.");

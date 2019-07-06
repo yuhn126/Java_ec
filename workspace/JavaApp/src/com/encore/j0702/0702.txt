@@ -1,0 +1,160 @@
+ <iBatis>
+  - 아이바티스란? sqlMapper프레임워크(JDBC프레임워크)
+  			   ---
+  			   sql문 작성시 필요한 JDBC코드를 생성해 주겠다!
+  			   
+  - 사용법)
+	1. sql문을 XML문서안에 작성.
+		- 각 엘리먼트를 id속성으로 구분
+		- id값은 절대 중복 불가
+		예)	<sqlMap>
+				<insert id="create">
+						==> 만약 DAO클래스와 매핑을 한다면 id속성값에는 메소드명과 일치시키는 것이 편리
+					insert into 테이블명 ~
+				</insert>
+				
+				<delete id='remove'>
+					delete from 테이블명 where no = ?
+				</delete>
+				
+				<update id='modify'>
+					update 테이블 set~
+				</update>
+				
+				<select id="find" parameterClass="자료형" resultClass="자료형">
+					select 컬럼 from 테이블명 
+					where no=?
+				</select>
+			</sqlMap>
+			
+	2. 호출(자바 코드 안에서)
+		- 호출에 필요한 객체 : SqlMapClient
+		- SqlMapClient smc;
+	 	  <insert>태그 : smc.insert(id);
+	 	  <delete>태그 : smc.delete(id);
+	 	  <update>태그 : smc.update(id);
+	 	  <select>태그 : smc.queryForObject(id);	//조회 결과가 최대 한 행
+	 	  			    smc.queryForList(id);	//조회 결과가 최소 두 개 행 이상
+	 	  			    
+	 	- 정리 :
+	 		smc.메소드명(아이디);
+	 		smc.메소드명(아이디, 전달데이터);
+	 						 ---------
+	 						 XML에 정의된 엘리먼트에 parameterClass에 전달
+	 						 
+	 	- 정리2 :
+	 		<insert>, <delete>, <update> ==> 속성 parameterClass만 정의
+	 		<select> ==> 속성 parameterClass, resultClass 정의
+	 										------------
+	 										조회 결과를 담는 클래스
+	 										
+	 	※주의 select엘리먼트 정의시에는 resultClass를 반드시 정의해야함.	
+	 		==>정의 안하면  select문 결과가 null!
+	 		
+	 		
+  - 호출사례)
+  
+	 1. <select id='search' parameterClass="int" resultClass='String'>
+	 		select ename
+	 		from   emp
+	 		where  empno=#empno#(파라미터)
+	 					 -------
+	 			==>만약 전달 데이터가 기본자료형 또는 String과 같은 한 개의 데이터람ㄴ
+	 			   ##안에 아무 이름이나 써도 됩니다.
+	 		where  empno=#value#
+	 	</select>
+	 	
+		 호출)
+		 	String ename = (String)smc.queryForObject('search', 7654);
+	 	
+	 	
+	 2. <select id='search' parameterClass="com.encore.EmpVO" resultClass='String'>
+	 		select ename
+	 		from   emp
+	 		where  sal>#sal# and deptno=#deptno#
+	 				   -----			--------
+	 				 vo.getSal()	  vo.getDeptno()
+	 				 ==>명시된 VO기준 get메소드 호출.
+	 	</select>
+	 	
+		 호출)
+		 	EmpVO vo = new EmpVO();
+		 		vo.setSal(2000);
+		 		vo.setDeptno(20);
+		 	List<String> list = smc.queryForList('search', vo);
+		 	
+		 	
+		 	
+	 2-2. <select id='search' parameterClass="java.util.Map" resultClass='String'>
+	 					 또는  ==> parameterClass="java.util.HashMap"
+	 		select ename
+	 		from   emp
+	 		where  sal>#sal# and deptno=#deptno#
+	 				   -----			--------
+	 				 map.get("sal")	  map.get("deptno")
+	 				 ==>명시된 Map기준 get메소드 호출.
+	 	 </select>
+		 	
+		 호출)
+		 	Map<String,Integer> map = new HashMap();
+		 		map.put("sal", 2000);
+		 		map.put("deptno", 20);
+		 	List<String> list = smc.queryForList('search', map);
+
+
+
+	3. <select id='search' parameterClass="int" resultClass='com.encore.EmpVO'>
+		==> 에러발생 가능성!! : 언제? EmpVO에 기본생성자가 없는 경우
+		==> 즉, resultClass에 명시된 VO에 대해 new EmpVO(); 호출!!
+		
+	 		select empno,ename
+	 		from   emp
+	 		where  deptno=#deptno#
+	 	</select>
+	 	
+		 호출)
+		 	List<EmpVO> list = smc.queryForList('search', 30);
+		 
+	 	
+	3-2. <select id='search' parameterClass="int" 
+							 resultClass='java.util.Map'>	  ==> 에러
+							 resultClass='java.util.HashMap'> ==> 실행 OK
+		 ==>  ※에러발생 : 왜? resultClass에 명시된 클래스를 iBatis에서 객체생성하기 때문에!
+		 		Map m = new Map();
+		 				---------
+		 				 에러 ---> Map인터페이스!
+		 				 
+	 		select empno, ename
+	 		from   emp
+	 		where  deptno=#deptno#
+	 	</select>
+
+		 호출)
+			List<Map> list = smc.queryForList('search', 30);
+
+
+  - 잠시 테스트
+  	==> 테이블 생성
+  		drop table empClone;
+  		create table empClone
+  		as select empno, ename, sal, deptno
+  		from emp;
+  		
+  		drop table deptClone;
+  		create table deptClone
+  		as select * from dept;
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+  
