@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.ibatis.sqlmap.client.SqlMapClient;
+
+import iba.MySqlMapClient;
+
 public class CountServlet extends HttpServlet {
 	ArrayList<String> list;
 	int cnt = 0;

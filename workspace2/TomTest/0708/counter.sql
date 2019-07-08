@@ -16,3 +16,4 @@ create table addr(
 	addr varchar2(20)
 );
 
+select * from addr;
