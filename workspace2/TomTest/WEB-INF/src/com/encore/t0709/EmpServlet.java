@@ -20,7 +20,7 @@ public class EmpServlet extends HttpServlet{
 		resp.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = resp.getWriter();
 		out.print("<html><head><title>사원조회</title></head>");
-		out.print("<body><center><h3>사원정보조회</h3><hr><table border='1'><tr><th>사원번호</th><th>사원명</th><th>입사일</th><th>급여</th><th>부서명</th></tr>");
+		out.print("<body><center><h3>사원정보조회</h3><hr><table border='1'><tr bgcolor='tomato'><th>사원번호</th><th>사원명</th><th>입사일</th><th>급여</th><th>부서명</th></tr>");
 		
 		EmpDAO dao = new EmpDAO();
 		List<Emp> list = dao.findAll();
