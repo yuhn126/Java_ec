@@ -17,3 +17,4 @@ create table addr(
 );
 
 select * from addr;
+select * from cnt;

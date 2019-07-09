@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
+	<body>
+		<h3>로그인폼</h3>
+		<hr>
+		<!-- 
+			<form action="폼안의 데이터를 가지고서 이동할 URL">
+			만약 action속성을 정의하지 않는 경우 현재 문서가 기본적으로 정의됨.
+			(현재 문서가 브라우저에 재호출)
+			1. <form>
+			2. <form action="login_form.html">
+				===> 1번과 2번은 같다.
+				
+			만약 method속성을 정의하지 않는 경우 기본값은 method="get"
+				===> method속성은 HTTP요청 방식을 의미!
+		-->
+		<form action="result" method="post">
+			ID : <input type="text" size="10" name="id"><br>
+			PASS : <input type="password" size="10" name="pwd"><br>
+			<input type="submit" value="로그인">
+		</form>
+	</body>
+</html>
