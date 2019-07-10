@@ -36,9 +36,9 @@ public class ParamServlet extends HttpServlet{
 		System.out.println("doGet()");
 		//클라이언트가  HTTP요청 방식을 'get'으로 했을 때 호출되는 메소드
 		/*
-		<URL> /TomTest/0709/result?id=gildong&pwd=1234
-								   -------------------
-								                 파라미터
+			<URL> /TomTest/0709/result?id=gildong&pwd=1234
+									   -------------------
+									                 파라미터
 								                 
 			String 속성값 = req.getParameter("name속성명"); 
 		 */
