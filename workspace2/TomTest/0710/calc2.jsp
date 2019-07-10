@@ -20,6 +20,7 @@
 			</select> <input type='text' size='5' name='su2'>
 			<button type='submit'>계산</button>
 		</form>
+		<%! String a = ""; %>
 		<%
 			//service()메소드 안에 들어갈 자바 코드!
 			if (request.getMethod().equals("POST")) {
@@ -35,6 +36,8 @@
 				} else {
 					Calculator calc = new Calculator(Integer.parseInt(su1), Integer.parseInt(su2), oper);
 					out.print("<hr><font color='blue'>" + calc.getResultStr() + "</font>");
+					out.print(a);
+					a += "<br><font color='blue'>" + calc.getResultStr() + "</font>";
 				}
 			}
 		%>
