@@ -1,0 +1,95 @@
+ <JSP 영역 객체>
+  - pageContext (page) : 현재 페이지
+  - request			   : 요청 페이지와 응답 페이지 (forward이동했을때의 호출한 페이지와 호출된 
+  - session            : 동일 브라우저
+  - application        : 동일 서버 (정확히는 같은 서버의 동일 Context)
+  	(ServletContext)
+  	
+  구분 : ServletContext application
+  		- Web Application(웹응용프로그램, 프로젝트), 전체서블릿
+  	  ServletConfig config
+  	  	- 한 개의 서블릿을 의미
+   ※ 
+   
+   종류)
+	1. request(javax.servlet.http.HttpServletRequest)
+		- HTML폼 요소의 선택값 등 사용자 입력 정보를 읽어 올 때 사용.
+	2. response(java.servlet.http.HttpServletResponse)
+		- 사용자 요청에 대한 응답을 처리하기 위해 사용
+	
+	
+	4. session(javax.servlet.http.HttpSession) (세션 == 접속)
+	---> 브라우저를 통해 URL요청을 했을 때 서버에서는 각 브라우저를 식별할 수 있는 번호를 부여
+		 서버측 메모리에 기억하고 있다가 브라우저가 또 따른 (URL)요청을 할 때 같은 Client인지 비교.
+		 
+		 - 클라이언트에 대한 세션정보를 처리하기 위해 사용
+		 - 비연결형 프로토콜 HTTP (한 페이지가 출력된 다음에 서버와 클라이언트 연결은 끊어짐.)에 대해
+		 	마치 계속 연결되어있는 것처럼 해주는 메커니즘.
+		 - 쿠키는 사용자PC에 세션은 서버에 사용자와 관련된 정보를 보관.
+	
+  세션의 사용 용도)
+	- 사용자 로그인
+	- 쇼핑몰에서 장바구니 기능 구현
+	- 사용자가 어떤 페이지를 다녀갔는지 웹 페이지 트래킹 기능을 구현.
+	 
+  주요 메소드)
+ 	getId()
+ 		- 각 접속에 대한 세션 고유의 ID를 문자열 형태로 리턴.
+ 	getCreatingTime()
+ 		- 세션이 생성된 시간을 long형 밀리세컨드 값으로 리턴
+ 		  (January 1, 1970 GMT기준)
+ 	getLastAccessedTime()
+ 		- 현재 세션으로 마지막 작업한 시간을 long형 밀리세컨드 값으로 리턴.
+ 	getMaxInactiveInterval()
+ 		- 세션의 유지시간을 초로 반환.
+ 	setMaxInactiveInterval(t)
+ 		- 세션의 유효시간을 t에 설정된 초 값으로 설정.
+ 		
+ 	invalidate() ★
+ 		- 현재 세션을 종료
+ 		- 로그아웃에서 사용.
+ 	
+ 	setAttribute(key, value)
+ 	 	- 문자열 key로 Object value을 설정.
+ 	
+ 	getAttribute(key)
+ 		- 문자열 key로 설정된 세션 값을 Object형태로 반환
+ 	
+ 	removeAttribute(key)
+ 		- 문자열 key로 설정된 Object 삭제.	
+
+
+==========================================================================
+
+ <세션 장바구니>
+ 	login.jsp		---> 로그인 화면 (사용자 이름만 입력)
+ 	selProduct.jsp	---> 상품을 선택하는 화면(추가 버튼 클릭)
+ 	add.jsp			---> 선택한 상품에 대해 세션(장바구니 역할)에 추가 : 장바구니에 상품 추가!
+ 	checkOut.jsp	---> 선택한 상품들에 대한 상품목록 보이기 	
+ -------------------------------------------------------------------
+  <미션>
+   1. selProduct.jsp  ---> 로그인폼(login.jsp)
+   2. add.jsp         ---> alert(선택된 과일이름 출력)
+   3. checkOut.jsp    ---> 선택된 상품들을 브라우저에 출력
+   
+==========================================================================
+ <세션 로그인>
+  sessionT1.jsp ---> 로그인 화면
+  sessionT2.jsp ---> 로그인 체크(로그인 처리)
+  sessionT3.jsp ---> 서비스 화면
+  sessionT4.jsp ---> 로그아웃 (로그아웃 처리)
+ 
+  1. sessionT2.jsp
+   --> 로그인 화면을 통해 전달된 아이디와 비번을 DB(Map)와 비교 검사
+   		--> 아이디가 존재하지 않거나 비번이 일치하지 않을 시 로그인 화면으로 이동
+   --> 로그인 성공 시 세션을 부여(세션 로그인)
+   		예) session.setAttribute("login", "success");
+  
+  2. sessionT3.jsp
+   --> 정상적이지 않은 경로(로그인을 거치지 않은 상태에서 바로 sessionT3.jsp페이지 호출)를 통해
+		접근 했을 시 로그인 화면으로 이동.
+
+  3. sessionT4.jsp
+   --> 세션 해제 실행.
+   
+    	

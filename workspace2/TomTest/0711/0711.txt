@@ -1,0 +1,241 @@
+
+ <JSP> JavaServerPage
+  - 자바 웹 어플리케이션
+  - 웹브라우저에 출력되는 화면을 표현
+  - HTML(CSS, JavaScript) + Java
+  			  ----------    ----
+  			  	    물			 기름
+  		      클라이언트스크립트     서버스크립트
+  		     (브라우저실행)   (JVM실행)
+  		     
+  ※웹브라우저 사용자가 hello.jsp요청!
+  		---> http://ip:pory/[웹컨텍스트루트(프로젝트명)]/경로/페이지명
+  		---> http://192.168.0.37:8282/TomTest/0711/hello.jsp
+ 
+ ------------------------------ hello.jsp ------------------------------
+ <html>
+ 	<head></head>
+ 	<body>
+ 		<h3>안녕 JSP</h3>
+ 		<%-- 나주석 --%>
+ 		<% String str="비가와요"; %>
+ 		<%= str %>
+ 	</body>
+ </html>
+ -----------------------------------------------------------------------
+ ==> 웹서버(ApacheTomcat)브라우저 전달 할 text를 생성!!
+ 	<html>
+	 	<head></head>
+	 	<body>
+	 		<h3>안녕 JSP</h3>
+ 	 		비가와요
+	 	</body>
+ 	</html>
+ -----------------------------------------------------------------------
+  문제1) 자바스크립트에 있는 str값을 자바 영역에서 출력 가능(사용 가능)?
+		<script>
+			var str = "나는 자바스크립트~!";
+		</script>
+		
+		<%= str %>
+			또는
+		<% out.print(str); %>
+		==> 에러 : 출력 절대절대 안됨!!!!!!!
+ -----------------------------------------------------------------------
+  문제2) 자바 영역에 있는 str값을 자바스크립트 영역에서 출력 가능(사용 가능)?
+ 	<% String str = "오늘은 목요일!!"; %>
+ 	
+ 	<script>
+ 		document.write(str);	==> 가능? X
+ 		alert(str);				==> 가능? X
+ 	</script>
+ 	---------------------------------------
+ 	<% int su=300; 
+ 	   String str="friday!";
+ 	%>
+ 	
+ 	<script>
+ 		document.write(su);			==> 가능? X
+ 		document.wrute(<%=su%>); == document.write(300); ==> 가능? O
+ 		
+ 		document.write(str);		==> 가능? X
+ 		document.wrute(<%=str%>);	==> 가능? X
+ 								 	==> document.write(friday);
+ 		document.write('<%=str%>'); ==> 가능? O
+ 									==> document.write('friday');
+ 	</script>
+ 
+======================================================================================================== 
+
+ <JSP 기본 태그>
+  1. declaration
+  	 <%!		%> 서블릿(자바클래스) 변환 시 멤버의 구성요소(필드, 메소드)
+  	 
+  2. scriptlet
+  	 <%			%> 서블릿(자바클래스) 변환 시 service()메소드 내에 들어갈 자바 코드
+  	 				==> 메소드 호출, 조건문, 반복문
+  	 				
+  3. expression
+  	 <%= 데이터   %> 서블릿(자바 클래스) 변환 시 service()메소드 내에 들어갈 자바 코드
+  	 				==> out.print(데이터)변환!
+  4. comment
+  	 <%--		--%> JSP설명문
+  	 
+  	 .html ==> HTML주석만 가능
+  	 .html ==> HTML주석 가능
+  
+	<%-- <%= "안녕" %> --%>	==> '안녕~!!' 화면에 출력되지 않고 실행도 안됨.
+							==> X
+	
+	<!-- <%= "안녕" %> -->	==> '안녕~!!' 화면에 출력되지 않지만 주석에 안녕이 포함됨.
+							==> <!-- 안녕 -->
+	
+	
+	
+=========================================================================================================
+ <JSP지시어(지시자)> : Directives
+  - JSP파일의 속성을 기술
+  - JSP컨테이너에 해당 페이지를 어떻게 처리해야 하는지 전달하기 위한 내용을 담는다.
+  - 종류에는 page, include, taglib가 있음
+  	<%@page        %> (O)
+  	<%@ page       %> (O)
+  	<% @page       %> (X)
+  
+  1. page지시어
+  	형식)
+  		<%@ page 속성명1="속성값" 속성명2="속성값" 속성명3="속성값" %>
+  		
+  		<%@ page 속성명1="속성값" %>
+  		<%@ page 속성명2="속성값" %>
+  		<%@ page 속성명3="속성값" %>
+  		
+  	속성종류)
+  		contentType (text/html;charset=UTF-8) : JSP사 생성할 문서의 타입 지정
+  		pageEncoding : JSP페이지 자체의 캐릭터 인코딩을 지정.
+  		import : JSP페이지에서 사용할 자바 클래스를 지정.
+  			<%@ page import="java.util.ArrayList" %>
+  			<%@ page import="java.util.Calendar" %>
+  			<%@ page import="java.util.Calendar,java.util.ArrayList" %>
+  			
+  		session(true) : JSP페이지가 세션을 사용할 지의 여부를 지정. / false --> 로그인 ㄴㄴ
+  		buffer(8kb) : JSP페이지의 출력 버퍼 크기를 지정.
+  		autoFlush(true) : 출력 버퍼가 다 찼을 경우 자동으로 버퍼 있는 데이터를 출력. false --> 오버플로우 발생
+  		errorPage : JSP페이지 실행 중 에러 발생 시 이동할 페이지 설정.
+  		isErrorPage(false) : 에러 발생 시 에러 관련된 객체 지원.
+  		
+  2. include지시어
+  	형식)
+  		<%@include file="경로명" %>
+  		
+  3. taglib지시어 (외부에서 정의된 태그를 사용할 때)
+  	형식)
+  		<%@taglib uri="경로" prefix="접두사"%>
+  		<%@taglib tagdir="경로" prefix="접두사"%>
+  		
+========================================================================================================
+ ※JSP기본객체(내장객체)
+  - JSP페이지내에서 자료형을 선언하지 않고 사용하는 객체 	
+  	---> <%  자바코드 %>
+		 <%= 자바코드 %>
+		 <% out.print("안녕"); %>
+
+	public class MyServlet extends HttpServlet{
+		public void service(HttpServletRequest request,
+	                        HttpServletResponse response){
+			PageContext pageContext = new PageContext();
+			HttpSession session = new HttpSession();
+			ServletContext application = new ServletContext();
+			ServletConfig config = new ServletConfig(); 
+			JspWriter out = new JspWriter();
+			Object page = new Object();
+		            
+		}//service
+	}
+
+  종류)
+  	1. request(javax.servlet.http.HttpServletRequest)
+		- HTML폼 요소의 선택값 등 사용자 입력 정보를 읽어올때 사용.
+		
+  주요 메소드)
+  	getParameter(String name)
+  		- 문자열 name과 같은 이름을 가진 파라미터의 값 얻어오기
+  	getAttribute(String key, Object value);
+  	getAttribute(String key);
+  	
+  	getParameterNames();
+  	
+  	getCookies()
+  		- 모든 쿠키값을 javax.servlet.http.Cookie의 배열 형태로 얻어오기
+  	getMethod()
+  		- 요청 방식을 문자열로 얻어오기 ("GET", "POST")
+  	getSession()
+		- 현재 세션객체 얻어오기
+	getRemoteAddr()
+		- 클라이언트의 IP주소 얻어오기
+	getProtocol()
+		- 현재 서버의 프로토콜을 문자열 형태로 얻어오기
+	setCharacterEncoding("문자집합명")
+		- HTML폼에서 한글 입력 시 정상적으로 처리해주기 위해 설정.
+		- POST로 전달된 한글을 처리하기 위해 사용.
+	
+=========================================================================
+ <페이지간 이동>  a.jsp   ----->   b.jsp
+
+  - HTML   : <a href="이동경로b.jsp">텍스트 또는 이미지</a>
+             <form action="이동경로"> <input type="submit"> <button> </form>
+
+  - JavaScript: location.href="이동할경로";
+                replace("이동할경로")                
+                               폼이름.submit();  ---> 폼태그내의 action에 명시된 경로로 이동!!
+
+  - JSP ★
+     a. 포워드 이동
+           pageContext.forward();       ===> JSP페이지에서만 사용
+           requestDispatcher.forward(); ===> JSP와 Servlet 둘 다 사용 가능!!
+                  특징) 브라우저에 출력되는 페이지와 URL에 명시된 페이지가 서로 다름.(URL에 변화가X)
+              URL에 명시된 페이지와 이동한 페이지간에 request를 공유.
+			    쇼핑몰이나 티켓구매에는 사용X
+			    
+     b. 리다이렉트 이동                            
+           response.sendRedirect("이동경로");
+                  특징) 브라우저에 출력되는 페이지와 URL에 명시된 페이지가 서로 같음.
+              URL에 명시된 페이지와 이동한 페이지간에 session를 공유.  
+              request를 서로 공유하지X session공유
+  
+    
+  
+  RequestDispatcher의 forward()메소드 사용
+  	RequestDispatcher dispatcher = request.get
+  	
+  	
+  
+  
+  영역에 데이터 저장
+  	영역객체.setAttribute(String key, Object value);
+  데이터 호출
+  	영역객체.getAttribute(String key);
+
+==========================================================================
+
+  데이터를 영역(page < request < session <  application)에 저장 
+  
+  - page영역
+	사용 빈도 가장 낮음
+	한 jsp문서내에서만 사용!
+  
+  - request영역
+  	forward로 페이지 이동 시 데이터 공유(redirect는 X)
+	
+  - session영역 --> 브라우저!
+ 	같은 브라우저 내에서 데이터 공유
+
+  - application영역
+  	ApacheTomcat
+  	TomTest(Web Application)
+  	동일한 서버에 동일한 Web Application에서 데이터 공유
+
+
+ 	
+
+
+
