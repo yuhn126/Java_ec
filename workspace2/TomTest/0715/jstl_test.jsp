@@ -39,15 +39,15 @@
 		<hr>
 		
 		<%-- 나이 20대, 30대 체크 --%>
-		<c:choose>
+		<c:choose> <%-- if ~ else if ~ else문과 유사 --%>
 			<c:when test="${param.age < 20 || param.age > 39} ">
-				<font color="green">나이가 20대 또는 30대가 아닙니다.</font>
+				<font color="green">나이가 20대 또는 30대가 아닙니다.</font><br>
 			</c:when>
 			<c:when test="${param.age < 30 }">
-				<font color="green">나이가 20대입니다.</font>
+				<font color="green">나이가 20대입니다.</font><br>
 			</c:when>
 			<c:otherwise>
-				<font color="green">나이가 30대입니다.</font>
+				<font color="green">나이가 30대입니다.</font><br>
 			</c:otherwise>
 		</c:choose>
 		<hr>
@@ -59,10 +59,10 @@
 		</c:forEach>
 		<hr>
 		<c:forEach begin="0" end="10" var="i" varStatus="stat" step="1">
-			<c:if test="${stat.count %2 == 0 }">
+			<c:if test="${stat.count%2==0 }">
 				<font color="blue">JSTL안녕! ==> ${i }</font><br>
 			</c:if>
-			<c:if test="${stat.count %2 == 1 }">
+			<c:if test="${stat.count%2==1 }">
 				<font color="red">JSTL안녕! ==> ${i }</font><br>
 			</c:if>
 		</c:forEach>

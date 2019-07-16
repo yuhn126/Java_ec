@@ -218,7 +218,7 @@
 	<jsp:getProperty name="useBean에서 사용한 id"
 					 property="속성명"/>
 					 
-	예) <jsp:useBean class="test,Person" id="p" />
+	예) <jsp:useBean class="test.Person" id="p" />
 			---> test.Person p = new test.person();
 			
 		<jsp:setProperty name="p" property="age" value="13"/>

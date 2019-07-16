@@ -1,0 +1,188 @@
+ <JSTL> JSP Standard Tag Library 표준 태그 라이브러리
+  - JSP페이지에서 많이 사용되는 논리적인 판단, 반복 처리, 포맷 처리를 위한 커스텀 태그를
+    표준으로 만들어서 정의한 것.
+  - JSTL을 사용하기 위해서는 추가적인 환경설정 필요
+    ==> jstl.jar파일을 lib폴더에 위치
+    
+    
+ <코어태그>
+  1. 변수지원 : set, remove
+  				JSP페이지 안에서 ---> <c:set> <c:remove>
+  				
+-----------------------------------------------------------------------------------------------------
+ <c:if태그>
+  형식)
+  		<%
+  			if(조건식){
+  				
+  			}
+  		%> 				
+  				
+  	<c:if test="조건식">
+  		조건식 참 일때 실행 할 (HTML)텍스트.
+  	</c:if>
+  	
+  	
+	예)
+		<c:if test="true">	---> 무조건 실행
+			조건식 참일때 실행 할 텍스트.
+		</c:if>
+		
+		<c:if test="some text">	---> 실행X
+			조건식 참 일때 실행 할 텍스트.
+		</c:if>
+		
+		<c:if test="${ expr }">
+			조건식 참 일때 실행 할 텍스트.
+		</c:if>	
+		
+		<c:if test="<%= expr %>">
+			조건식 참 일때 실행 할 텍스트.
+		</c:if>
+		
+==================================================================================================================
+ <데이터베이스 커넥션 풀> DataBase Connection Pool (DBCP)
+  - 애플리케이션에서 필요로 하는 시점에 커넥션을 만드는 것이 아니라 미리 일정 수의 커넥션을 만들어 놓고
+    필요한 시점에 애플리케이션에 제공하는 서비스 및 관리 체계를 말한다.
+    
+    동작형태)
+    	1. 웹 애플리케이션 서버가 시작될 때 일정수의 커넥션을 미리 생성
+    	2. 웹 애플리케이션 요청에 따라 생성된 커넥션 객체를 전달.
+    	3. 일정 수 이상의 커넥션이 사용되면 새로운 커넥션을 만듬.
+    	4. 사용하지 않는 커넥션은 종료하고 최소한의 기본 커넥션을 유지.
+    	
+    	
+    ArrayList<Connection> list = new ArrayList<>();
+    list.add(new Connection());
+    list.add(new Connection());
+    list.add(new Connection());
+    list.add(new Connection());
+    list.add(new Connection());
+	
+	boolean [] useStatus = {false, false, false, false, false};    	
+    
+    C:\apache-tomcat-8.5.42\conf\context.xml
+    	
+	톰캣에 javax.sql.DataSource설정)
+		- <Context> 태그 내에 <Resource>태그 정의 
+		- <Resource> 태그 속성
+			name : 커넥션 풀(DataSource)에 대한 이름지정
+			auth : 실행 컨테이너
+			type : DataSource
+			driverClassName : 드라이버명
+			url : 접속 DB서버 ip, port, sid
+			username : 접속 계정
+			password : 접속 비밀번호
+			maxActive : 커넥션 풀이 제공할 최대 커넥션 수
+			maxIdle : 사용되지 않고 풀에 저장될 수 있는 최대 커넥션 수
+			maxWait : 사용되는 대기 시간 (1/1000초)
+					  음수값은 무한 대기 
+    	
+    ※참고) DBCP					DBCP2(변경사항)
+    	  --------------------------------------------
+    	  maxActive		------>		maxTotal
+    	  maxWait		------>		maxWaitMillis
+  
+===================================================================================================================
+
+
+ <미션>
+  - MVC구성하여 사원의 정보(사원번호, 사원명, 부서명, 급여등급)를 출력하시오.
+  - 모델   : com.encore.t0716.dao.EmpDAO    (ibatis사용)
+             com.encore.t0716.vo.Emp
+         
+  - 뷰       : emp_info.jsp
+
+  - 컨트롤러 : com.encore.t0716.control.Controller
+          ---> 서블릿을 구성, 서블릿 등록
+          
+	==> 요청은 서블릿!!  
+	    - http://192.168.0.96:8282/TomTest/0716/emp_info.jsp  (X)                   
+	    - http://192.168.0.96:8282/TomTest/0716/empInfo       (O)
+	==> 서블릿에서 모델호출, 결과를 영역에 저장
+	==> 서블릿에서 jsp페이지 호출(이동)
+	==> jsp페이지에서 사원정보를 HTML <table>로 출력.  (jstl,el사용)                       
+
+===================================================================================================================
+ 
+ <미션2>
+	==> 사용자인증JSP : Model1사용, DAO만 Model2개발방식!!
+	
+	userinput.jsp		(사용자정보 입력 폼, 회원가입폼)
+	
+	userprocess.jsp		(사용자정보 DB저장)
+		- insert
+	
+	userconfirm.jsp		(로그인 화면 폼)
+	
+	confirmprocess.jsp	(로그인 처리 : 아이디, 비밀번호에 대한 존재와 일치를 체크)
+		- select
+		
+	modifyuser.jsp		(사용자 정보 수정 폼)
+		- select
+	
+	modifyprocess.jsp	(사용자 정보 DB수정 처리)
+		- update
+	
+	deleteid.jsp		(사용자 정보에 대한 DB삭제, 회원탈퇴)
+		- delete
+	
+	confirmid.jsp		(아이디 중복 여부 처리)
+		- select
+	
+	service.jsp   <------- sessionT3.jsp내용 복사
+	
+  ------------------------------------------------------------------------------------
+   
+   <SQL스크립트>
+   
+   drop table userinfo;
+   
+   create table userinfo(
+   		id varchar2(20) constraint userinfo_pk primary key,
+   		pass varchar2(20) not null,
+   		name varchar2(20) not null,
+   		jumin varchar2(14) not null,
+   		birth varchar2(10), 
+   		zip number(5) not null,
+   		addr varchar2(300),
+   		email varchar2(50) not null,
+   		job varchar2(30) not null,
+   );
+   
+   ---> userinfo.sql 저장, 실행
+   ---> UserInfo.java (9개의 속성 정의)
+   
+   ---------------------------------------------------------------------------------
+  작업순서)
+   	회원 정보 입력 ---> 로그인 처리 ---> 수정 처리 ---> 삭제 처리 ---> 아이디 중복 처리 ---> 유효성 검사
+   	
+  1. userinput.jsp(입력폼, 회원가입폼)에서 '월'과 '일'에 대한 숫자 출력.
+	월 : 01 ~ 12월 (자바 for문을 통해 출력)
+	  
+  2. UserInfo.java 작성 (테이블의 한 레코드 표현)
+  
+  3. UserInfoDAO.java 작성
+  
+  4. DB insert작업(userprocess.jsp)
+      DAO의 insert호출 ---> 호출 결과에 따라 적당한 메시지 출력
+      
+  5. userconfirm.jsp (로그인 화면) ---이동---> confirmprocess.jsp
+  		- UserInfoDAO의 selectLogin() 메소드 구현
+  		- 로그인 처리
+  		- 호출 결과에 따라 적당한 메시지 출력
+  		- 로그인 성공 시 세션 적용(설정)
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+	
+	

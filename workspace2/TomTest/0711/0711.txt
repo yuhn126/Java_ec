@@ -192,17 +192,16 @@
      a. 포워드 이동
            pageContext.forward();       ===> JSP페이지에서만 사용
            requestDispatcher.forward(); ===> JSP와 Servlet 둘 다 사용 가능!!
-                  특징) 브라우저에 출력되는 페이지와 URL에 명시된 페이지가 서로 다름.(URL에 변화가X)
-              URL에 명시된 페이지와 이동한 페이지간에 request를 공유.
-			    쇼핑몰이나 티켓구매에는 사용X
+      특징) 브라우저에 출력되는 페이지와 URL에 명시된 페이지가 서로 다름.(URL에 변화가X)
+           URL에 명시된 페이지와 이동한 페이지간에 request를 공유.
+		   쇼핑몰이나 티켓구매에는 사용X
 			    
      b. 리다이렉트 이동                            
            response.sendRedirect("이동경로");
-                  특징) 브라우저에 출력되는 페이지와 URL에 명시된 페이지가 서로 같음.
-              URL에 명시된 페이지와 이동한 페이지간에 session를 공유.  
-              request를 서로 공유하지X session공유
+      특징) 브라우저에 출력되는 페이지와 URL에 명시된 페이지가 서로 같음.
+           URL에 명시된 페이지와 이동한 페이지간에 session를 공유.  
+           request를 서로 공유하지X session공유
   
-    
   
   RequestDispatcher의 forward()메소드 사용
   	RequestDispatcher dispatcher = request.get
