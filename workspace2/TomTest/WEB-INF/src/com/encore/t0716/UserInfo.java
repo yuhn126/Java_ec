@@ -1,6 +1,8 @@
 package com.encore.t0716;
 
-public class UserInfo {
+public class UserInfo { //테이블 레코드(행)를 표현하는 객체
+						//---> select 뒤의 여러 컬럼명을 한 개의 객체로 표현
+						//UI(HTML)를 통해 전달된 여러 데이터를 한 개의 이름으로 저장
 	private String id;
 	private String pass;
 	private String name;

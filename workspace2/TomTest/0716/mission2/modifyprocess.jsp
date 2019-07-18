@@ -1,13 +1,31 @@
+<%@page import="com.encore.t0716.UserInfoDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<jsp:useBean id="vo" class="com.encore.t0716.UserInfo" scope="request"></jsp:useBean>
+<% request.setCharacterEncoding("utf-8"); %>
+<jsp:setProperty property="*" name="vo"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>수정 처리</title>
 </head>
 <body>
   <center>
+  	<%
+  		UserInfoDAO dao = new UserInfoDAO();
+  		String jumin = request.getParameter("jumin1") + "-" + request.getParameter("jumin2");
+		String birth = request.getParameter("year") + "-" + request.getParameter("month")
+		+ "-" + request.getParameter("day");
+		
+		vo.setJumin(jumin);
+		vo.setBirth(birth);
+		vo.setId((String)session.getAttribute("loginId"));
+  	
+		try{
+		
+  			if(dao.update(vo)){
+  	%>
   	  <table width="280" border="0" cellpadding="5">
           <tr bgcolor="#3399cc">
             <td><b>수정성공</b></td>
@@ -18,7 +36,9 @@
                <a href="service.jsp">서비스페이지</a>
             </td>
           </tr>
-       </table>     
+       </table>  
+       
+     <% 	} else { %>   
        <table width="280" border="0" cellpadding="5">
           <tr bgcolor="#3399cc">
             <td><b>수정실패</b></td>
@@ -30,7 +50,25 @@
                <a href="javascript:history.go(-1)">이전화면</a>
             </td>
           </tr>
-       </table>    
+       </table>  
+      <% 
+      		}
+		} catch (Exception e){
+			e.printStackTrace();
+      %>  
+      	<table width="280" border="0" cellpadding="5">
+          <tr bgcolor="#3399cc">
+            <td><b>수정실패</b></td>
+          </tr>
+          <tr>
+            <td>
+               정보수정이 되지않았습니다.<br>
+               입력내용을 다시확인하시고 다시수정하시기 바랍니다.<br><br>
+               <a href="javascript:history.go(-1)">이전화면</a>
+            </td>
+          </tr>
+       </table>
+       <% } %>
     </center>
 </body>
 </html>

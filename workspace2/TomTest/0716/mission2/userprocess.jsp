@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <jsp:useBean class="com.encore.t0716.UserInfo" scope="request" id="vo"/>
+<%-- UserInfo vo = new UserInfo(); --%>
 <% request.setCharacterEncoding("utf-8"); %>
 <jsp:setProperty property="*" name="vo"/>
 
@@ -15,6 +16,7 @@
 <body>
 	<center>		
 		<%
+			//폼 안의 데이터 얻기 : String data = request.getParameter("name속성값");
 			UserInfoDAO dao = new UserInfoDAO();
 			String jumin = request.getParameter("jumin1") + "-" + request.getParameter("jumin2");
 			vo.setJumin(jumin);
@@ -24,16 +26,17 @@
 			
 			boolean b = dao.insert(vo);
 			if(b){
+				
 		%>
 		<table width="330" border="0" cellpadding="5">
 			<tr bgcolor="#3399cc">
-				<td><b><%=request.getParameter("name")%>님 가입을 축하합니다.</b></td>
+				<td><b>[${param.name}]님 가입을 축하합니다.</b></td>
 			</tr>
 			<tr>
 				<td>입력하신 내용대로 가입이 완료되었습니다.<br> 
-					<%=request.getParameter("name")%>님께서 요청하신 아이디와 패스워드입니다.
+					[${param.name}]님께서 요청하신 아이디와 패스워드입니다.
 					<p align="center">
-						아이디:<%=request.getParameter("id")%><br> 패스워드:<%=request.getParameter("pass")%><br>
+						아이디:[${param.id}]<br> 패스워드:[${param.pass}]<br>
 						<br> <a href="userconfirm.jsp">로그인 화면</a>
 					</p>
 				</td>

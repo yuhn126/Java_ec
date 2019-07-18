@@ -3,7 +3,10 @@ package com.encore.t0708;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,6 +35,23 @@ public class MyServlet extends HttpServlet{
 		//out.print("HTML코드(텍스트)");
 		out.print("<html><head><title>서블릿타이틀</title></head>");
 		out.print("<body><h3>ServletTest</h3><hr/>");
+		
+		//web.xml에 등록된 initParam데이터 가져오기!
+		ServletConfig config = getServletConfig(); //현재 서블릿
+		String name = config.getInitParameter("youName");
+		String name2 = getInitParameter("youName");
+		
+		ServletContext application = getServletContext();
+			//TomTest와 같은 웹 어플리케이션
+		
+		String commonTxt = application.getInitParameter("common");
+		out.print("<font color=green>"+ commonTxt+"</font><br>");
+		
+		out.print(application.getAttribute("book")+"<br>");
+		
+		
+		//문제) '안녕 서블릿'을 화면에 10줄 출력
+		//홀수줄 --> 빨간색/ 짝수줄 --> 파란색
 		for (int i = 0; i < 10; i++) {
 			if(i%2==1)
 				out.print("<b><font color='red'>안녕, 서블릿~!!</font></b><br>");

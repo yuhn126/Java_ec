@@ -1,0 +1,41 @@
+
+
+ <서블릿 필터>
+  - 사용자 요청에 따라 서블릿이나 JSP의 실행 전후, 필요에 따라 기능을 
+    추가,삭제해주는 역할
+  - 인증, 로깅/감사, 국제화
+  - javax.servlet.Filter
+
+
+ <리스너>
+  - 특정인터페이스를 구현하는 자바클래스
+  - web.xml의 리스너 설정 항목에 기술해두면 웹 애플리케이션 시작 시 
+    자동으로 실행되어 모든 애플리케이션에서 참조할 객체 생성등을 수행.
+  - javax.servlet.ServletContextListener
+
+=========================================================================
+ <파일 업로드>
+  - 사용자(클라이언트)PC내의 파일 -------> 서버의 특정 디렉토리에 저장!
+
+ <파일 업로드 규칙>
+  1. form태그의 method속성은 반드시 post!
+  2. form태그의 속성 enctype="multipart/form-data" 추가!
+  						---> 폼 내의 데이터들을 text가 아닌 stream으로 전송!
+  						---> input.jsp
+  						
+	참고) enctype="application/x-www-form-urlencoded"
+			---> 기본값
+			---> form태그 내의 name데이터들을 text로 전달!
+			
+ <파일 업로드 구현>
+  1. inputFile.jsp : 폼 제공
+  2. resultFile.jsp : inputstream을 통해 파일 업로드 구현, 실행
+  
+=========================================================================
+ <파일 업로드 툴>
+  http://www.servlets.com
+	----> 좌측메뉴: com.oreilly.servlet클릭
+	----> 다운테이블: cos-26Dec2008.zip 받기
+	----> 압축풀기: doc,src,lib 받을 수 있음
+	----> lib폴더내의 cos.jar을 적용(사용)하고자 하는 프로젝트에 환경설정.
+  
