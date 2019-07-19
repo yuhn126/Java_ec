@@ -1,0 +1,44 @@
+
+
+<client.txt>
+- 떼쟁이(아이)객체, 요청객체, request, 웹브라우저
+  
+- 주된일: 요청하는 일
+   ---> 방식: URL,파라미터
+   
+- 뷰: 데이터 화면에 출력, 
+           텍스트필드에 데이터 입력,
+           체크박스 체크하기,
+           버튼을 눌러 서비스 요청!!
+=================================
+1. 입력폼 요청
+ http://192.168.0.96/TomTest/guest/control?action=form
+ 
+2. DB입력 요청 (폼에 작성된 데이터를 DB에 저장)
+ http://192.168.0.96/TomTest/guest/control?action=insert
+                                           writer=길동
+                                           .....
+                                           contents=동에번쩍
+
+3. 목록보기 요청                                           
+ http://192.168.0.96/TomTest/guest/control?action=list
+ 
+4. 수정폼 요청                                           
+ http://192.168.0.96/TomTest/guest/control?action=edit
+                                           no=3
+                                           
+5. DB수정 요청 (폼에 작성된 데이터를 DB에 갱신,수정)
+ http://192.168.0.96/TomTest/guest/control?action=update                                           
+                                           no=3
+                                           .....
+                                           contents=서에번쩍
+                                           
+6. DB삭제 요청 (특정 글번호에 대한 DB삭제)
+ http://192.168.0.96/TomTest/guest/control?action=delete
+                                           no=7
+                                                                                      
+
+
+
+
+                

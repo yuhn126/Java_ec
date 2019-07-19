@@ -1,0 +1,200 @@
+
+
+ <방명록 기능분석>
+  1. 방명록 리스트 (최신게시물을 맨위로 해서 보여줌)
+  2. 방명록 입력 (작성자, 이메일, 전화번호, 비밀번호, 내용)
+  3. 방명록 수정
+  4. 방명록 삭제
+
+	방명록 JSP(View)                ----->  guest폴더
+	방명록 Java(Model, Controller)  ----->  guest패키지
+
+ <방명록 화면목록>
+  1. 리스트화면  (list.jsp)
+  2. 입력폼 (inputForm.jsp)
+  3. 수정폼, 수정/삭제 화면 (editFrom.jsp) 
+
+
+ <방명록 프로그램 구성> (클래스)
+  1. GuestDAO
+	- DB insert, update, delete, select 수행
+
+  2. Guest
+	- 방명록 데이터객체(DB테이블의 행을 표현, 매핑)
+
+  3. GuestController (서블릿)   ===> 컨트롤러 역할
+	- 사용자 요청 분석(URL파라미터분석)
+	  action(사건,이벤트) code = form(입력폼)
+                                 insert(DB입력처리)
+                                 list(리스트)
+                                 edit(수정폼)
+                                 update(DB수정처리)
+                                 delete(DB삭제처리)
+
+   예) http://192.168.0.96/TomTest/guest/control?action=form
+   예) http://192.168.0.96/TomTest/guest/control?action=insert
+   
+      String action = request.getParameter("action");
+         ---> "form"
+                 ---> 화명에 inputForm.jsp출력!!
+   
+   - 사용자 입력데이터 얻어오기
+      request.getParameter("writer");
+      
+   - 알맞은 모델 호출, 호출결과를 영역에 저장!!
+      Calculator calc = new Calculator(su1,su2,oper);
+                 calc.getResult();
+      DAO d = new DAO();
+            String name = d.selectName();
+            
+            request.setAttribute("key",name);                     
+            ---------------------------------
+                      컨트롤러에서 영역에 데이터를 저장!!
+                      왜? ---> 뷰(jsp)와 저장된 데이터를 공유 (컨트롤러와 뷰간의 통신) 
+   
+   - 이동할 페이지 설정 (forward, redirect)
+       - 만약 request영역에 데이터를 저장한다면?
+          forward 이동   O
+          redirect 이동 X
+          
+       - 만약 session영역에 데이터를 저장한다면?
+          forward 이동    O
+          redirect 이동  O  
+          ===> ★ 리다이렉트 이동시 데이터를 공유(C와V)하고 싶다면 반드시 세션영역에 데이터 저장
+          
+----------------------------------------------------------------------
+<방명록 테이블 설계>
+  테이블 명: guest
+  컬럼
+    - no        글번호
+    - writer    작성자
+    - email     이메일
+    - tel       전화번호
+    - pass      비밀번호
+    - contents  내용
+    - wdate     작성일자
+    
+  시퀀스: guest_seq(1부터시작, 1씩증가)
+
+============================================================
+작업순서)
+  1. JSP(HTML)작성
+       ---> 입력폼(inputForm.jsp), 수정폼(editForm.jsp), 리스트(list.jsp)
+  2. DB테이블(guest)작성, 시퀀스(guest_seq)생성
+  3. VO작성(guest.vo.Guest)
+  4. DAO작성(guest.dao.GuestDAO)
+  5. 컨트롤러(서블릿)작성(guest.control.GuestController)
+       ---> web.xml에 등록  또는  @WebServlet 어노테이션 사용
+       ---> 가상경로 설정("/guest/control");
+       ※컨트롤러, MVC를 사용한다는 것은 inputForm.jsp를 직접 호출하기 말자!!
+       ---> control?action=form
+       
+  6. 컨트롤러를 통한 입력폼 호출!!
+     if(action.equals("form")){
+        forward();   -------> inputForm.jsp페이지
+     }
+  7. 컨트롤러를 통한 DB입력!!
+     if(action.equals("insert")){
+        - request.getParameter("폼내의 이름들")
+        - dao.insert(guest)
+     }
+  
+  8. 컨트롤러를 통한 Guest목록 출력!!
+     if(action.equals("list")){
+        - dao.selectAll()    : 전체 레코드 조회
+        - setAttribute("list")  : 영역에 조회된 결과를 저장
+        - forward(): list.jsp페이지 이동
+     }
+
+
+====================================================================
+<URL요청>
+
+-----------------------a.jsp-------------------------
+
+<form action='control?age=13&job=학생&action=insert'  >
+      이름: <input type=text name=username>
+   <input type=submit>
+</form>
+
+-----------------------b.jsp-------------------------
+<a href="control?action=list">리스트 이동하기</a>
+           
+-----------------------c.jsp-------------------------
+<script>
+   function move(){
+      location.href="control?action=editForm"
+   }
+</script>
+  <button onclick="move()">수정폼이동</button>
+           
+           
+           
+
+---------GuestController(url등록:/guest/control)------
+
+ public void service(){
+  String action = request.getParameter("action");
+    
+  
+  if(action.equals("insert")){ 
+    1. DB입력
+     String name = request.getParameter("username");  
+     String age = request.getParameter("age");  
+     String job = request.getParameter("job");  
+  }else if(action.equals("list")){
+    2. 리스트화면 보이기
+  }else if(action.equals("editForm")){
+    3. 수정폼 보이기
+    }
+ }
+
+------------------------------------------------------
+
+
+
+
+    
+
+
+
+          
+          
+          
+          
+   
+   
+   
+   
+   
+  
+
+
+
+   TomTest
+      - folder
+           - hello.jsp    hello.js    hello.css   hello.jpg
+      - WEB-INF
+           - src
+           - classes
+           - lib
+           - web.xml
+           - hello.jsp
+           
+           
+           
+           
+           
+           
+           
+
+
+
+
+
+
+
+
+
+
+

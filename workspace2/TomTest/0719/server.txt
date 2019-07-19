@@ -1,0 +1,13 @@
+
+
+<server.txt>
+- 엄마객체, 응답객체, response, 톰켓서버, Controller(서블릿)
+
+- 주된일: 서비스 자원 준비
+                 요청분석   ---분석결과---> (응답)액션
+                 
+======================================================
+<<GuestController>> 1.요청분석 2.데이터얻기 3.모델객체생성 호출 저장 4.페이지이동
+  String action= request.getParameter("action");
+  
+1.                 
