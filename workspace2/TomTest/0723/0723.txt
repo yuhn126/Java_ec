@@ -1,0 +1,18 @@
+
+ 미션1) list 목록 출력 시 contents에 출력되는 text는 최대 5글자까지 제한하시오.
+ 	- jsp파일 
+	 	<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+	 	${fn:substring(guest.contents,0,5)}
+ 	
+ 	
+ 	- DB조회문
+	 	select no, writer, tel, wdate, substr(contents,1,5) contents (첫번째 글자부터 5까지 글자)
+	 	from guest
+ 		order by no desc
+ 		
+ 		
+ 미션2) 수정폼에서 수정 버튼 클릭 시 만약 <input name=pass>
+ 
+ 
+ 
+ 

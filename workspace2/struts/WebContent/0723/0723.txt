@@ -1,0 +1,45 @@
+
+
+  <Struts>
+  
+  Servers - new - 서버생성
+  
+  DynamicProject - 서버설정
+  
+  
+ ---------------------------
+  
+  jar == Java Archive
+  
+  war == Web Archive
+  
+ ---------------------------
+ 
+  reference --> 컴파일 시 사용
+  lib		--> 런타임 시 사용
+  
+===========================================================
+ <로그인 액션 만들기>
+ 1. 0723/loginForm.jsp
+ 	<input name="id">
+ 	<input name="pass">
+ 	
+ 2. com.encore.s0723.actions.LoginAction
+ 	---- execute() ----
+ 	요청분석, 사용자 데이터 얻어오기, 모델호출(데이터저장), 페이지 이동
+ 	
+ 3. com.encore.s0723.dao.LoginProces
+ 
+ 	HashMap userPasswords;  -- 아이디와 비번 저장
+ 	HashMap userInfos;		-- 아이디와 사용자 정보 저장
+ 	
+ 4. com.encore.s0723.vo.UserInfo
+ 	- 사용자이름, 이메일, 전화번호
+ 
+ 5. struts-config.xml (<action>엘리먼트 두 개 정의)
+ 	- <action> : 로그인 폼 보이기
+ 	- <action> : LoginAction을 거친(실행)후 성공페이지 또는 실패페이지 이동
+ 
+ 
+ 
+ 

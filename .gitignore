@@ -48,3 +48,4 @@ workspace/.metadata/.plugins/org.eclipse.jdt.core/savedIndexNames.txt
 *.jpg
 *.class
 workspace/JavaApp/.tern-project
+*.policy

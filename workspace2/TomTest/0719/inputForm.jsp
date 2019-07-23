@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +10,7 @@
 <body>
 	<h3><strong>입력폼</strong></h3>
 	<hr>
-	<a href="control?action=list">게시물 목록으로</a>
+	[<a href="control?action=list">게시물 목록으로]</a> <%-- /control ~> http://localhost:8282/control~ --%>
 	<br><br>
 	<form action="control?action=insert" method="post">
 		<table border="1">
@@ -51,6 +52,5 @@
 			
 		</table>
 	</form>
-
 </body>
 </html>

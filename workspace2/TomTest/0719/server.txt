@@ -7,7 +7,77 @@
                  요청분석   ---분석결과---> (응답)액션
                  
 ======================================================
-<<GuestController>> 1.요청분석 2.데이터얻기 3.모델객체생성 호출 저장 4.페이지이동
-  String action= request.getParameter("action");
+<<GuestController>>
+1.요청 분석 2.데이터 얻기 3.모델객체생성 호출,영역 저장 4.페이지 이동 5.유효성 검사
+ ===> 등록 : TomTest/guest/control
+ 					--------------
+ 					= GuestController 
   
-1.                 
+	String action= request.getParameter("action");
+  
+  
+ 1. control? action=form		- 입력폼 요청!
+ 	>>>>service<<<<
+ 	할 일?
+ 		  입력폼 보이기 [4]
+ 	
+ 2. control? action=insert		- DB입력 요청
+ 	>>>>service<<<<
+ 	할 일?
+ 		  저장할 데이터 수집 [2]
+ 		  ★DB 입력
+ 		  	  - DAO객체 생성, 호출, 결과 얻기 [3]
+ 		  입력 결과를 반영 할 페이지 선택 [4]
+ 		   					  -----------
+		  					  = 페이지 이동(forward, redirect) --> 자바 안에서!
+		  					  				-------  --------
+		  					  				   X		O
+		  					  				  ---
+		  					  				 이유?
+		  					  				입력 정보와 insert액션을 기억하기 때문에
+		  					  				동일한 데이터가 2번 이상 입력될 수 있다.
+ 
+ 3. control? action=list  		- DB조회 요청!
+ 	>>>>service<<<<
+ 	할 일?
+ 		  ★ DB 전체조회
+ 		  	  - DAO객체 생성, 호출, 결과 얻기, 결과를 request영역에 저장 [3]
+		  조회 결과를 반영 할 페이지 선택 [4]
+		  					  -----------
+		  					  페이지 이동 (forward, redirect)
+		  					  			   -------  --------
+		  					  			      O         X
+													   ---
+													  이유?
+													 브라우저에 list.jsp호출		  					 
+		   
+ 4. control? action=edit  		- 수정폼 요청!
+ 	>>>>service<<<<
+	할 일?
+		  데이터 수집(특정 글 번호) [2]
+		  DB 조회 (특정 글 한 개) 
+		  	  - DAO객체 생성, 호출, 영역 데이터 저장  [3]
+		  ★ (기존 입력된 데이터가 출력된)수정폼 보이기 [4]
+		  
+		  
+ 5. control? action=update  
+ 	>>>>service<<<<
+ 
+ 6. control? action=delete  
+ 	>>>>service<<<<
+
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
