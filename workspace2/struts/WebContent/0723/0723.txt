@@ -1,5 +1,4 @@
 
-
   <Struts>
   
   Servers - new - 서버생성
@@ -9,16 +8,17 @@
   
  ---------------------------
   
-  jar == Java Archive
+ ※ jar == Java Archive
   
-  war == Web Archive
+    war == Web Archive
   
  ---------------------------
  
-  reference --> 컴파일 시 사용
-  lib		--> 런타임 시 사용
+  reference폴더 내 jar --> 컴파일 시 사용
+  JavaResource/Libraries/Web App Libraries 내 jar --> 런타임 시 사용
   
 ===========================================================
+
  <로그인 액션 만들기>
  1. 0723/loginForm.jsp
  	<input name="id">
@@ -28,7 +28,7 @@
  	---- execute() ----
  	요청분석, 사용자 데이터 얻어오기, 모델호출(데이터저장), 페이지 이동
  	
- 3. com.encore.s0723.dao.LoginProces
+ 3. com.encore.s0723.dao.LoginProcess
  
  	HashMap userPasswords;  -- 아이디와 비번 저장
  	HashMap userInfos;		-- 아이디와 사용자 정보 저장
@@ -40,6 +40,28 @@
  	- <action> : 로그인 폼 보이기
  	- <action> : LoginAction을 거친(실행)후 성공페이지 또는 실패페이지 이동
  
+----------------------------------------------------------------------------------------------
+ <스트럿츠 구조>
+ 1. ActionServlet : 어떤 Actiond을 사용할지 여부 등 스트럿츠 전반에 대한 설정을
+ 					저장하고 있는 struts-config.xml파일을 읽어 저장하는 Servlet클래스
  
+ 2. RequestProcessor : 사용자의 요청을 받으면 struts-config,xml설정에 따라 실제로 호출할 Action을
+ 					   선택하고, request와 response서블릿 객체를 이용해서 미리 선행작업을 하는 역할
+ 					   
+ 3. ActionForward : Action이 모든 작업을 끝내고 view해줄(이동 할) 페이지의 경로를 지정하는것
  
- 
+ 4. Action : 실질적인 비지니스 로직을 수행
+ 	- execute() 메소드에 전달되는 파라미터
+ 		- mapping  : 이 Action을 선택하는데 사용된 ActionMapping
+ 		- form     : 매핑에서 정의된 ActionForm
+ 		- request  : 요청 컨텍스트
+ 		- response : 응답을 생성해줄 객체
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
