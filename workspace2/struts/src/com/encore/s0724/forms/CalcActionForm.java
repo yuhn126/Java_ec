@@ -39,7 +39,8 @@ public class CalcActionForm extends ActionForm {
 	@Override
 	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
 		ActionErrors err = new ActionErrors(); // 빈 바구니
-		if (su1 != null) {
+		if (request.getMethod().equals("POST")) {
+		//폼 전송된 데이터 (su1, su2, oper)가 존재했을때
 			if (su1.length() == 0 || su2.equals("") || su1 == null || su2 == null) {
 				err.add("errcalc", new ActionMessage("calc.input", "데이터를 입력하세요!"));
 			} else if (!su1.matches("[\\d]+") || !su2.matches("[\\d]+")) {
@@ -47,7 +48,8 @@ public class CalcActionForm extends ActionForm {
 			} else if (oper.equals("/") && su2.equals("0")) {
 				err.add("errcalc", new ActionMessage("calc.divide", true));
 			}
-		} else {
+		} else {//if(request.getMethid().equals("GET"))
+			//== redirect, GET / URL을 직접 입력했을 때(적절하지 않은 접근), 폼데이터 전송이 없을때
 			err.add("errcalc", new ActionMessage("calc.input", "잘못된 접근입니다."));
 		}
 
