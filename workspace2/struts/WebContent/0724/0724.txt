@@ -1,0 +1,95 @@
+ 	
+ ※ p16)
+ 	<!--  로그인을 수행하는 액션 -->
+ 	<action path="/login2/login" 		   (/struts/login2/login.do)
+ 			type="strutsguide.actions.Login2Action" 
+ 			name="login2Form" (<form-bean>태그에 정의된 액션폼클래스의 이름)
+ 			validate="true" 
+ 			scope="request" 
+ 			input="/login2/loginForm.jsp"> (action폼에서 에러가 났을때(입력데이터가 적절치X) 이동할 경로)
+ 										   (액션폼 클래스 안에서 적절치 않은 데이터를 발견 시 이동할 경로
+																	(보통 폼을 담고 있는 JSP페이지))
+ 	</action>
+ 	
+ 	<!--  로그 아웃 수행 액션 --> 
+ 	<action path="/login2/logout" 
+ 			type="strutsguide.actions.LogoutAction" />	(session.invalidate())
+ 	
+ 	
+ 	<message-resources parameter="strutsguide.resources.application" />
+ 										a		b			c
+ 										
+	 		- properties file name
+	 	a.b.c
+	 	---
+	 	package Name
+ 	
+
+
+	
+==================================================================================================================
+
+ <미션>
+ 
+  화면에 계산기를 출력하시오. (스트럿츠 계산기)
+	- 뷰 : calc.jsp
+	
+	- 기존모델 Calculator(TomTest - com.encore.t0709)클래스를 그대로 사용
+	  com.encore.s0724.model.Calculator
+	  
+	- 액션 폼 com.encore.s0724.forms.CalcActionForm
+		- su1, su2, oper 멤버 필드 정의		<=== HTML name속성의 값과 일치하는 필드명!
+		- 세터메소드 정의					<=== setSu1(request.getParameter("su1"))
+		- 게터메소드 정의 					<=== 액션클래스 CalcAction에서 사용
+		- validate() 정의
+				==> su1과 su2, oper에 대한 유효성 검사
+				
+	- 액션 com.encore.s0724.action.CalcAction
+		- execute()정의
+			==> 액션폼으로부터 전달받은 데이터를 모델 Calculator에게 전달하여
+			    ------------------------------
+			    	    form.getSu1()
+			    	    
+			==> 결과값을 calc.jsp에 출력(영역저장)
+		
+     ------------------------ calc.jsp ------------------------------
+
+              텍스트 필드          연산자             텍스트 필드            계산
+	name =      "su1"              "oper"                "su2"
+	type =     "text"             <select>               "text"            "submit"
+	
+	---> 계산 버튼 클릭시
+	---> 계산기 밑으로 수평선<hr>긋기
+	---> 수평선 밑에 계산 결과를 '파랑색'으로 "결과값: 2*3=6" 출력
+											   -------------
+											    EL, JSTL 사용
+	
+	---> 만약 su1또는 su2에 데이터가 입력되지 않았다면
+		 '빨강색'으로 "데이터를 입력!" 출력
+		 err.add("새키값", new ActionMessage("calc.input", "데이터를 입력"))
+		 
+	---> 만약 su1 또는 su2에 숫자 아닌 값이 입력되었다면
+		 '빨간색'으로 "숫자만 입력" 출력
+		 
+	---> 만약 oper가 '/'이고 su2의 값이 '0'이 입력되었다면
+		 '빨간색'으로 "0으로 나눌 수 없습니다!" 출력
+
+	
+ - application.properties 메시지 추가!!
+	- calc.input={0} 입력!!    
+	- calc.divide=0으로 나눌 수 없습니다!!
+	
+	
+※참고)
+
+	ActionErrors err = new ActionErrors();
+
+	err.add("뷰와 공유할 키값", new ActionMessage(String key, boolean resource));
+	     - 인자 resource의 값이 true였을때  key값은 bundle key 
+	                                                ----------
+	                                        application.properties에 정의된 key
+	                                        
+	     - 인자 resource의 값이 false였을때  key값은 literal value
+	                                                 --------------
+	                                                  문자열 메시지
+	

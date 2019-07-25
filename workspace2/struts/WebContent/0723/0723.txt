@@ -47,8 +47,11 @@
  
  2. RequestProcessor : 사용자의 요청을 받으면 struts-config,xml설정에 따라 실제로 호출할 Action을
  					   선택하고, request와 response서블릿 객체를 이용해서 미리 선행작업을 하는 역할
- 					   
- 3. ActionForward : Action이 모든 작업을 끝내고 view해줄(이동 할) 페이지의 경로를 지정하는것
+ 
+ 3. ActionForm : HTML폼으로부터 받은 입력은 ActionForm빈으로 전달되고 파라미터에 대한 검증이 끝나면
+ 				 폼으로부터 받은 입력 값을 잘 정돈된 자바빈 데이터로 만들어 Action으로 전달.
+	
+	- ActionMessages : 자주 사용하는 message를 저장하는 ArrayList
  
  4. Action : 실질적인 비지니스 로직을 수행
  	- execute() 메소드에 전달되는 파라미터
@@ -56,12 +59,5 @@
  		- form     : 매핑에서 정의된 ActionForm
  		- request  : 요청 컨텍스트
  		- response : 응답을 생성해줄 객체
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
+	- ActionForward : Action이 모든 작업을 끝내고 view해줄(이동 할) 페이지의 경로를 지정하는것
  	
