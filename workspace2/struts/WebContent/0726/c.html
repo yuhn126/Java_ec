@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script type="text/javascript">
+			function printName(){
+				var uname = document.frm.username.value;
+				var sp = document.getElementById('sp');
+				sp.innerHTML = uname;
+				document.frm.username.value = "";
+			}
+		</script>
+	</head>
+	<!-- c.html -->
+	<body>
+		<h3>입력폼</h3><hr>
+		<form name="frm" method="post">
+			이름 : <input type="text" name="username"><br>
+			<input type="button" value="전송" onclick="printName()"> 
+		</form>
+		<hr>
+		안녕 <span id="sp"></span>
+	</body>
+</html>                         

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script type="text/javascript">
+			function manipulationDoc1(){
+				/*
+					<div>엘리먼트 객체 얻어오기!
+						---> Element자료형은 innerHTML속성을 사용할 수 있음!
+					변수 = d1.innerHTML			: getInnerHTML()을 의미
+					d1.innerHTML=데이터			: setInnerHTML(데이터)을 의미
+				*/
+				var d1 = document.getElementById("d1");
+				var content = d1.innerHTML		
+				console.log("d1.innerHTML >>" + content);
+				d1.innerHTML = '<font size=5 color=tomato>안녕하세요</font>';
+			}
+			
+			function manipulationDoc2() {
+				var name = document.frm.username.value;
+				var d2 = document.getElementById("d2"); //d2자료형 : Element
+				d2.innerHTML='<font color=green>안녕, ' + name +'</font>'
+			}
+			
+			function manipulationDoc3() {
+				/*
+					문서 조작에 필요한 데이터가 외부(서버)에 있을 때 그 서버에게
+					데이터를 요청!
+					 ---> 서버통신이 필요함!!
+					 		--> 객체 : XMLHttpRequest!
+				*/
+				//객체 생성
+				//XMLHttpRequest xhr = new XMLHttpRequest();
+				xhr = new XMLHttpRequest();
+				
+				//xhr.onreadystatechange = 콜백함수명;
+				//콜백함수란? 이벤트발생시 실행하는 함수
+				xhr.onreadystatechange = fromServer;
+				//readystate값이 변경되는것 (0 --> 1, 1 --> 2)을 이벤트로 해서
+				//fromServer()메소드를 호출
+				
+				var name = document.frm.username.value;
+				console.log('name>>'+name);
+				//한글데이터를 (서버JSP에게)전달하는 경우 깨짐이 발생(GET방식)
+				//할 수 있고 UTF-8형식으로 변환해서 보내는 것이 좋다.
+				//encodeURIComponent(한글데이터)
+				//name = encodeURIComponent(name)
+				
+				//데이터를 출력하는 URL을 요청
+				//xhr.open(HTTP요청 방식, 요청 URL)
+				//xhr.open('GET', 'hello.jsp?a=10&name=홍길동');
+				xhr.open('POST', 'hello.jsp');//★ url요청
+				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+				//URL요청시 전달할 데이터가 text임을 정의!(POST인 경우)
+				xhr.send('uname=' + name);
+				
+			}//manipulationDoc3(서버에서 데이터 요청)
+			
+			function fromServer() { //콜백함수 : 응답데이터 얻어오기
+				if(xhr.readyState == 4){ //4의 의미 : 응답데이터를 전부 받았을 때(통신요청이 끝났을때)
+					//alert('fromServer');
+					var msg = xhr.responseText;//응답데이터 얻기★
+					alert('응답데이터 >>>' + msg);
+					document.getElementById("d3").innerHTML=msg;
+				}
+			}//fromServer
+			
+		</script>
+	</head>
+	<!-- hello.html(확장자html은 요청페이지) -->
+	<body>
+		<h3>Ajax테스트</h3><hr>
+		<form name="frm">
+			 <input type="text" name="username">
+		</form>
+		<br>
+		<input type="button" value="문서조작요청1" onclick="manipulationDoc1()">
+		<input type="button" value="문서조작요청2" onclick="manipulationDoc2()">
+		<input type="button" value="문서조작요청3" onclick="manipulationDoc3()">
+		<div id="d1"><strong>내가 <br>innerHTML이다</strong></div>
+		<div id="d2"></div>
+		<div id="d3"></div>
+	</body>
+</html>

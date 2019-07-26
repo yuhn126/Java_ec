@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>요청페이지</title>
+		<script src="/struts/js/ajax.js"></script>
+		<script>
+			function toServer() { //URL요청
+				//sendRequest(url, params, callback, method)
+				var params='name='+document.frm.name.value;
+				//var params='name=홍길동';
+			}
+			
+		 	function fromServer() { //콜백함수 : 요청에 대한 응답 데이터 얻기
+				if(xhr.readyState == 4) {
+					var msg = xhr.responseText; //데이터얻기
+				}
+			}
+		</script>
+	</head>
+	<!-- hello2.html (서버데이터를 요청하는 페이지)
+	
+		문제) ajax를 사용해서 '요청'버튼 클릭 시
+			  메시지창(alert)에 '안녕하세요, [홍길동]고객님~!!' 출력하시오.
+			  
+	 -->
+	<body>
+		<h3>요청페이지</h3><hr>
+		<form name="frm">
+			고객이름 : <input type="text" name="name"><br>
+			<input type="button" value="요청" onclick="toServer()">
+		</form>
+	</body>
+</html>
