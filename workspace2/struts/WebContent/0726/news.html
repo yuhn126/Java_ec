@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>뉴스정보</title>
+		<script src="/struts/js/ajax.js"></script>
+		<script>
+			//ajax요청!! - 두개의 함수를 필요로 함   1함수(요청) 2함수(응답처리)
+			function loadNews() {//요청
+				sendRequest('news.jsp', null, loadedNews);
+			}
+			function loadedNews() {//응답처리
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					//응답데이터 얻기 var v1 = xhr.responseText
+					//v1의 자료형? String
+					//응답데이터 얻기 var v2 = xhr.responseXML
+					//v2의 자료형? Document
+					document.getElementById("d1").innerHTML = xhr.responseText;
+				}
+			}//loadedNews
+			window.onload = function() {
+				loadNews();
+			}
+		</script>
+	</head>
+	<!-- news.html -->
+	<body>
+		<h3>최신늬우스</h3>
+		<hr>
+		<div id="d1"></div>
+	</body>
+</html>

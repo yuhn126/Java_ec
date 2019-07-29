@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Ajax요청테스트(전체페이지)</title>
+		<!-- 레퍼런스 전용 <script>태그 사용! -->
+		<script type="text/javascript" src="../js/ajax.js"></script>
+		<script type="text/javascript">
+			function load1() {//페이지 요청
+				//요청 시 필요한 요소 : (원하는 데이터를 출력하는)URL요청, 파라미터 전달, 요청 방식
+				sendRequest('response/response1.jsp', '', loaded1, 'GET');
+			}
+			
+			function loaded1() {//응답 처리(콜백함수)
+				//응답처리 시 가장 중요한 요소 : 1. 데이터 얻기	2. 얻은 데이터로 문서 조작
+				if(xhr.readyState == 4 && xhr.status == 200){
+					var str = xhr.responseText; //str="Hello,Ajax~!!"
+					var arr = str.split(','); //arr=["Hello", "Ajax~!!"]
+					
+					var html = '<ul>';
+					for(var i=0; i<arr.length; i++){
+						html += '<li>'+arr[i]+'</li>';	
+					}
+					html += '</ul>';
+					
+					var d1 = document.getElementById('d1'); //출력 할 위치 잡기
+					//d1:Element ==> innerHTML속성 사용 가능!
+					d1.innerHTML = str; //서버가 전달한 데이터를 그대로 출력
+					d1.innerHTML = html; //서버가 전달한 데이터를 JS내에서 가공해서 출력
+				}
+			}//loaded1
+			
+			//-----------------------------------------------------------------------
+			
+			function load2(){ //페이지 요청
+				var uname = document.getElementById('uname');
+				//uname : <input>Element
+				console.log('uname>>>' + uname.value);
+				//var params = 'username=나길동'
+				var params = 'username='+uname.value;
+				sendRequest('response/response2.jsp', params, loaded2, 'POST');
+			}
+			
+			function loaded2(){ //응답 처리
+				if(xhr.readyState==4&&xhr.status==200){
+					var str = xhr.responseText;
+					document.getElementById('d1').innerHTML = str;
+				}
+			}
+			
+			//-----------------------------------------------------------------------
+			
+			function load3(){ //페이지 요청
+				var uname = document.getElementById('uname');
+				//uname : <input>Element
+				console.log('uname>>>' + uname.value);
+				//var params = 'username=나길동'
+				var params = 'username='+uname.value;
+				sendRequest('response/response3.jsp', params, loaded3, 'POST');
+			}
+			
+			function loaded3(){ //응답 처리
+				if(xhr.readyState==4&&xhr.status==200){
+					var str = xhr.responseText;
+					var d1 = document.getElementById('d1');
+					//d1은 엘리먼트 타입! ==> innerHTML, innerText속성 사용 가능
+					//d1.innerHTML = str;
+					//응답데이터의 MIME형식 중 'text/html'과 'text/plain'은 결과의 차이가 없다.
+					d1.innerText = str; //태그 해석하지 않고 text자체로 출력해라!
+				}
+			}
+			
+			//-----------------------------------------------------------------------
+			
+			function load4() { //요청
+				sendRequest('response/response4.jsp', null, loaded4);
+			}
+			
+			function loaded4() { //응답처리(콜백)(XML데이터 중 '책제목'데이터를 얻어서 번호순으로 출력!)
+				if(xhr.readyState==4&&xhr.status==200){
+					var doc = xhr.responseXML; //doc자료형? Document
+					//Document 할 수 있는 일? 1. 위치(root엘리먼트 위)  2. GOD (생성)  3. 짭짤 (doc.getElement) 
+					//※주의) document : 현재 문서 객체, doc : 얻어온 문서 객체
+					var root = doc.documentElement;//<books>리턴
+					console.log('root태그명 : ' + root.tagName);
+					
+					//Element    doc.getElementById('아이디명');
+					//NodeList   doc.getElementsByTagName('태그명');
+					
+					//책 제목 얻어오기
+					var titleList = doc.getElementsByTagName('title');
+					//titleList의 자료형? NodeList(length, item(index))
+					
+					var html='<ol>';
+					for(var i=0; i<titleList.length; i++){
+						var title = titleList.item(i); //title자료형? ElementNode
+								//<title>AjaxProgramming</title>
+						html += '<li>' + title.textContent + '</li>';
+					}
+					html += '</ol>';
+					console.log('html>>>' + html);
+					
+					document.getElementById('d1').innerHTML = html;
+				}
+			}
+			
+			//-----------------------------------------------------------------------
+			
+			function load5() {//JSON데이터 요청
+				sendRequest('response/response5.jsp',null, loaded5, 'GET');
+			}
+			
+			function loaded5() {//JSON데이터를 요리!
+				//이름, 나이, 직업 정보를 화면에 출력
+				if(xhr.readyState == 4 && xhr.status == 200){
+					//var str = xhr.responseText; //str자료형 : String ==> "{name:'나길동'}"
+					//console.log('str >>' + str);
+					
+					var person = eval("("+xhr.responseText+")");
+					//person자료형? JSON
+					//eval함수 ---> 특정한 형식을 갖는 텍스트를 JS Object로 변환!
+					console.log(person);
+					
+					//var person = {"name":"나길동", "age":"15", "job": "학생"};
+					var htmlTxt = '이름 : ' +  person.name +
+								  '<br>나이 : ' + person.age +
+								  '<br>직업 : ' + person.job;
+					document.getElementById('d1').innerHTML = htmlTxt;
+				}
+			}
+			
+		</script>
+	</head>
+	<!-- request.html -->
+	<body>
+		이름 : <input type="text" id="uname"><br>
+		<button onclick="load1()">response1요청(HTMLtext)</button><br>
+		<button onclick="load2()">response2요청(HTMLtext)</button><br>
+		<button onclick="load3()">response3요청(text,plain)</button><br>
+		<button onclick="load4()">response4요청(xml)</button><br>
+		<button onclick="load5()">response5요청(JSON)</button><br>
+		<h3>결과 출력</h3><hr>
+		<div id="d1"></div>
+	</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>최고온도구하기</title>
+  <script type="text/javascript" src="/struts/js/ajax.js"></script>
+  <script type="text/javascript">
+    function loadTemp(){//서버에게 온도 정보 요청
+      //sendRequest(url, params, callback, method)
+      	sendRequest('getMaxTemperature.jsp','',loadedTemp);
+    }
+    
+    function loadedTemp(){//콜백함수(요청후 실행할 코드 정의)
+       if(xhr.readyState==4  && xhr.status==200){
+    	  var str = xhr.responseText;//var str = '25.6, 29.6, 32.4, 19.2'
+    	  var arr= str.split(',');
+    	  //arr=["25.6", "29.6", "32.4", "19.2"];//문자열 배열
+    	  
+    	  var arr2 = new Array(arr.length);
+    	  for(var i=0; i<arr.length; i++){
+    		  arr2[i] = parseFloat(arr[i]);   //float배열 ---> 대소 비교
+    	  }
+    	  //arr2=[25.6, 29.6, 32.4, 19.2];//문자열 배열
+    	  var max=arr2[0];
+    	  
+    	  for(var i=1; i<arr2.length; i++){
+    		  if(max < arr2[i]) max = arr2[i];
+    	  }
+    	  document.getElementById('sp').innerHTML=max;
+       }	
+    }//loadedTemp
+    
+    window.onload=function(){
+    	//브라우저에 HTML이 전체 출력이 되고 난후 실행할 코드
+    	loadTemp();
+    }
+  </script>
+</head>
+<!-- maxTemperature.html  --> 
+<body>
+   최고 온도는 [<span id="sp"></span>]도!!
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="/struts/js/ajax.js"></script>
+<script type="text/javascript">
+	//전역변수
+	var checkFirst = false;
+	var loopSendKeyword = false;//반복 제어
+
+	function startSuggest() {//키보드가 눌렸을때 최초 호출되는 함수
+		//상태표현 전역변수를 true변경
+		if (!checkFirst) {
+			setTimeout('sendKeyword()', 500);//한번 호출하면 순환구조를 갖음!!
+			loopSendKeyword = true;
+		}
+		checkFirst = true;
+	}//startSuggest
+
+	function sendKeyword() {//(suggest2.jsp)페이지 요청
+		//폼에 입력된 '키워드'를 서버에 전달, 순환구조
+
+		if (!loopSendKeyword)
+			return;
+
+		var keyword = document.searchForm.keyword.value;
+
+		if (keyword != '') {//입력된 문자가 최소 1개 이상일때
+			//sendRequest(url, params, callback, method);
+			var params = "keyword=" + keyword;//"keyword=a"
+			sendRequest('suggest2.jsp', params, displayResult, 'POST');
+		} else {//입력된 키워드가 없다면
+			hide('suggest');
+		}
+
+		setTimeout('sendKeyword()', 500)
+	}//sendKeyword
+	
+	function displayResult() {//콜백함수: 서버가 전달한 데이터 얻기, 문서조작
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var str = xhr.responseText;//str="3|ajax,apple,apart"
+			var result = str.split("|");// ["3","ajax,apple,apart"]
+			var count = parseInt(result[0]);//count="3" ---> 3
+
+			if (count > 0) {//연관 제시어가 1개 이상일때
+				var keywordList = result[1].split(",");//["ajax","apple","apart"]
+
+				var htmlTxt = '';
+				for (var i = 0; i < keywordList.length; i++) {
+					htmlTxt += "<a href=\"javascript:select('" + keywordList[i]
+							+ "')\">" + keywordList[i] + "</a><br>";
+				}
+				//htmlTxt="ajax<br>apple<br>apart<br>"
+				var suggestList = document.getElementById('suggestList');//안div
+				//suggestList: <div>엘리먼트
+				suggestList.innerHTML = htmlTxt;
+				show('suggest');
+			}
+		}
+	}//displayResult
+	
+	function select(selectedKeyword) {
+		//나열된 제시어 중 선택된 단어를 <input name=keyword>에게 전달
+		document.searchForm.keyword.value = selectedKeyword;
+
+		//제시어 기능이 일단락 되었음
+		checkFirst = false;
+		loopSendKeyword = false;
+
+		hide('suggest');
+	}
+
+	function show(elementId) {
+		var ele = document.getElementById(elementId);//ele: Element
+		if (ele)//id에 해당하는 엘리먼트가 존재한다면
+			ele.style.display = '';
+	}
+	function hide(elementId) {
+		var ele = document.getElementById(elementId);//ele: Element
+		if (ele)//id에 해당하는 엘리먼트가 존재한다면
+			ele.style.display = 'none';
+	}
+	
+	function searchInfo() { //부분 HTML출력하는 페이지 요청!
+		//sendRequest(url★, params, callback, method)
+		var params = 'ename=' + document.searchForm.keyword.value;
+				   //'ename=ADAMS';
+		sendRequest('empInfo.jsp', params, searchInfoPrint, 'POST');
+	}//searchInfo
+	
+	function searchInfoPrint() { //페이지 요청 후 응답에 대한 처리! (콜백함수)
+		//if(응답데이터를 전부 받았다면, 서버실행이 잘 되었다면){//기다리는 작업
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var htmlTxt = xhr.responseText;//★응답데이터 얻기
+			
+			//조작
+			var infoDiv = document.getElementById( 'infoDiv');
+			infoDiv.innerHTML = htmlTxt;
+		}
+	}
+	
+</script>
+</head>
+<!-- suggest.html -->
+<body>
+	<form name="searchForm">
+		<font color="green">검색어</font>
+		<input type="text" name="keyword" onkeydown="startSuggest()">
+		<button type="button" onclick="searchInfo()">검색</button>
+		
+
+		<!-- 바깥div: 스타일 적용(보여라,숨겨라), 안div:제시어출력 -->
+		<div id="suggest" style="display:; position: absolute; left: 60px;">
+			<div id="suggestList"></div>
+		</div>
+	</form>
+
+	<br>
+	<div id="infoDiv"></div>
+
+	<!-- <div id="testDiv" style="display:none ">주말에 뭐하세요?</div>
+  <button onclick="show('testDiv')">보여라</button>
+  <button onclick="hide('testDiv')">숨겨라</button> -->
+</body>
+</html>
+
+
+

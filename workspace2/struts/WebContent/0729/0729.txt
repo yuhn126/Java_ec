@@ -1,0 +1,187 @@
+ ▣ JavaScript ▣
+  - HTML문서내에서 동적페이지(DynamicWebPage)를 구성하는 용도로 사용.
+  - 용도)
+	1. 문서조작(태그와 속성 또는 스타일조작)
+	2. 유효성 검사(사용자가 입력한 데이터가 프로그램에서 원하는 데이터인지를 체크)
+
+ 	예) 
+		<div id="d1">이 영역이 div태그의 innerHTML영역입니다!!</div>
+   
+		<script>
+			var data='홍길동';
+			d1.innerHTML=data;
+		</script>    
+    
+    
+ ▣ Ajax ▣
+  - Ajax는 자바스크립트!!
+  - 비동기서버통신( JavaScript				Java(JSP/Servlet) )
+  					----------              ----------------
+  					클라이언트				      서버
+  			     프로그램 사용자
+  			     			<--------------->
+  			     		 통신 : 데이터를 주고받기
+  			     		 
+  			    클라이언트  -------------------> 서버
+  	  ?name=gildong&age=13						 request.getParameter("name");
+  	  
+  	  <form>
+  	  	<input name=job>						 request.getParameter("job");
+  	  </form>
+  	  
+  	  			클라이언트  <------------------- 서버
+  	  <form action=hello.jsp>
+  	  <a href=hello.jsp>
+  	  location.hred=hello.jsp
+  	  -----------------------
+  	     URL요청 액션!
+  	     
+  	     									 ---------- hello.jsp --------
+                                             <%@page pageEncoding='UTF-8' import="java.util.Calendar" %>
+                                             <html>
+                                                 <body>
+                                                	안녕하세요 오늘의 날짜를 알려드릴께요!!
+	                                                <br>
+	                                                <%= 2+3 %>
+	                                                <hr>
+	                                                <% Calendar c = Calendar.getInstance() %>                        
+	                                                <%= c.get(Calendar.MONTH)+1%>월
+	                                                <%= c.get(Calendar.DATE)%>일
+                                                 </body>
+                                             </html>
+                                             
+                클라이언트  -------------------> 서버
+                                             
+  	  		
+  - 단지 조작에 필요한 '데이터'가 현재 페이지가 아닌 외부문서(서버에 존재하는 문서)에 존재할 때 사용.
+  
+  - ajax의 요청페이지는 웹브라우저에 보여지는 전체페이지가 아니고
+  	요청 HTML의 특정한 부분을 변경할 '부분 HTML'이다.
+  	
+  - XMLHttpRequest라는 객체를 통해 서버에게 필요한 데이터를 요청할 수 있음.
+	예) 
+		<div id="d2">이 영역이 div태그의 innerHTML영역입니다!!</div>
+   
+		<script>
+			d1.innerHTML=server.jsp페이지 요청합니다!!;
+		</script>   
+-------------------------------------------------------
+ server.jsp
+	===> '홍길동' 출력!!
+
+ ▣  XMLHttpRequest(서버통신객체) xhr ▣ 
+	속성)
+     readyState : 0 (아무상태아님)
+                  -------요청---------------
+                  1 (open메소드호출-URL요청)
+                  2 (send메소드호출-파라미터전달)
+                  
+                  -------응답---------------
+                  3 (요청한 데이터를 일부분 받는 중)
+                  4 (요청한 데이터를 전체 받았을때)
+                  -------------------------
+     onreadystatechange : 이벤트 속성(readyState값이 변경되었을때를 이벤트!!)
+     status : 서버의 상태                  
+             (예==> 200:정상상태
+                    403:요청 권한 없음
+                    404:요청 페이지 없음
+                    405:요청한 메소드(doGet, doPost)가 준비되지 않았음
+                    500:요청한 페이지가 서버에서 실행 중(runtime시) 에러발생)
+   메소드)
+     open('HTTP요청방식', '요청URL', 비동기방식)
+     send('요청URL에게 전달할 데이터');
+           ----> send(name=홍길동&age=13)
+   
+========================================================================
+ ▣ Ajax핵심코드
+
+  <클라이언트>                               <서버>
+  - JavaScript                           - JSP,Servlet(자바)
+  - 데이터요청                           - 데이터 준비, 데이터 출력 out.print(데이터)
+       
+          1.open(URL요청과 get방식의 데이터)  
+          ---------------------------->
+
+          2.send(post방식의 데이터)  
+          ---------------------------->
+          
+          3.responseText 또는 responseXML
+          <----------------------------
+            var v1 = xhr.responseText;
+            var v2 = xhr.responseXML;
+            
+            v1의 자료형? String
+            v2의 자료형? Document       
+            
+                
+            
+           
+ ※ 위의 1,2,3번을 실행하기 위해서는 XMLHttpRequest(xhr)객체가 필요!!
+ ※ 3번(서버데이터 받기)은 콜백함수에 정의!!
+                           --------
+                         이벤트 발생 후 실행하는 함수
+                         ------
+                      xhr을 통한 URL요청       
+                      
+========================================================================
+
+ <미션>
+	- suggest2.html(suggest.html복사해서 요청페이지만 suggest2.jsp로 변경!!)
+  		----> <input type=text name=keyword>에 '사원명' 키보드 입력
+  		----> 'A'입력시
+                       출력  ----> ALLEN
+                                   ADAMS
+ 		----> 'a'입력시
+                       출력  ----> ALLEN
+                                   ADAMS
+	- suggest2.jsp (DB조회)
+
+	1. sql문 작성 (emp.xml)    id='selectKeyword'
+	2. DAO메소드 추가
+	3. suggest2.jsp에서 DAO호출                
+	
+	
+-----------------------------------------------------------
+ <미션2>
+  - 사원 정보 출력하기
+  - 위 <미션>의 제시된 사원 중 한 명을 선택 후 '검색'버튼 클릭 시
+    사원의 정보(사원정보, 사원명, 입사일, 부서명)를 브라우저에 출력하기
+    
+    예) <h3>MARTIN사원의 정보</h3>
+        --------------------------
+         사원번호 : 7654
+         사원명   : MARTIN
+         입사일   : 1981년 09월 28일
+         부서명   : SALES
+         
+  1. sql문 작성 emp.xml(id=selectEmpInfo)	
+  2. DAO메소드 추가 (selectEmpInfo(ename))
+  3. 출력할 JSP페이지(empInfo.jsp)
+  	 ---> suggest2.html(전체HTML)에 출력
+	
+=================================================================== 
+ 
+ <iBatis!!>
+  
+  resultClass="com.encore.s0729.EmpVO" 클래스가 반드시 존재해야하며 클래스 내에 기본 생성자가 반드시 정의되어 있어야함!	  
+  
+  DAO ==> Guest guest = new Guest();
+		  smc.queryForObject('you', guest);
+
+	<select id='you' parameterClass="vo.Guest" resultClass="vo.Emp">
+		select ename ~
+	</select>
+	
+	iBatis ==> Emp emp = new Emp();  ※기본생성자 호출 주의
+			   emp.setEname(rs.getString("ename"));
+			   return emp;
+			   
+			   
+	<select resultClass="java.util.HashMap">
+		select ename ~
+	</select>
+	
+	iBatis ==> HashMap map = new HashMap();
+				※resultClass속성에 인터페이스 또는 추상클래스 올 수 없음
+				map.put("ename", rs.getString("ename"))                                   
+                                 
