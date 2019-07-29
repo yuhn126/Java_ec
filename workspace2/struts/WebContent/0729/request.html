@@ -61,7 +61,7 @@
 				sendRequest('response/response3.jsp', params, loaded3, 'POST');
 			}
 			
-			function loaded3(){ //응답 처리
+			function loaded3(){ //응답 처리 (plain)
 				if(xhr.readyState==4&&xhr.status==200){
 					var str = xhr.responseText;
 					var d1 = document.getElementById('d1');
@@ -126,7 +126,7 @@
 					for(var i=0; i<person.people.length; i++){
 						var htmlTxt = '이름 : ' +  person.people[i].name +
 						  '<br>나이 : ' + person.people[i].age +
-						  '<br>직업 : ' + person.people[i].job + '<br>';
+						  '<br>직업 : ' + person.people[i].job + '<hr>';
 						document.getElementById('d1').innerHTML += htmlTxt;
 					}
 					//var person = {"name":"나길동", "age":"15", "job": "학생"};
