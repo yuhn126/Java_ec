@@ -3,8 +3,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Ajax요청테스트(전체페이지)</title>
+		
 		<!-- 레퍼런스 전용 <script>태그 사용! -->
 		<script type="text/javascript" src="../js/ajax.js"></script>
+		
 		<script type="text/javascript">
 			function load1() {//페이지 요청
 				//요청 시 필요한 요소 : (원하는 데이터를 출력하는)URL요청, 파라미터 전달, 요청 방식
@@ -13,7 +15,7 @@
 			
 			function loaded1() {//응답 처리(콜백함수)
 				//응답처리 시 가장 중요한 요소 : 1. 데이터 얻기	2. 얻은 데이터로 문서 조작
-				if(xhr.readyState == 4 && xhr.status == 200){
+				if(xhr.readyState == 4 && xhr.status == 200){ //요청한 데이터를 전체 받았을때 && 서버 정상 상태
 					var str = xhr.responseText; //str="Hello,Ajax~!!"
 					var arr = str.split(','); //arr=["Hello", "Ajax~!!"]
 					
@@ -121,11 +123,17 @@
 					//eval함수 ---> 특정한 형식을 갖는 텍스트를 JS Object로 변환!
 					console.log(person);
 					
+					for(var i=0; i<person.people.length; i++){
+						var htmlTxt = '이름 : ' +  person.people[i].name +
+						  '<br>나이 : ' + person.people[i].age +
+						  '<br>직업 : ' + person.people[i].job + '<br>';
+						document.getElementById('d1').innerHTML += htmlTxt;
+					}
 					//var person = {"name":"나길동", "age":"15", "job": "학생"};
-					var htmlTxt = '이름 : ' +  person.name +
+					/* var htmlTxt = '이름 : ' +  person.name +
 								  '<br>나이 : ' + person.age +
 								  '<br>직업 : ' + person.job;
-					document.getElementById('d1').innerHTML = htmlTxt;
+					document.getElementById('d1').innerHTML = htmlTxt; */
 				}
 			}
 			
