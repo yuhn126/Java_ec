@@ -11,7 +11,7 @@
 			function load1() {//페이지 요청
 				//요청 시 필요한 요소 : (원하는 데이터를 출력하는)URL요청, 파라미터 전달, 요청 방식
 				sendRequest('response/response1.jsp', '', loaded1, 'GET');
-			}
+			}//load1
 			
 			function loaded1() {//응답 처리(콜백함수)
 				//응답처리 시 가장 중요한 요소 : 1. 데이터 얻기	2. 얻은 데이터로 문서 조작
@@ -39,16 +39,16 @@
 				//uname : <input>Element
 				console.log('uname>>>' + uname.value);
 				//var params = 'username=나길동'
-				var params = 'username='+uname.value;
-				sendRequest('response/response2.jsp', params, loaded2, 'POST');
-			}
-			
+				//var params = 'username='+uname.value;
+				sendRequest('response/response2.jsp', 'username='+uname.value, loaded2, 'POST');
+			}//load2
+
 			function loaded2(){ //응답 처리
 				if(xhr.readyState==4&&xhr.status==200){
-					var str = xhr.responseText;
+					var str = xhr.responseText;//콜백
 					document.getElementById('d1').innerHTML = str;
 				}
-			}
+			}//loaded2
 			
 			//-----------------------------------------------------------------------
 			
@@ -62,7 +62,7 @@
 			}
 			
 			function loaded3(){ //응답 처리 (plain)
-				if(xhr.readyState==4&&xhr.status==200){
+				if(xhr.readyState==4 && xhr.status==200){
 					var str = xhr.responseText;
 					var d1 = document.getElementById('d1');
 					//d1은 엘리먼트 타입! ==> innerHTML, innerText속성 사용 가능
@@ -118,7 +118,7 @@
 					//var str = xhr.responseText; //str자료형 : String ==> "{name:'나길동'}"
 					//console.log('str >>' + str);
 					
-					var person = eval("("+xhr.responseText+")");
+					var person = eval("("+xhr.responseText+")"); //작은따옴표 제거!
 					//person자료형? JSON
 					//eval함수 ---> 특정한 형식을 갖는 텍스트를 JS Object로 변환!
 					console.log(person);
