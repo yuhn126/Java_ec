@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>사용자 정의 객체 Member</title>
+<script src="../js/member.js"></script>
+<script src="../js/member_json.js"></script>
+<script type="text/javascript">
+	window.onload = function() {
+		//new Member(name, id, securityNo)
+		var m = new Member('홍길동', 'gidong', '960302-2012345');
+
+		//출력할 엘리먼트 정보 얻기
+		var d1 = document.getElementById('d1');
+		d1.innerHTML = '변경전==> ' + m;//문자열 + m ---> m.toString()호출
+		d1.innerHTML += '<br>나이: ' + m.getAge();
+
+		//Member값 이름변경
+		m.setName("전길동");
+		d1.innerHTML += '<br><br>변경후==> ' + m.toString();
+
+		//Member값 전체변경
+		m.setValue("차길동", 'chagildong', '080808-3012345');
+		d1.innerHTML += '<br><br>변경후==> ' + m.toString();
+		d1.innerHTML += '<br>나이: ' + m.getAge();
+
+		var member = {
+			name : '홍길동',
+			favoriteColors : [ '파랑', '빨강', '노랑' ]
+		};
+		/*
+		member: JSON Object!!
+		접근법) JSON변수명.key값!!
+		
+		member.name  ---> String   리턴: 홍길동
+		member.favoriteColors  ---> Array   리턴: 배열
+		 */
+		var message = member.name + '님이 좋아하는 색상은 '
+				+ member.favoriteColors.length + '개이고, ';
+		message += '그 중 첫 번째 색상은 ' + member.favoriteColors[0] + '입니다.';
+		d1.innerHTML += '<br>' + message;
+		
+		//---------------------member_json-------------------------------------------
+		var m2 = new Member2('길라임', 'lime', '970503-2012345');
+		d1.innerHTML += '<br>Member2변경전 --> ' + m2.toString();
+	}
+
+</script>
+</head>
+<!-- useMember.html -->
+<body>
+	<h3>사용자 정의 Member객체 테스트</h3>
+	<div id="d1" style="border: 1px solid red"></div>
+</body>
+</html>

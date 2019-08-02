@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script src="../js/ajax.js"></script>
+		<script src="../js/member_json.js"></script>
+		<script>
+			function loadXML() { //member_xml.jsp페이지 요청
+				sendRequest('response/member_xml.jsp', '', loadedXML)
+			}
+			function loadedXML() {
+				if(xhr.readyState == 4 && xhr.status == 200){
+					var doc = xhr.responseXML;//doc자료형 : Document
+					var code = doc.getElementsByTagName('code')//NodeList[<code>]
+								.item(0)					   //첫번째<code>엘리먼트
+								.textContent;				   //'success'문자열
+					if(code === 'success'){
+						//엄격한 비교 (자료형, 데이터)
+						var name = doc.getElementsByTagName('name').item(0).textContent;
+						var id = doc.getElementsByTagName('id').item(0).textContent;
+						var sno = doc.getElementsByTagName('sno').item(0).textContent;
+						var m = new Member2(name, id, sno);
+						
+						var d1 = document.getElementById('d1');
+						d1.innerHTML = m.toString();
+						d1.innerHTML += '<br>나이 : ' + m.getAge();
+					}//if
+				}//상태체크if
+			}//loadedXML
+			
+			//========================================================================
+			function loadJSON() {//member_json.jsp요청
+				sendRequest('response/member_json.jsp', null, loadedJSON);
+			}//loadJSON
+			function loadedJSON() {//응답데이터출력
+				if(xhr.readyState == 4 && xhr.status == 200){
+					//var str = eval("("+xhr.responseText+")");
+					var jStr = JSON.parse(xhr.responseText); //jStr : JSON객체
+					console.log('code' + jStr.code);
+					var member = jStr.data.member;
+					var m2 = new Member2(member.name, member.id, member.sno);
+					document.getElementById('d1');
+					d1.innerHTML = m2.toString();
+					d1.innerHTML += '<br> 나이 : ' + m2.getAge();
+					
+				}//상태체크if
+			}
+			
+			//========================================================================
+			function loadJSONs() {//member_jsons.jsp요청
+				sendRequest('response/member_jsons.jsp', null, loadedJSONs)
+			}
+			function loadedJSONs() {
+				if(xhr.readyState == 4 && xhr.status == 200){
+					var arr = eval(xhr.responseText);//eval("[]") --> Array
+					//arr = [{나길동데이터}, {너길동데이터}, {우리길동데이터}]
+					var d1 = document.getElementById('d1');
+					d1.innerHTML = "";
+					for(var i=0; i<arr.length; i++){
+						var m3 = new Member2(arr[i].name,arr[i].id,arr[i].sno);
+						d1.innerHTML += m3.toString() + '<br> 나이 : ' + m3.getAge()+'세<hr color=tomato>';
+					}//for
+				}//상태체크if
+			}
+		</script>
+	</head>
+	<!-- loadMemberTest.html -->
+	<body>
+		<h3>멤버정보(XML, JSON)얻어오기</h3><hr>
+		<button onclick="loadXML()">XML정보</button>
+		<button onclick="loadJSON()">JSON정보</button>
+		<button onclick="loadJSONs()">JSON정보들</button>
+		<div id="d1" style="border: 1px solid blue"></div>
+	</body>
+</html>

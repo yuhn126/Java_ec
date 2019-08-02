@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script src="/struts/js/log.js"></script>
+		<script>
+			window.onload = function () {
+				//루트엘리먼트 구하기
+				var root = document.documentElement;
+				log('루트엘리먼트명: '+ root.tagName);
+				
+				//span태그들 구하기(span태그가 갖는 속성 출력)
+				var spanList = document.getElementsByTagName('span');
+				log('span태그의 수 : ' + spanList.length);
+				//NodeList >> length,item사용가능
+				for(var i=0; i<spanList.length; i++){
+					var span = spanList.item(i);
+					log((i+1) + '번째 span의 id속성값=' + span.getAttribute('id'));
+				}
+				
+				//body의 마지막 자식 구하기
+				//document.getElementsByTagName('body') == NodeList
+				//document.getElementsByTagName('body').item(0) == body엘리먼트
+				var bodyNode = document.getElementsByTagName('body').item(0);
+				log('body의 자식요소 갯수? : ' + bodyNode.childNodes.length);
+				log('body의 마지막 자식은? : ' + bodyNode.lastChild.nodeValue);
+			}
+		</script>
+	</head>
+	<!-- usingDOM.html(DOM API알아보기) -->
+	<body><span id="a">a</span>
+		<p>test<span id="b">b</span></p>
+		<div><p>p</p><span id="c">c</span></div>
+		<div id="debugConsole" style="border: 1px solid green"></div>abcd</body>
+</html>

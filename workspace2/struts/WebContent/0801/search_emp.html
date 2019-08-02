@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>사원정보출력</title>
+  <script src="../js/ajax.js"></script>
+  <script>
+     function load(){//페이지 요청
+    	//sendRequest('search_emp.jsp','keyword=S',loaded,'POST'); 
+    	var keyword = document.getElementById('search').value; 
+    	//sendRequest('search_emp.jsp','keyword='+keyword,loaded,'POST');
+    	
+    	//search_emp.jsp?keyword=S&kindName=ename
+    	var kinds = document.getElementsByName("kind");//name="kind"
+    	//kinds자료형? 배열
+    	console.log('라디오 그룹(kind)의 갯수>>>'+ kinds.length);		
+    	console.log('kinds[0].value>>>'+ kinds[0].value);		
+    	
+    	var kindName;//='ename' 또는 'dname' 또는 'job'
+    	for(var i=0; i<kinds.length; i++){
+    		if(kinds[i].checked){
+    			kindName = kinds[i].value;
+    			break;
+    		}
+    	}//for
+    	console.log('선택된 그룹이름>>>'+ kindName);
+    	
+    	if(keyword==''){
+    		alert("검색할 단어 입력!!");
+    		return;
+    	}else{
+    		var params='keyword='+keyword+"&kindName="+kindName;
+    		           //keyword=S&kindName=ename
+    		sendRequest('search_emp.jsp',params,loaded,'POST');	           
+    	}    	
+    	search.value='';//검색단어 초기화
+     }//load
+     
+     function loaded(){//응답처리
+    	if(xhr.readyState==4){
+    		d1.innerHTML=xhr.responseText;
+    	} 
+     }
+  </script>
+</head>
+<!-- search_emp.html -->
+<body>
+  <h3>사원정보출력</h3>
+  <hr>
+    <input type="radio" name="kind" checked value="ename">사원명
+    <input type="radio" name="kind" value="dname">부서명
+    <input type="radio" name="kind" value="job">직책명
+    <br>
+    <input type="text" id="search">
+    <button onclick="load()">검색</button>
+  <hr>
+  <div id="d1"></div>
+</body>
+</html>
+
+

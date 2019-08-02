@@ -1,0 +1,145 @@
+
+ <DOM> - Document		/ 		Object Model
+ 		----------
+ 		HTML, XML
+ 		---------
+ 		 text <body> ====> <book>엘리먼트 객체를 메모리에 적재
+ 		 
+  - 트리기반의 파서(메모리 표현)
+  
+  1. Node
+  	 - 추상객체(XML문서를 구성하는 모든 요소들의 부모!!)
+  	 - 메소드)
+  	 	♣ 노드의 정보를 얻거나 정하는 메소드
+  	 		XML문서를 구성하는 요소 : 12개 분류
+  	 		nodeType(1 ~ 12)
+  	 		nodeName	- 태그명
+  	 		nodeValue	- 텍스트 내용, 속성값, 주석값
+  	 	
+  	 	♣ 조작메소드
+  	 		- 추가, 삭제, 수정
+  	 		appendChild, insertBefore, removeChild, replaceChild
+  	 		사용형식) 부모노드.appendChild(자식노드);
+  	 	
+  	 	♣ 관계메소드
+  	 		- 부모, 자식, 형제
+  	 		parent child sibling
+  	 		
+  	 	  Element ele = new Element();
+  	 	  Node n = new Element();
+  	 	  
+  	 	  Element	Node
+  	 	  Attribute	Node
+  	 	  Text		Node
+  	 	  Document	Node
+  	 	  Comment	NOde
+  	 	  
+  2. Document
+  	- 문서객체
+  		♣ 위치 : XML문서트리에서 최상위에 위치
+  					==> 루트엘리먼트 바로 위에 위치
+  							==> 특정 XML문서의 루트 엘리먼트 얻어오는 기능
+  							Element root = doc.documentElement;
+  							
+  		♣ 생성관련메소드
+  			 createElement("gildong");	===> <gildong></gildong>
+  			 createAttribute("su","10")	===> <gildong su='10'></gildong>
+  			 createTextNode("안녕");	===> <gildong su='10'>안녕</gildong>
+  			 
+  		♣ 자주 사용하는 메소드
+  			Element 변수명 = doc.getElementById("String id");
+  			NodeList 변수명 = doc.getElementsByTagName("String tagName");
+  			
+  			
+  3. Element
+  	- XML문서를 구성하는 기본 객체
+  	- 속성관련된 메소드
+  		setAttribute
+  		getAttribute
+  		removeAttribute
+  		hasAttribute
+  		
+  4. NodeList
+  	- XML문서를 구성하는 요소들을 담는 클래스 (단, 속성 Attrinute는 제외)
+  
+  5. NamedNodeMap
+  	- 한 개의 태그 안의 Attribute들을 담는 클래스
+  	
+  ==> 4,5번 공통 속성, 메소드 : length속성, item(int index)메소그
+  	NodeList list;
+  	for(var i=0; i<list.length; i++){
+  		list.item(i);
+  	}
+  			 
+  			 
+  			 
+  			 
+ ======================================================================
+ 
+ Member.prototype.setValue = function(newId, newName){
+	this.id = newId;
+	this.name = newName;
+ }
+
+ =
+ 
+class Member{
+	void setValue(id, name){
+	
+	}
+	
+}
+
+========================================================================
+
+ JSON에서의 데이터 표시
+  1. 이름/값 쌍(자바의 Map이나 Hashtable과 같은 방식)
+  
+	{이름1:값1, 이름2:값2, 이름3:값3}
+		
+	예) 국가별 코드와 이름 표현
+		var countries = {ko:‘대한민국’, fr:‘프랑스’, uk:‘영국’}
+		var koName = countries.ko;
+		var frName = countries[‘fr’]
+
+	접근방식 : ‘객체.이름’ 이나 ‘객체[이름]’
+	
+  2. 배열
+  
+	[값0, 값1, 값2, 값3]
+	
+	예)	var countryCodes = [‘ko’, ‘fr’, ‘uk’, ‘us’];
+		var idx0 = countryCodes[0]; // ‘ko’
+		var idx2 = countryCodes[2]; // ‘uk’
+		
+	접근방식 : ‘객체[인덱스]’
+	
+  3. 혼합
+	예) var member = {
+		name: ‘홍길동’,	
+		
+
+ 예제2) JSON표기법을 사용한 클래스 정의
+  - 형식)
+	클래스이름 = function(파라미터) {
+	
+	}
+	
+	클래스이름.prototype = {
+		함수명1: function(파라미터1) {},
+		함수명2: function(파라미터2) {}
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

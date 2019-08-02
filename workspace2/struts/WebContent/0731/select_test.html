@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>시구동</title>
+		<script src="../js/ajax.js"></script>
+		<script>
+			var sido ="";
+			window.onload= function() {
+				loadSido();
+			}	
+		
+			function loadSido() {
+				sendRequest('addr_result.jsp', 'load=sido', loadedSido);
+			}
+		
+			function loadedSido() {
+				if(xhr.readyState == 4 && xhr.status == 200){
+					var str = xhr.responseText;
+					var s1 = document.getElementById('select1');
+					s1.innerHTML = str;
+				}
+			}
+			
+			
+			//=========================================================
+				
+			function loadGugun(param) {
+				sido = param;
+				sendRequest('addr_result.jsp', 'load=gugun&sido='+param.value, loadedGugun);
+			}
+			function loadedGugun() {
+				if(xhr.readyState == 4 && xhr.status == 200){
+					var str = xhr.responseText;
+					var s2 = document.getElementById('select2');
+					s2.innerHTML = str;
+				}
+			}
+			
+			//=========================================================
+			function loadDong(param) {
+				sendRequest('addr_result.jsp', 'load=gugun&sido='+sido.value+'&gugun='+param.value, loadedDong);
+			}
+			function loadedDong() {
+				if(xhr.readyState == 4 && xhr.status == 200){
+					var str = xhr.responseText;
+					var s3 = document.getElementById('select3');
+					s3.innerHTML = str;
+				}
+			}
+		</script>
+	</head>
+	<!-- select_test.html -->
+	<body>
+		<select id="select1" onchange="loadGugun(this)"></select>
+		<select id="select2" onchange="loadDong(this)"></select>
+		<select id="select3"></select>
+	</body>
+</html>

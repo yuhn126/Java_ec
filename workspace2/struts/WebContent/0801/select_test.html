@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>시도구군정보</title>
+  <script src="../js/ajax.js"></script>
+  <script>
+  //=========== sido구하기  =====================  
+    function loadSido(){//페이지요청
+      sendRequest('addr_result.jsp','want=sido',loadedSido);	
+    }
+    function loadedSido(){//응답데이터 얻기, 현재문서조작
+      if(xhr.readyState==4){
+    	//페이지를 요청해서 전체 데이터 응답이 끝났다면 
+    	
+    	var str = xhr.responseText;
+    	//"<option>서울</option><option>제주</option>"
+    	
+    	//엘리먼트 객체얻기 ==>왜? innerHTML할수 있기때문!!
+    	var sido = document.getElementById('sido');
+    	sido.innerHTML = str;
+      }    	
+    }
+    //=========== gugun구하기  =====================  
+     function loadGugun(){//페이지 요청
+    	//<input type='text' id='uname' value='길동이'>
+        // var uname = document.getElementById('uname'); //uname:엘리먼트객체
+        //  alert(uname.value)  ==> 길동이
+    	 var sido = document.getElementById('sido');//sido:엘리먼트 객체
+         sendRequest('addr_result.jsp','want=gugun&sido='+ sido.value,
+        		  loadedGugun,'POST');	
+     }
+     function loadedGugun(){//콜백: 응답처리
+    	 if(xhr.readyState==4){
+    		 var str = xhr.responseText;
+    		 document.getElementById('gugun').innerHTML=str;
+    	 }
+     }
+    //=========== dong구하기  =====================
+     function loadDong(){//페이지 요청
+    	/*
+    	  <select id=sido>
+             <option value=서울>서울</option>
+             <option value=부산>부산</option>
+             <option value=제주>제주</option>
+    	  </select>
+    	
+    	  ---->var sido = document.getElmentById('sido');
+    	          ---> sido.value
+    	  ----> getElement생략하고 바로 sido.value사용 가능
+    	*/
+    	
+    	
+        sendRequest('addr_result.jsp',
+        	 'want=dong&gugun='+gugun.value+'&sido='+sido.value
+        		    , loadedDong, 'POST');	
+     }
+     function loadedDong(){//응답 처리
+        if(xhr.readyState==4){//요청에서~응답까지가 끝난 상태
+            dong.innerHTML=xhr.responseText;
+        } 
+     }
+    
+    //window.onload=function(){할일}
+    window.onload=function(){
+    	loadSido();
+    }
+    
+  </script>
+</head>
+<!-- select_test.html
+      ==> Ajax요청
+          ==> (페이지 이동없이)특정부분을 변경
+      ==> 웹브라우저에 출력되는 전체 페이지
+      ==> 뒤에서는 jsp페이지로 변경!!
+      
+ -->
+<body>
+  <h3>시도구군동테스트</h3>
+  <hr>
+  <select id="sido" onchange="loadGugun()"><option>==선택==</option></select>
+  <select id="gugun" onchange="loadDong()"><option>==선택==</option></select>
+  <select id="dong"><option>==선택==</option></select>
+  
+</body>
+</html>
+
+
+

@@ -1,0 +1,18 @@
+
+
+<미션>
+ - 콤보박스(select,option)의 '시'를 선택시  관련된'구'가,
+   '구'를 선택시 관련된'동'이 출력되도록 하시오.
+   
+   ---> select_test.html
+   ---> <select name='sido'> 
+        <select name='gugun'> 
+        <select name='dong'>
+ - addr.sql
+ 
+1. select_test.html 페이지를 요청(페이지로딩 이벤트)했을 때 '시도'정보 출력
+2. 'sido' 콤보박스를 선택(변경)했을 때 '구군'정보 출력
+3. 'gugun' 콤보박스를 선택(변경)했을 때 '동'정보 출력
+ - addr_result.jsp : 요청에 대한 결과출력페이지
+ - addr.xml : sql문 작성
+ 

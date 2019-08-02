@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script type="text/javascript">
+			var cnt = 0;
+			function appendItem() {
+				cnt++;
+				var newDiv = document.createElement('div') //엘리먼트 생성
+				var htmlTxt = "새로 추가된 아이템 [" + cnt + "]" //HTML텍스트 생성
+								+ ' <input type="button" value="삭제" onclick="removeItem('+ cnt +')">'
+				
+				//newDiv.setAttribute("id","d1");//<div id="d1"></div>
+				newDiv.setAttribute("id","item_"+cnt);//<div id="item_1"></div>
+								
+				//newDiv.innerHTML = htmlTxt; //<div>내가 innerHTML이야!</div>
+				newDiv.innerHTML = htmlTxt; //<div>새로 추가된 아이템</div>
+				
+				//해로 만들어진 엘리먼트를 현재문서에 추가하기
+				//부모노드.appendChild(자식노드);
+				var itemList = document.getElementById('itemList');
+				itemList.appendChild(newDiv);
+				//<div id="itemList"><div>새로 추가된 아이템 [1]</div><div>새로 추가된 아이템 [2]</div></div>
+			}//appendItem()
+			
+			function removeItem(num) {
+				var removeNode = document.getElementById('item_' + num);
+				//removeNode == <div id="item_3">
+				
+				//var removeNode = document.getElementById('item_' + num);
+				//document.getElementById("itemList").removeChild(removeNode);
+				
+				removeNode.parentNode.removeChild(removeNode);
+				//removeNode.parentNode == <div id="itemList">
+				//사용 이유 : DOM프로그램 실행 시 delItem의 부모는 언제든지 변할 수 있기 때문에
+			}
+			
+			function delD1() {
+				var bodyNode = document.getElementsByTagName('body').item(0);
+				var d1Node = document.getElementById('d1');
+				bodyNode.removeChild(d1Node);
+			}
+			
+			function delD2(ele) {
+				//var d2Node = document.getElementById('d2');
+				//d2Node.parentNode.removeChild(d2Node);
+				
+				//ele == <button>
+				var fa = ele.parentNode;	 // == <div><button></div>
+				var grandfa = fa.parentNode; // == <html><div><button></div></html>
+				fa.parentNode.removeChild(fa);
+			}
+		</script>
+	</head>
+	<!-- changeUsingDOM.html -->
+	<body>
+		<h3>DOM을 사용한 현재문서 변경</h3>
+		<hr>
+		<input type="button" value="추가" onclick="appendItem()">
+		<div id="itemList"></div>
+		<div id="d1">
+			나디브<button onclick="delD1()">삭제</button>
+		</div>
+	</body>
+	<div id="d2">
+		너디브<button onclick="delD2(this)">삭제</button>
+	</div>
+</html>

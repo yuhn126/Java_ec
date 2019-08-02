@@ -1,0 +1,64 @@
+
+
+<미션>
+
+- search_emp.html
+  사원명, 부서명, 직책명 중 선택된 라디오에 따라 입력된 데이터를 포함하는 사원들의 정보를 출력하시오.
+ (사원들의 정보: 사원번호, 사원명, 입사일, 부서명, 직책명)
+
+- EmpInfo ---> empno, ename, hiredate, dname, job
+
+- search_emp.jsp (HTML 테이블출력)
+  
+예) 사원명 선택한 상태 ==> 입력값 'S'  
+
+        사원번호   사원명           입사일   부서명      직책
+		---------- --------------   -------- ---------  -----------------
+		      7369 SMITH            80/12/17 RESEARCH    CLERK
+		      7566 JONES            81/04/02 RESEARCH    MANAGER
+		      7788 SCOTT            87/04/19 RESEARCH    ANALYST
+		      7876 ADAMS            87/05/23 RESEARCH    CLERK
+		      7900 JAMES            81/12/03 SALES       CLERK
+
+=======================================================================
+########                    #######                        #######
+# HTML #                    # JSP #                        # SQL #
+########                    #######                        #######
+
+Ajax요청!!                  응답페이지
+            
+ 변수=.value                                                     
+jsp?keyword=S
+                        String keyword = 
+                        request.getParameter("keyword")            
+                        
+                        smc.queryForList("info",keyword)                                                      
+                                                      
+                                                    select 사원정보
+                                                    from   사원,부서
+                                                    where  ename like #keyword#  
+                       
+########                    #######                        #######
+# HTML #                    # JSP #                        # SQL #
+########                    #######                        #######
+                         List list;                        
+
+                        <table>
+                          <tr>
+                            <td></td>
+                          </tr>
+                        </table>
+
+innerHTML=str;
+
+
+   
+
+
+
+
+
+
+
+      
+      
