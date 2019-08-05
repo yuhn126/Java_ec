@@ -42,7 +42,19 @@
 				document.addForm.name.value='';
 				document.addForm.content.value='';
 				
-				sendRequest('/struts/reply.do?action=insert', params, addResult, 'POST');
+				//sendRequest('/struts/reply.do?action=insert', params, addResult, 'POST');
+				sendRequest('/struts/reply.do?action=insert', params,
+						function {//응답처리
+							if(xhr.readyState == 4){
+								var str = xhr.responseText;
+								//str='whirespace입력성공whirespace'
+								//str = str.trim();//낮은 버전의 브라우저에서는 trim()지원X
+								str = str.replace(/(^\s+)|(\s+$)/g, '');
+								alert(str);
+								loadReplyList();
+							}
+						},
+						'POST');
 			}
 			
 			function addResult() {//응답처리

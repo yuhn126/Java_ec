@@ -1,0 +1,183 @@
+
+ <jQuery>
+  - javascript 라이브러리!
+  - write less, do more
+  - HTML을 쉽게 접근하고 문서 조작을 간편하게 하는 제품 ----> 편리한 함수 제공
+  
+  문법)
+	jQuery(엘리먼트를 표현하는 선택자) ==> HTML문서 내의 엘리먼트 객체 얻어오기
+	==> 축약 : $(엘리먼트를 표현하는 선택자) ==> HTML문서내의 엘리먼트 객체 얻어오기
+	==> 리턴 : 확장 집합, 자바의 ArrayList와 흡사
+	
+  ※기본 문법※암기!
+  	$(선택자).action(할일); ==> 할 일은 익명의 함수 객체로 표현
+  		
+  		action = 이벤트 함수
+  		
+  	$("div")	---> 모든 div태그들
+  	$(".div")	---> class=div 속성이 있는 태그들
+  	$("div")	---> id=div 속성이 있는 태그 (id는 유일)
+  	
+  ※기본 문법 다시 정리※암기!	
+  	jQuery('선택자 조건')	----------------------------------->  조건에 일치하는 엘리먼트 집합
+  	 --> $('선택자')
+  	 	 $('선택자').action();	------------------------------->  엘리먼트에 적용할 액션 정의
+  	 	 														   (예 - action : 클릭했을때)
+  	 	 														   
+	//call-back function(콜백함수) : 이벤트 실행 시 실행하는 함수 (anonymous function)
+	
+-----------------------------------------------------------------------------------------------------
+
+  - el(Expression Language) : JSP페이지에서만 사용. (HTML페이지에서는 사용X)
+  	'{출력할 내용'} == 자바!
+  	위치 : 
+  		<head>
+  			<script>
+  				var str = '${username}';
+  				alert('${username}');
+  			</script>
+  		</head>
+  		<body>
+  			${msg}		${emp.ename}
+  			<a href="${path}/baby.jsp">이동</a>
+  			<%
+  				${msg} ---> ? > 에러발생!
+  				==> service()메소드 내에 들어가 자바 코드만 위치!
+  			%>
+  		</body>
+ 
+	--------------------------------------------------------------------------
+ jQuery : HTML 또는 JSP내의 JavaScript영역내에서 사용.
+  '$(선택자)'
+  
+  		<head>
+  			<script>
+  				var str=$('div');
+  				$('div').click(function(){});
+  			</script>
+  		</head>
+  		<body>
+  			<script>
+  				alert($('div').text());
+  			</script>
+  			$('div')	===> 	에러? 에러는 발생하지 않고 텍스트로 인식함!
+  		</body>
+  		
+  	jQuery문법)
+  		$(선택자).action(할 일);
+  		
+  		$(선택자) : 문서 내의 엘리먼트 집합을 얻어오는 기능
+  					action = 이벤트 함수
+  					할 일  = 익명의 함수(이름 없앤)로 표현! function(){} : 콜백함수
+  					
+  		$(선택자).action(function(){}); ★
+  		
+  	선택자 종류)
+  		$("태그이름")
+  			예) $("div") : 모든 <div>엘리먼트들
+  			
+  		$(".클래스명")
+  			예) $(".div") : 속성으로 class='div'를 갖는 엘리먼트들(리스트)
+  			
+  		$("#아이디명")
+  			예) $("#div") : 속성으로 id='div'를 갖는 엘리먼트!
+  		------------------------------------------------------------------
+  		
+  		$('a.b') : <a>엘리먼트 중 <a class='b'>인 엘리먼트 들		==> <a>태그
+  		
+  		$('a,b') : <a> 또는 <b> 엘리먼트 들							==> <a>태그, <b>태그
+  		
+  		$('a b') : <a>를 부모로 갖는 <b>엘리먼트 들(<a>에 속한 <b>)	==> <b>태그
+  									 
+  		$('[href]') : 현재 속성값으로 href속성이 있는 엘리먼트 들
+  			
+  			예)     <a>텍스트</a>				: 미적용
+  					<a href="경로">텍스트</a>	: 적용
+  					<link href="경로">			: 적용
+  			
+  		$('a[href]') : <a>엘리먼트 중 href속성이 있는 엘리먼트 들
+  			
+  			예)     <a href="경로">텍스트</a>	: 적용
+  					<link href="경로">			: 미적용
+  		
+  		$('a[href="http://daun.net"]') 
+  					: <a>엘리먼트의 href속성값이 "http://daun.net"인 엘리먼트 들
+  					
+  		$('a[href!="http://daun.net"]') 
+  					: <a>엘리먼트의 href속성값이 "http://daun.net"이 아닌 엘리먼트 들
+  		
+  		$('*') : HTML문서를 구성하는 모든 엘리먼트 들
+  		
+  		$(this) : 보통 이벤트를 발생시킨 한 개의 엘리먼트를 표현  			
+  			
+  		$('li:first') : 첫번째 <li>엘리먼트
+  		
+  		$('ul li:first') : <ul>의 자식 <li>중 첫번째 <li>엘리먼트 한 개
+  			<ul>
+  				<li>	<---------- 적용
+  				<li>
+  			</ul>
+  			<ul>
+  				<li>	<---------- 미적용
+  				<li>
+  			</ul>
+  			
+  		$('ul li:first-child') : 각각의 <ul>의 자식 <li>중 첫번째 <li>엘리먼트 한 개
+  			<ul>
+  				<li>	<---------- 적용
+  				<li>
+  			</ul>
+  			<ul>
+  				<li>	<---------- 적용
+  				<li>
+  			</ul>
+  		
+  		$(':button') : <input type=button>과 <button>엘리먼트 들
+  		
+  		$('tr:even')
+  		$('tr:odd')
+  		
+  		<table>
+  			<tr></tr>	0	<--- even
+  			<tr></tr>	1	<--- odd
+  			<tr></tr>	2	<--- even
+  			<tr></tr>	3	<--- odd
+  		</table>	
+  			
+  	※ 그 외 선택자들 ---> https://www.w3schools.com/jquery/jquery_ref_selectors.asp
+  -----------------------------------------------------------------------------------------------
+  
+	$('부모선택자').on('click','자식선택자', function(){});		
+	
+		$("p").on({
+	    mouseenter: function(){
+	      $(this).css("background-color", "lightgray");
+	    },  
+	    mouseleave: function(){
+	      $(this).css("background-color", "lightblue");
+	    }, 
+	    click: function(){
+	      $(this).css("background-color", "yellow");
+	    }  
+		
+		===> 다중 이벤트 구현 가능
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+  			
+  			
+  			

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>on함수테스트</title>
+	</head>
+	<!-- on_test.html
+		 $('선택자').action(function(){});
+		 
+		 $('선택자').click(function(){});
+		 $('선택자').on('이벤트', function(){});
+		 $('선택자').on('click', function(){});
+		 $('부모선택자').on('click','자식선택자', function(){});
+	
+		
+		문제) 1. 아래 '버튼생성' 버튼 클릭시 <div>엘리먼트 안에 <button>삭제</button>버튼 생성!
+			  2. '삭제'버튼 클릭 시 <p>태그 삭제! - hide()
+	 -->
+	 	<!-- <script src="../js/jquery-3.js"></script> -->
+	 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	 	<script>
+	 		//$(document).ready(할일); //html문서 로딩이 끝났을 때
+	 		$(document).ready(function(){
+	 			//$('input')
+	 			//$('input[type=button]')
+	 			//$('[type=button]')
+	 			$('input').click(function(){
+	 				//alert('클릭');
+	 				$('div').html('<button>삭제</button>');
+	 				//div.innerHTML = '<button>삭제</button>';
+	 				//<div><button>삭제</button><div>
+	 				
+	 				//$('선택자').action(할일);
+	 				//$('선택자').action(function(){});
+		 			/* 
+		 				$('button').click(function(){
+		 					$('p').hide(1000);
+		 				}) 
+		 			*/
+	 			});//input(type=button)클릭
+
+	 			/*
+		 			$('button').click(function(){
+		 				$('p').hide(500);
+		 			});// --> 최초 document.ready할 때 button태그가 없었으므로 무효!
+	
+		 			$('부모선택자').on('click','자식선택자', function(){});
+		 			 ---> document.ready하면서 부모선택자에 대한 '액션이벤트'를 먼저 정의하면 동적으로
+		 			 	  생성되는 자식 엘리먼트에 대한 이벤트를 처리할 수 있음
+		 			 	  
+		 			$('div').on('click','button', function(){});
+		 			 ---> div엘리먼트는 원래 문서에서 존재해야 하고
+		 			 	  나중 동적으로 생성되는 button엘리먼트에 '클릭'이벤트 적용하는것이 가능!
+	 			*/
+	 			$('div').on("click", "button", function(){
+	 				$('p').hide(1000);
+	 			});
+		 	
+				//$('선택자').action(할일);
+		 		$('p').on({//이벤트 : 할 일
+		 			mouseenter: function(){
+		 				$(this).css("background-color","pink");
+		 			},
+		 			mouseleave: function(){
+		 				$(this).css("background-color","gray");
+		 			},
+		 			click: function(){
+		 				$(this).css("background-color","yellow");
+		 			}
+		 		});
+	 		}); //html문서 로딩이 끝났을 때
+	 	</script>
+	<body>
+		<h3>on함수테스트</h3>
+		<p>동해물과 백두산</p>
+		<hr>
+		<input type="button" value="버튼생성">
+		<hr>
+		<div></div>
+	</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Content값 얻고 정하기</title>
+		<script src="../js/jquery-3.js"></script>
+		<script type="text/javascript">
+		/*
+			jQuery(document).ready(할일);
+			$(document).ready(할일);	$(document).ready(function(){});
+			jQuery(할일);
+			$(할일); 			$(function(){})
+		*/
+		$(function(){
+			//$('button').click(할일)
+			//$('button').click(function(){
+			$('#b1').click(function(){
+				alert($('a').attr('href'));//getAttribute('href')
+				//속성 : attribute ---> 관련함수 : attr('name','value')
+			});
+			
+			$('#b2').click(function(){
+				$('a').attr('href','https://www.daum.net');//setAttribute('href','https://www.daum.net')
+				$('a').text('다음으로 이동');
+				alert('링크변경성공');
+			});
+			
+			/*
+				변수명 = 엘리먼트객체.innerHTML
+						 엘리먼트객체.innerHTML = 데이터;
+			
+			   ====> jQuery : 변수명 = $('선택자').html
+			   						   $('선택자').html('데이터')
+			
+				변수명 = 엘리먼트객체.innerText
+						 엘리먼트객체.innerText = 데이터;
+			   
+			   ====> jQuery : 변수명 = $('선택자').text
+				  					   $('선택자').text('데이터')
+				
+			*/
+		});//document.ready
+		</script>
+	</head>
+	<!-- content_get_set_test.html -->
+	<body>
+		<h3>Content값 얻고 정하기</h3>
+		<hr>
+		<a href="http://www.naver.com">네이버로 이동</a><br>
+		<button id="b1">링크값얻기</button>
+		<button id="b2">링크값변경</button>
+	</body>
+</html>

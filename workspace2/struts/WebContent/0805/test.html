@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>함수테스트</title>
+		<script type="text/javascript">
+			function test2() {
+				alert('안녕2');
+			}
+			
+			window.onload=function(){
+				var b3 = document.getElementById('b3');
+				b3.onclick=function(){
+					alert('안녕3');
+					//외부에서도 컨트롤 가능
+				}
+			}
+		</script>
+	</head>
+	<!-- test.html -->
+	<body>
+		<h3>자바스크립트 함수 테스트</h3>
+		<button onclick="alert('안녕1')">눌러주세요1</button><br>
+		<button onclick="test2()">눌러주세요2</button><br>
+		<button id="b3">눌러주세요3</button>
+	</body>
+</html>

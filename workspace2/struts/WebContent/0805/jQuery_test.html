@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script src="../js/jquery-3.js"></script>
+		<script>
+			//window.onload=function(){} //웹브라우저 전체HTML문서 로딩이 끝났다면
+			//$(document).ready(function(){}) //웹브라우저 전체HTML문서 로딩이 끝났다면
+			//$(function(){})//웹브라우저 전체HTML문서 로딩이 끝났다면
+			
+			$(document).ready(function(){
+				//$('선택자').action(function() {할일});
+				//$('button').click(function() {alert('눌렀어요?');});
+				$('#b0').click(function() {
+					$('h3').html('<font color=red>재미있는 jQuery~!!</font>');
+				});
+				$('#b1').click(function() {
+					$('p').hide(1000);
+				})
+				$('#b2').click(function() {
+					$('p').show(1000);
+				})
+				$('#b3').click(function() {
+					$('*').hide(1000);
+				})
+			});//document.ready
+		</script>
+	</head>
+	<!-- jQuery_test.html -->
+	<body>
+		<h3>jQuery테스트</h3>
+		<p>
+			동해물과 백두산이<br>
+			마르고 닳도록<br>
+			하느님이 만세~!
+		</p>
+		<button id="b0">바꿔주세요</button>
+		<button id="b1">지우기</button>
+		<button id="b2">보이기</button>
+		<button id="b3">모두지우기</button>
+	</body>
+</html>
