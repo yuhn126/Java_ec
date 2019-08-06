@@ -1,0 +1,167 @@
+ <jQuery>
+  - 자바스크립트 라이브러리!
+  - write less, do more
+  
+  문법)
+	jQuery(엘리먼트를 표현하는 선택자) ==> HTML문서 내의 엘리먼트 객체 얻어오기
+	==> 축약 : $(엘리먼트를 표현하는 선택자) ==> HTML문서내의 엘리먼트 객체 얻어오기
+	==> 리턴 : 확장 집합, 자바의 ArrayList와 흡사
+	
+	$( 객채 )
+	$( '엘리먼트표현' )
+	
+	ElementList list = new ElementList();
+	
+	$( '엘리먼트표현' ).action();
+	
+	결과 : ArrayList list = new ArrayList();		size ===> 0
+		for(인덱스){
+			
+		}
+	
+	$( 'div' ).action();
+	$( '.div' ).action();
+	$( '#div' ).action();
+	$( 'a   b' ).action();
+	$( 'a , b' ).action();
+	$( 'a > b' ).action();
+	t
+	$( 'a [b]' ).action();
+	$(  '[b]'  ).action();
+	$( 'a[b=c]' ).action();
+	
+	$('엘리먼트매핑').action(할 일);
+	
+		function hello(){
+	
+	}
+	
+	hello();
+	
+	var good = function(){}
+	
+	good();
+	
+	$('엘리먼트매핑').action(function(){});
+	
+==================================================================================================================	
+	
+ <HTML 문서 내의 데이터를 얻거나 정하기>
+  - ★관련함수 : text(), html(), val()
+  
+  - text()
+	- innerText속성과 같음.
+	- 선택된 엘리먼트로 부터 내용(텍스트데이터)을 얻거나 정할 때 사용.
+
+ 예) 값 얻어오기
+ 	<div> 안녕 jQuery~!!</div>
+ 	
+ 문제) div태그 안의 내용을 메시지창에 출력하시오.
+ 	1. JavaScript ?
+ 		document.getElementsByTagName("div").item(0).textContent;
+ 					 NodeList		  <div>
+ 					 
+ 		var d1 = document.getElementById('d1');
+ 		var str2 = d1.innerText;
+ 					 
+	2. jQuery ?
+		var str3 = $('div').text(); ---> getText
+	
+ 예) 값 설정
+ 	<div id="d1">안녕 jQuery~!!</div>
+ 	
+ 문제) div태그안의 내용을 '대한민국 만세'로 변경하시오.
+ 	$('div').text('설정할내용')
+	
+	- <div></div>
+	
+		----> $('div').text('대한민국만세'); ---> setText
+		----> <div>대한민국만세</div>
+		
+
+	1. 값 얻어오기
+		var 변수명 = $('선택자').html();
+	2. 값 설정
+		$('선택자').html('설정할 내용 텍스트 또는 태그');
+ 	
+   - val() : 폼 안의 데이터를 얻거나 정할 때 사용.
+   
+   예) <form name='frm'>
+   			이름 : <input type=text name='username' value='기본값' id='un'>
+   	   </form>
+   	   
+	1. JavaScript
+		var name = document.frm.username.value;
+				 = document.getElementById('un').value;
+				 
+	2. jQuery
+		var name2 = $('form input[name=username]').val();
+				  = $('[name=username]').val();
+				  = $("un").val();
+	
+		값설정) '기본값' ---> '나길동'
+			$('#un').val()
+ 	
+--------------------------------------------------------------------------------------------
+  - append() : Inserts content at the end of the selected elements 마지막 자식으로 추가
+	  	 예) $("p").append("나텍스트");
+	  	 	  부모			  자식
+  	 	  
+  	 	  - 엘리먼트를 만드는 방법
+			function appendText() {
+	  			var txt1 = "<p>Text.</p>";
+	  			var txt2 = $("<p></p>").text("Text.");
+				var txt3 = document.createElement("p");
+				
+				txt3.innerHTML = "Text.";
+				
+				$("body").append(txt1, txt2, txt3);
+			}
+  		 
+  - prepend() : Inserts content at the beginning of the selected elements 첫번째 자식으로 추가
+  	 	형식) $(선택자).prepend(추가텍스트 또는 마크업);
+  	 
+  - after() : Inserts content after the selected elements
+  		 형식) $(선택자).after(추가텍스트 또는 마크업);
+  	 
+  - before() : Inserts content before the selected elements	
+	 	형식) $(선택자).before(추가텍스트 또는 마크업);
+
+	
+	
+  - remove(  ) : 선택한 엘리먼트(태그) 제거
+  		   ---- 
+  		   조건 삽입 가능
+  		   
+  - empty() : 선택한 태그의 자식을 제거
+  
+  - $("div span") : <div>태그의 자손<span>
+  
+  - $("div>span") : <div>태그의 바로 밑 자식<span>
+	
+  - addClass(클래스명); : 클래스 추가
+	  	 예) $("#div1").addClass("important blue"); 				---> 	multiple class 가능
+	  	 	 --> <div id="div1" class="important blue"></div>	
+	
+  - removeClass(클래스명) : 클래스 제거
+	
+  - noConflict() : 충돌 방지 ---> conflict_test.html 참조
+  
+  - parent() : 부모 엘리먼트
+  
+  - parents() : 조상 엘리먼트들
+  
+  - parentsUntil()
+  	
+  	$("span").parentsUntil("div"); : <div>엘리먼트부터 <span>의 부모엘리먼트 까지
+  	
+  - children() : 바로 아래 자식 태그
+  
+  - find()     : 자손 태그 중 원하는 태그 찾기
+		 $("div").find("span"); ---> <div>엘리먼트의 자손 엘리먼트 중 <span>찾기
+	
+	
+	
+	
+	
+	

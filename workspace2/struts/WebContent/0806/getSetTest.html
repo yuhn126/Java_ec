@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>text,html,val함수테스트</title>
+		<script src="../js/jquery-3.js"></script>
+		<script type="text/javascript">
+			//$('선택자').action(할일); $('선택자').action(function(){});
+			//기다려1 $(document).ready(function(){});
+			//기다려2 $(function(){})
+			$(function(){
+				$('#b1').click(function(){
+					var str = $('div').text();//글자만 뽑아오기!
+					alert(str);
+				});//첫번째 버튼 클릭했다면
+				
+				$('#b2').click(function(){
+					$('div').text('<font color=red>나디브</font>');
+					//브라우저는 마크업 해석하지 않음!
+				});
+				
+				$('#b3').click(function(){
+					alert($('div').html()); //글자(text)와 마크업(태그) 뽑아오기!
+				});
+				
+				$('#b4').click(function(){
+					$('div').html('<font color=red>나디브</font>');
+					//브라우저는 마크업 해석을 적용
+				});
+				
+				/*
+				$('#b5').click(function() {
+					//var str = $('p').html();
+					//str += '<br>마르고 닳도록';
+					//$('p').html(str);
+					
+					$('p').html($('p').html()+'<br>마르고 닳도록');
+				});
+				*/
+				
+				//$('선택자').text(function(인덱스, 원래텍스트){return '텍스트';});
+				//$('선택자').html(function(인덱스, 원래텍스트){return '텍스트';});
+				$('#b5').click(function() {
+					$('p').html(function(idx, ori){
+						if(idx == 0){
+							return ori+' 마르고 닳도록';
+						} else if(idx == 1){
+							return ori+' 철갑을 두르듯';
+						}
+						
+					});
+				});
+				
+				$('#b6').on('click', function() {
+					alert($('[name=username]').val());
+				});
+				
+				$('#b7').click(function() {
+					$('[name=username]').val('동에번쩍');
+				});
+			});//document.ready
+		</script>
+	</head>
+	<!-- getSetTest.html -->
+	<body>
+		<h3>text,html,val함수테스트</h3><hr>
+		<div><font color="blue">나디브</font></div>
+		<button id="b1">div값 얻기(text)</button>
+		<button id="b2">div값 설정(text)</button><br>
+		<button id="b3">div값 설정(html)</button>
+		<button id="b4">div값 설정(html)</button>
+		
+		<hr>
+		<p>동해물과 백두산이</p>
+		<p>남산위에 저 소나무</p>
+		<button id="b5">가사추가</button>
+		
+		<hr>
+		이름 : <input type="text" name="username"><br>
+		<button id="b6">사용자명얻기</button>
+		<button id="b7">사용자명변경</button>
+		<!-- 
+			문제) '가사추가'버튼 클릭 시 첫번째<p>태그에 가사 '마르고 닳도록'을 한 줄 밑에 추가
+			문제) 						 두번째<p>태그에 가사 '철갑을 두른듯'을 한 줄 밑에 추가
+		-->
+	</body>
+</html>

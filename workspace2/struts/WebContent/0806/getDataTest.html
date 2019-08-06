@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jQuery통한데이터얻어오기</title>
+		<script src="../js/jquery-3.js"></script>
+		<script type="text/javascript">
+			var printData = function(){
+				var str="";
+				var checked = $('[name=fruit]:checked').each(function() {//체크된 과일의 수 만큼 반복
+					str += $(this).val();
+				});
+				alert("이름▶"+$('#uname').val()
+						+"\n비번▶"+ $('[name=pass]').val()
+						+"\n히든▶"+$('[name=hide]').val()
+						+"\n좋아하는 과일▶"+ str
+						+"\n강의실▶"+$('[name=room]:checked').val()
+						+"\n점심메뉴▶"+$('[name=menu]').val()// $('[name=menu option:selected]').val()
+	    				+"\n메모▶"+$('[name=memo]').val());
+	
+			}
+		</script>
+	</head>
+	<!-- getDataTest.html -->
+	<body>
+		<h3>jQuery통한 데이터 얻어오기</h3>
+		<hr>
+		<form name="frm">
+			이름: <input type="text" name="uname" value="나이름" id="uname"> <br> 
+			비번: <input type="password" name="pass" value="1234"> <br>
+			히든: <input type="hidden" name="hide" value="지킬박사와하이드"> <br>
+			좋아하는 과일:
+			<input type="checkbox" name="fruit" value="풋사과" checked>사과         
+			<input type="checkbox" name='fruit' value="딸기">딸기      
+			<input type="checkbox" name="fruit" value="바나나" checked>바나나       <br>  
+			강의실:
+			<!-- 
+				$('input[name=room]') ==> 4개의 <input>엘리먼트 집합!
+				$('input[name=room]:checked')
+						 ==> 그룹에서 체크된 1개의 <input>엘리먼트!
+				
+			 -->
+			<input type="radio" name="room" value="1강의실" checked>1강의실       
+			<input type="radio" name="room" value="2강의실">2강의실       
+			<input type="radio" name="room" value="3강의실">3강의실       
+			<input type="radio" name="room" value="4강의실">4강의실 <br>
+			점심메뉴:
+			<select name="menu">
+				<option value="김치찌개">한식</option>
+				<option value="꿔바로우" selected>중식</option>
+				<option value="초밥">일식</option>
+			</select><br>
+			메모:
+			<textarea rows="5" cols="30" name="memo">기본text!!</textarea><br>
+		    <input type="button" value="입력내용출력" onclick="printData()">
+		  </form>
+	</body>
+</html>

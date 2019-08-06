@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jQuery충돌테스트</title>
+		<script src="../js/test.js"></script>
+		<script src="../js/jquery-3.js"></script>
+		<script>
+			//$.noConflict(); ==> jQuery내에서 '$'부호를 사용하지 않겠음
+			//$(function(){}) ==> jQuery(function(){})
+			
+			var jq = $.noConflict(); //'$'부호를 대신해서 'jq'를 사용하겠음!
+			
+			jq(function(){
+				//'버튼'클릭시 메시지창을 통해 '안녕, username'출력하기
+				jq('button').click(function(){
+					alert('안녕,' + jq('input[name=username]').val());
+				});
+			});
+		</script>
+		<script>
+			window.onload=function(){
+				var text = '올해는 ' + $.getFullYear() + '년 입니다.';
+				div.innerHTML=text;
+			}
+		</script>
+	</head>
+	<!-- conflict_test.html -->
+	<body>
+		<h3>jQuery충돌테스트</h3><hr>
+		<!-- test.js를 참조해서 <div>태그 안에 현재년도를 출력하시오. -->
+		<div id="div"></div>
+		<input type="text" name="username">
+		<button>누르세요</button>
+	</body>
+</html>

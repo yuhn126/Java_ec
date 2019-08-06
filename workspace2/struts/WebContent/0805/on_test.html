@@ -51,6 +51,7 @@
 		 			$('div').on('click','button', function(){});
 		 			 ---> div엘리먼트는 원래 문서에서 존재해야 하고
 		 			 	  나중 동적으로 생성되는 button엘리먼트에 '클릭'이벤트 적용하는것이 가능!
+		 			 	  원래 문서에 없던 엘리먼트는 이벤트 적용x
 	 			*/
 	 			$('div').on("click", "button", function(){
 	 				$('p').hide(1000);

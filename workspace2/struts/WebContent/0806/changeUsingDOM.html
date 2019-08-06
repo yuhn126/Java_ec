@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script src="../js/jquery-3.js"></script>
+		<script>
+			$(function(){//document.ready
+				var cnt=0
+				$('#b1').click(function(){
+					cnt++
+					$('#itemList').append("<div>새로운아이템["+cnt+"]<button>삭제</button></div>");
+				})
+				
+				$('#itemList').on('click','button',function(){
+					//동적으로 생성된 엘리먼트에 이벤트를 적용
+					$(this).parent().remove();
+					//$(this) ==> 클릭 이벤트를 발생시킨 button엘리먼트!
+				})
+				
+				$('#b2').click(function(){
+					$('#itemList').empty();
+				})
+			});
+		</script>
+	</head>
+	<!-- changeUsingDOM.html
+		 (jQuery DOM을 이용한 화면 변경, 조작
+		 		- append, prepend, after, before, remove, empty)
+		 		
+		 문제) #b1버튼 클릭 시 <div>엘리먼트에 내용추가
+		 									   --------
+		 									   <div>새로운아이템[1]</div><button>삭제</button>
+		 문제) 새로 추가된 '삭제'버튼 클릭 시 ===> '삭제'버튼의 부모 <div>삭제
+		 문제) #b2버튼 클릭 시 생성된 모든 <div>삭제
+	 -->
+	<body>
+		<button id="b1">추가</button>
+		<button id="b2">전체삭제</button>
+		<div id="itemList"></div>
+	</body>
+</html>
