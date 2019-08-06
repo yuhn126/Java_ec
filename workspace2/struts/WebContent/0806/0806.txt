@@ -49,14 +49,19 @@
  <HTML 문서 내의 데이터를 얻거나 정하기>
   - ★관련함수 : text(), html(), val()
   
+	text() - Sets or returns the text content of selected elements
+	html() - Sets or returns the content of selected elements (including HTML markup)
+	val() - Sets or returns the value of form fields
+  
   - text()
 	- innerText속성과 같음.
 	- 선택된 엘리먼트로 부터 내용(텍스트데이터)을 얻거나 정할 때 사용.
 
- 예) 값 얻어오기
- 	<div> 안녕 jQuery~!!</div>
+	예) 값 얻어오기
+	 	: <div> 안녕 jQuery~!!</div>
  	
- 문제) div태그 안의 내용을 메시지창에 출력하시오.
+	문제) div태그 안의 내용을 메시지창에 출력하시오.
+	
  	1. JavaScript ?
  		document.getElementsByTagName("div").item(0).textContent;
  					 NodeList		  <div>
@@ -67,11 +72,11 @@
 	2. jQuery ?
 		var str3 = $('div').text(); ---> getText
 	
- 예) 값 설정
- 	<div id="d1">안녕 jQuery~!!</div>
+	 예) 값 설정
+	 	<div id="d1">안녕 jQuery~!!</div>
  	
- 문제) div태그안의 내용을 '대한민국 만세'로 변경하시오.
- 	$('div').text('설정할내용')
+ 	문제) div태그안의 내용을 '대한민국 만세'로 변경하시오.
+ 		 : $('div').text('설정할내용')
 	
 	- <div></div>
 	
@@ -86,9 +91,9 @@
  	
    - val() : 폼 안의 데이터를 얻거나 정할 때 사용.
    
-   예) <form name='frm'>
-   			이름 : <input type=text name='username' value='기본값' id='un'>
-   	   </form>
+	   예) <form name='frm'>
+	   			이름 : <input type=text name='username' value='기본값' id='un'>
+	   	   </form>
    	   
 	1. JavaScript
 		var name = document.frm.username.value;
