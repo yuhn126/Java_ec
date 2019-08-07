@@ -1,0 +1,62 @@
+ <jQuery>
+ 	$(선택자).action(function(){}); ★
+ 	
+ <Ajax>
+ 	$(선택자).load(URL,data,callback);
+ 	
+ 	예)
+		$("button").click(function(){
+			$("#div1").load("demo_test.txt", function(responseTxt, statusTxt, xhr){
+				if(statusTxt == "success")
+					alert("External content loaded successfully!");
+				if(statusTxt == "error")
+					alert("Error: " + xhr.status + ": " + xhr.statusText);
+			});
+		});
+		
+ <load>
+ 	$(selector).load(URL,data,callback);
+ 	
+ 		예) $("#div1").load("demo_test.txt");
+ 		
+ <get>
+ 	$.get(url, data, callback, type);
+ 	
+ <post>
+ 	$.post(url, data, callback, type);
+ 
+ <ajax>
+ 	$.ajax({
+			url : '',
+			success : function(result){},
+			data : { name:'~', ~:~, ...},
+			type : 'POST'		   //HTTP요청방식(GET, POST)
+			,dataType : 'text'	   //응답데이터 형식(text, html, xml, json)
+	});
+ 
+ 
+==> https://araikuma.tistory.com/640 
+			
+==========================================================================================
+ <미션>
+  - 0730폴더의 request.html과 response1.jsp ~ response5.jsp복사
+  
+  - jQuery의 $.ajax()함수를 사용하여 응답페이지 호출
+  
+  - 1번버튼: 응답데이터를 ',' 구분해서 <ul><li> 구성하고 <div>엘리먼트 내용변경
+    2번버튼: <input>내의 이름을 전달하고 응답데이터를 <div>엘리먼트 내용변경
+    3번버튼: <input>내의 이름을 전달하고 응답데이터를 <div>엘리먼트 내용변경
+    4번버튼: 응답데이터 중 '책제목'만  <ol><li> 구성하고 <div>엘리먼트 내용변경
+    5번버튼: 응답데이터에서 이름,나이,직업구분해서 서로 다른 줄에 표시하고 <div>엘리먼트 내용변경
+    6번버튼: 응답데이터중 '책제목'만 <ol><li>구성하고 빨강 마크업 후 <div>엘리먼트 내용변경
+
+
+
+
+
+
+
+
+
+		
+		

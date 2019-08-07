@@ -15,18 +15,17 @@
 	$( '엘리먼트표현' ).action();
 	
 	결과 : ArrayList list = new ArrayList();		size ===> 0
-		for(인덱스){
-			
-		}
 	
 	$( 'div' ).action();
 	$( '.div' ).action();
 	$( '#div' ).action();
+	$( 'a . b' ).action();	:	<a>엘리먼트 중 <a class="b">인 엘리먼트들
 	$( 'a   b' ).action();
 	$( 'a , b' ).action();
 	$( 'a > b' ).action();
-	t
-	$( 'a [b]' ).action();
+	
+   - [] ===> 속성!
+	$( 'a [b]' ).action();	:	<a>엘리먼트 중 href속성이 있는 엘리먼트들
 	$(  '[b]'  ).action();
 	$( 'a[b=c]' ).action();
 	
@@ -49,63 +48,66 @@
  <HTML 문서 내의 데이터를 얻거나 정하기>
   - ★관련함수 : text(), html(), val()
   
-	text() - Sets or returns the text content of selected elements
-	html() - Sets or returns the content of selected elements (including HTML markup)
-	val() - Sets or returns the value of form fields
+	 text() - Sets or returns the text content of selected elements
+	 html() - Sets or returns the content of selected elements (including HTML markup(태그까지))
+	 val()  - Sets or returns the value of form fields
   
   - text()
 	- innerText속성과 같음.
 	- 선택된 엘리먼트로 부터 내용(텍스트데이터)을 얻거나 정할 때 사용.
 
-	예) 값 얻어오기
-	 	: <div> 안녕 jQuery~!!</div>
- 	
-	문제) div태그 안의 내용을 메시지창에 출력하시오.
-	
- 	1. JavaScript ?
- 		document.getElementsByTagName("div").item(0).textContent;
- 					 NodeList		  <div>
- 					 
- 		var d1 = document.getElementById('d1');
- 		var str2 = d1.innerText;
- 					 
-	2. jQuery ?
-		var str3 = $('div').text(); ---> getText
-	
-	 예) 값 설정
-	 	<div id="d1">안녕 jQuery~!!</div>
- 	
- 	문제) div태그안의 내용을 '대한민국 만세'로 변경하시오.
- 		 : $('div').text('설정할내용')
-	
-	- <div></div>
-	
-		----> $('div').text('대한민국만세'); ---> setText
-		----> <div>대한민국만세</div>
+		예) 값 얻어오기
+		 	: <div> 안녕 jQuery~!!</div>
+	 	
+		문제) div태그 안의 내용을 메시지창에 출력하시오.
 		
+	 	1. JavaScript ?
+	 		document.getElementsByTagName("div").item(0).textContent;
+	 					 NodeList		  <div>
+	 					 
+	 		var d1 = document.getElementById('d1');
+	 		var str2 = d1.innerText;
+	 					 
+		2. jQuery ?
+			var str3 = $('div').text(); ---> getText
+		
+		 예) 값 설정
+		 	<div id="d1">안녕 jQuery~!!</div>
+	 	
+	 	문제) div태그안의 내용을 '대한민국 만세'로 변경하시오.
+	 		 : $('div').text('설정할내용')
+		
+		- <div></div>
+		
+			----> $('div').text('대한민국만세'); ---> setText
+			----> <div>대한민국만세</div>
+  - html()
+    - innerHTML속성과 같음.
+    - 선택된 엘리먼트로 부터 내용(텍스트데이터)을 얻거나 정할 때 사용.   
+    - text()함수와 차이점은 HTML마크업을 포함, 적용함!!	
 
-	1. 값 얻어오기
-		var 변수명 = $('선택자').html();
-	2. 값 설정
-		$('선택자').html('설정할 내용 텍스트 또는 태그');
+		1. 값 얻어오기
+			var 변수명 = $('선택자').html();
+		2. 값 설정
+			$('선택자').html('설정할 내용 텍스트 또는 태그');
  	
-   - val() : 폼 안의 데이터를 얻거나 정할 때 사용.
+  - val() : 폼 안의 데이터를 얻거나 정할 때 사용.
    
 	   예) <form name='frm'>
 	   			이름 : <input type=text name='username' value='기본값' id='un'>
 	   	   </form>
    	   
-	1. JavaScript
-		var name = document.frm.username.value;
-				 = document.getElementById('un').value;
-				 
-	2. jQuery
-		var name2 = $('form input[name=username]').val();
-				  = $('[name=username]').val();
-				  = $("un").val();
-	
-		값설정) '기본값' ---> '나길동'
-			$('#un').val()
+		1. JavaScript
+			var name = document.frm.username.value;
+					 = document.getElementById('un').value;
+					 
+		2. jQuery
+			var name2 = $('form input[name=username]').val();
+					  = $('[name=username]').val();
+					  = $("un").val();
+		
+			값설정) '기본값' ---> '나길동'
+				$('#un').val()
  	
 --------------------------------------------------------------------------------------------
   - append() : Inserts content at the end of the selected elements 마지막 자식으로 추가

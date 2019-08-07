@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script type="text/javascript">
+			function gildong(a, b, c) {
+				alert('안녕, 길동[a=' + a + ', b=' + b + ', c=' + c + ']')
+			}
+			//$.post('요청url', '전달데이터', 콜백)
+			//$.post('요청url', 콜백)
+			
+			var hwasa = function() {
+				alert('곱창 고고!');
+			}
+			
+			function lime(str, fun){
+				//원하는 자료형 str:String, fun:함수
+				
+				/*
+					typeof(데이터)  --->  데이터의 자료형을 리턴
+					typeof('안녕하세요?')  --->  'String'
+					typeof(new Date())     --->  'object'
+					typeof(12345)          --->  'number'
+					typeof(function test(){}) --->  'function'
+				*/
+				if(typeof(str) === 'string'){
+					alert(str);
+					fun();	
+				} else if (typeof(str) === "function"){
+					str();
+				}
+			}
+		</script>
+	</head>
+	<!-- test.html(자바스크립트의 인자 테스트) -->
+	<body>
+		<h3>파라미터 테스트</h3><hr>
+		<button onclick="gildong(11,22,33)">1번</button>
+		<button onclick="gildong(11,22)">2번</button>
+		<button onclick="gildong(11)">3번</button>
+		<button onclick="gildong()">4번</button>
+		<button onclick="gildong(11,22,33,44,55)">5번</button>
+		<br>
+		<button onclick="lime('안녕', hwasa)">라임호출1</button>
+		<button onclick="lime(hwasa)">라임호출2</button>
+	</body>
+</html>

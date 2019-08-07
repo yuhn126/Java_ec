@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script src="../js/jquery-3.js"></script>
+		<script>
+			$(function () {
+				$('button').click(function(){
+					//$('div').load('요청URL'); ==> 요청URL에서 출력하는 값은 div(선택자)에 innerHTML!!
+					//$('div').load('demo.txt');  		//전체 text,html 얻어오기 
+					//$('div').load('demo.txt p'); 		//특정 엘리먼트만 선택
+					//$('div').load('demo.txt p#ko'); 	//특정 엘리먼트중 조건을 만족하는 것만 선택 
+					//$('div').load('demo.jsp');		//전체 text,html얻어오기
+					
+					//$('div').load('요청URL',function(응답데이터,서버상태text,XHR){});
+					$('div').load('demo3.jsp', function(fromData,statusTxt,xhr) {
+						//div.innerHTML = 'demo.jsp'; 외의 추가적인 코드
+						console.log('fromData>>>'+fromData);
+						console.log('statusTxt>>>'+statusTxt);
+						console.log('xhr>>>'+xhr);
+						
+						if(statusTxt == 'success'){//페이지 요청 성공
+							alert('데이터 load성공!');
+						} else if (statusTxt == 'error'){//페이지 요청 실패
+							alert('잘못된 요청입니다');
+							alert('서버에러 : '+ xhr.status +', ' + xhr.statusText);
+							$('div').html(fromData);
+						}
+					})
+				});
+			});
+		</script>
+	</head>
+	<!-- load_test.html -->
+	<body>
+		<h3>Ajax-load()테스트</h3><hr>
+		<div>안녕, Ajax~!!</div>
+		<button>눌러주세요</button>
+	</body>
+</html>

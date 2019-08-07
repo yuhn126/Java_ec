@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ajax요청테스트(전체페이지)</title>
+<script src="../js/jquery-3.js"></script>
+<script>
+	/*
+	 $.ajax({
+	 url : 
+	 ,data : 
+	 ,success:function(result){}
+	 }); 
+	 */
+
+	function load1() {
+		/*
+		$('div').load('response/response1.jsp', function(fromData,statusTxt,xhr) {
+			var str = xhr.responseText;
+			var arr = str.split(',');
+			var html = '<ul>';
+			for (var i = 0; i < arr.length; i++) {
+				html += '<li>' + arr[i] + '</li>';
+			}
+			html += '</ul>';
+			var d1 = document.getElementById('d1');
+			d1.innerHTML = html;
+		});
+		 */
+
+		$.ajax({
+			url : 'response/response1.jsp',
+			success : function(result) {
+				//$('li').each*(); //li태그 수 만큼 반복!
+				//$.each(배열);	   //배열의 수 만큼
+				var ul = $('<ul></ul>');
+				$.each(result.split(','), function(index, value) {
+					ul.append($('<li></li>').text(value));
+					//<ul><li>Hello</li></ul>
+				});
+				//<ul><li>Hello</li><li>Ajax~!!</li></ul>
+				$('div').html(ul);
+			}
+		});
+	}
+
+	//----------------------------------------------------------------------------
+	//function load2(){
+	$(function() {
+		$('button:eq(1)').click(function() {
+		/*
+			//alert('두번째 버튼');
+			$.ajax({
+				url : 'response/response2.jsp',
+				success : function(result) {
+					$('#d1').html(result);
+				},
+				data : {
+					name : $('#name').val()
+				},
+				type : 'POST',
+				dataType : 'html'
+			});
+		*/
+			$.get('response/response2.jsp','name='+$('#name').val(), function(result){
+				$('#d1').html(result);
+			});
+		});
+	});
+	//}
+	//----------------------------------------------------------------------------
+	function load3() {
+		/* $.ajax({
+			url : 'response/response3.jsp',
+			success : function(result) {
+				$('#d1').text(result);
+			},
+			data : {
+				name : $('#name').val()
+			},
+			type : 'POST',
+			dataType : 'text'
+		}); */
+		
+		/* $.post('response/response3.jsp', 'name='+$('#name').val(), function(result){
+			$('#d1').text(result);
+		}); */
+		$.ajax
+	}
+	//----------------------------------------------------------------------------
+	function load4() {
+		$.ajax({
+			url : 'response/response4.jsp',
+			success : function(doc) {
+				var ol = $('<ol></ol>');
+				$(doc).find('title').each(function(idx, titleEle) {
+					//ol.append('<li>'+$(this).text()+'</li>');
+					var li = $('<li>').text($(this).text());
+					ol.append(li);
+				});
+				$('div').html(ol);
+			},
+			type : 'POST',
+			dataType : 'xml'
+		});
+	}
+	//----------------------------------------------------------------------------
+	function load5() {
+		$.ajax({
+			url : 'response/response5.jsp',
+			success : function(result) {
+				var htmlTxt = '이름:' + result.name + '<br>나이:' + result.age
+						+ '<br>직업:' + result.job;
+				$('div').html(htmlTxt);
+			},
+			type : 'POST',
+			dataType : 'json',
+			error : function(xhr, status) {//에러콜백
+				alert('서버에러!');
+				alert('상태 : ' + xhr.status + ", 상태text : " + xhr.statusText
+						+ '\nstatus : ' + status);
+			}
+		});
+	}
+	//----------------------------------------------------------------------------
+	function load6() {
+		$.ajax({
+			url : 'response/response6.jsp',
+			success : function(arr) {
+				var htmlTxt='<font color=tomato><ol>';
+				for(var i = 0; i <arr.length; i++){
+					//arr[i] == JSON.
+					htmlTxt += '<li>'+arr[i].title+'</li>';
+				}
+				htmlTxt += '</ol>';
+				$('div').html(htmlTxt);
+			}
+		 ,dataType:'json'
+		});
+	}
+</script>
+</head>
+<!-- request.html 
+	 (요청페이지 - 서버에서 데이터 URL요청, jQuery Ajax사용!)
+-->
+<body>
+	이름 :
+	<input type="text" id="name" name="uname">
+	<br>
+	<button onclick="load1()">response1요청(HTMLtext)</button>
+	<br>
+	<button>response2요청(HTMLtext)</button>
+	<br>
+	<button onclick="load3()">response3요청(text,plain)</button>
+	<br>
+	<button onclick="load4()">response4요청(xml)</button>
+	<br>
+	<button onclick="load5()">response5요청(JSON)</button>
+	<br>
+	<button onclick="load6()">response6요청(JSON배열)</button>
+	<br>
+	<h3>결과 출력</h3>
+	<hr>
+	<div id="d1"></div>
+</body>
+</html>

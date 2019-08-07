@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>GET POST 요청</title>
+		<script src="../js/jquery-3.js"></script>
+		<script>
+			$(function(){
+				$('button').click(function() {
+					//<button>get요청</button> <button>post요청</button>
+					var btStr = $(this).text()
+					if(btStr == 'get요청'){
+						//get요청 : jQuery.get(url, callback);
+						//get요청 : $.get(url, callback);
+						//get요청 : $.get(url, data, callback);
+						//get요청 : $.get(url, [data], function(data,status,xhr), dataType);
+						
+						/*
+						$.get('getData1.jsp', function(result, status) {
+							//status = 'success' 또는 'error'
+							$('div').html(result);
+						});//get
+						*/
+						
+						$.get('getData1.jsp', 'name=홍길동',function(result){
+							$('div').html(result);
+						});
+					}else if(btStr == 'post요청'){
+						$.post('getData2.jsp',
+							//{name:'나길동', age:15}
+							{
+								name:$('[name=username]').val(),
+								age:$('[name=age]').val()
+							},
+							function(responseTxt){
+								$('div').html(responseTxt); //innerHTML
+								$('input').val(''); //input내용 지우기
+							}
+						);//post
+					}
+				});//버튼 클릭
+				
+				$('#bt').click(function() {//ajax버튼클릭
+					//$.ajax({name1:value, name2:value, ...});
+					$.ajax({
+						//-------------------------[필수]-------------------------
+						url:'getData3.jsp',//요청URL(요청페이지)
+						success:function(result){
+							//success(result, status, xhr)
+							$('div').html(result);
+						},//성공시 콜백
+						
+						//----------------------[데이터전달]----------------------
+						data:{
+							name:$('[name=username]').val()
+							,age:$('[name=age]').val()
+						},
+						//-----------[그밖의 옵션(jQuery Ajax에서 추측)]----------
+						type:'POST',	  //HTTP요청방식(GET, POST)
+						dataType:'html',  //응답데이터 형식(text, html, xml, json)
+										  //※주의 : json은 반드시 명시!
+										  
+						error:function(xhr, status){//에러콜백
+							alert('서버에러!');
+							alert('상태 : ' + xhr.status + ", 상태text : " + xhr.statusText + '\nstatus : ' + status);
+						}
+					});//ajax함수호출
+				});
+			});
+		</script>
+	</head>
+	<!-- getpost_test.html -->
+	<body>
+		<h3>jQuery Ajax(get함수, post함수)</h3><hr>
+		이름 : <input type="text" name="username"><br>
+		나이 : <input type="text" name="age"><br>
+		<button>get요청</button>
+		<button>post요청</button>
+		<button id="bt">ajax요청(제일많이사용)</button>
+		<div></div>
+	</body>
+</html>
