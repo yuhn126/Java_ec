@@ -29,6 +29,8 @@
 	$(  '[b]'  ).action();
 	$( 'a[b=c]' ).action();
 	
+	$('li:first')			:	첫번째 <li>엘리먼트
+	
 	$('엘리먼트매핑').action(할 일);
 	
 		function hello(){
