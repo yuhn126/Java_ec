@@ -46,7 +46,7 @@
   - commit(DB에 물리적인 반영), rollback, savepoint
   
 ==================================================================================================
- <DECODE함수>
+ <DECODE함수> : 여러가지 경우에 대해서 선택할 수 있도록 하는 기능을 제공(SWITCH CASE문과 같은 기능)
 	형식)
  		DECODE(컬럼명,
  						비교데이터1, 결과데이터1
@@ -85,7 +85,6 @@
 		decode(deptno, 10, 'ACCOUNTING', 20, 'RESEARCH', 30, 'SALES', 40, 'OPERATIONS') 부서명,
 		decode(mod(empno,2),0,'짝수',1,'홀수') 홀짝
 		from emp;
-		 
 		 
  <CASE함수>
 	형식)

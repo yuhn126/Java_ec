@@ -1,0 +1,82 @@
+
+
+<jQuery+Ajax+iBatis+Struts>
+
+	요청페이지(전체HTML페이지) 
+	   - 0808/request폴더생성 
+	   - mission1.jsp, mission2.jsp, mission3.jsp, mission4.jsp
+         
+	응답페이지(부분HTML페이지, 또는 메시지Text) 
+	   - 0808/response폴더생성             
+	   - response2.jsp, response3.jsp, response4.jsp
+	   
+	액션클래스
+	   - MissionAction1, MissionAction2, MissionAction3
+
+----------------------------------------------------------------------------------------------
+
+	1. <input type='text' name='username'>
+	   ----> 버튼 이벤트를 사용하여 이름을 서버에 전송한 후
+	         HTML에 "안녕, 길동!!"을 출력.
+	       
+	             요청
+	   HTML    -------->   Action         
+	          <--------
+	            JSP응답  
+	             또는
+	           out.print()
+	
+	
+	2. 계산
+	   HTML계산기 폼의 데이터를 서버의 모델을 통해서 결과값을 얻고
+	     그 결과값을 HTML에 출력.
+	     
+	     예)  HTML 2,5,+    ------- 서버전송 ------->  결과값: 2+5=7  (파란색 마크업)  
+	     예)  HTML 10,0,/   ------- 서버전송 ------->  0으로 나눌 수 없습니다  (빨간색 마크업)  
+	     
+	     
+	            GET요청
+	   HTML    -------->   Action(setAttribute())         
+	          <--------
+	           JSP응답     
+	          (getAttribute())
+	   
+	   
+	3. EMP테이블 사원의 정보(사원번호,사원명,급여,부서번호,입사일자)를 HTML에 출력.
+	
+	     검색기준(기본 사원명):
+	   <input type='radio'>사원명 <input type='radio'>부서번호<br>
+	   <input type='text'><br>
+	   <button>검색</button>
+	   
+	   -----> 검색에 일치하는 사원정보 출력
+	         (사원명 철자가 들어가는 사원, 부서번호에 속하는 사원)
+	         
+	                  요청
+	   HTML  -------->  Action(getParameter())  ----->   DAO   ------> XML(sql문)         
+	         <--------      setAttribute()      <-----         <------
+	           JSP응답     
+	          (getAttribute())         
+	   =======================================================================      
+	   HTML :  필터 <input type='text'> 추가
+	                ----> 서버로 부터 받은 HTML 테이블에서 '필터에 입력된 값'과 일치되는 행만 출력.
+	        : 짝수행과 홀수행을 구분할 수 있는 색상 설정.                
+	   
+	4. 콤보박스(select,option)의 '시'를 선택시 '구'가,
+	   '구'를 선택시 '동'이 출력되도록 하시오.
+	   ===> (이전 파일을 사용해서 ajax ---> jQueryAjax로 변경) 
+	   ===> 새로 Action클래스 작성 X
+   
+   
+   
+====================================================================================================
+
+ 실행순서)
+ 	1. action태그 path속성에 명시된 가상URL요청을 했다면
+ 	2. action태그 type속성에 명시된 액션클래스 execute()실행
+ 	   execute() - request.getParameter()
+ 	   			 - request.setAttribute()
+ 	3. forward태그 path속성에 명시된 JSP페이지 이동
+ 				 - out.print(request.getAttribute()) 
+
+

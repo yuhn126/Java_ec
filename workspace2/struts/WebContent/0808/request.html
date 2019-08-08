@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jQuery Ajax요청테스트(전체페이지)</title>
+<!-- 
+		
+			<script>
+				var json={name:길동}	X
+				var json={name:'길동'}	O
+				var json={name:"길동"}	O
+			</script>
+			
+			hello.jsp영역(응답데이터 출력)
+				==> {name:길동}			X
+				==> {name:'길동'}		X
+				==> {name:"길동"}		X
+				==> {"name":"길동"}		O
+				
+		 -->
+<script src="../js/jquery-3.js"></script>
+<script>
+			/*
+				jQuery.ajax(); == $.ajax();
+		        $.ajax({key1:value,key2:value,key3:value});
+		        $.ajax({url      : '요청페이지', ★
+		       	     	type     : 'HTTP요청방식(GET,POST)',
+						data     : 전달데이터{name='길동', age=13},
+		       	     	dataType : '응답데이터형식(text,html,xml,json)', 
+		       	                       ==> 주의) 응답데이터가 {} 또는 [] 였을때  'json'을 명시!!
+		                success  : 콜백function(Anything data,String status,jqXHR xhr){}, ★ loaded
+		                error    : 콜백function(jqXHR xhr, String status, String errorThrown){}        	                
+		        });
+		        
+		    */  
+			$(function() {//document.ready
+				$('button:eq(0)').click(function(){//첫번째 버튼 클릭
+					$.ajax({/* key1:value, key2:value */
+						url : 'response/response7.jsp',
+						success : function(data){//요청에 성공(OK200상태)했다면
+							//data='SMITH,ALLEN,...'
+							//var arr = data.split(','); //['SMITH','ALLEN',...]
+							data = data.trim();
+							var ul = $('<ul>');
+							$.each(data.split(','), function(idx,value){
+								//'<li>'+value+'</li>';
+								ul.append($('<li>').html(value));
+							});
+							var font = $('<font>').append(ul).attr("color","tomato")
+							$('div').html(font);
+						}
+					});
+				});//1번 클릭
+				//------------------------------------------------------------------------------
+				
+				$('button:eq(1)').click(function(){//두번째 버튼 클릭
+					$.ajax({
+						url:'response/response7_2.jsp',
+						success:function(data){
+							//console.log('사원수 : ' + data.length+'명');
+							var ul = $('<ul>');
+							$.each(data,function(idx,value){
+								ul.append($('<li>').text(value));
+							});
+							$('div').html(ul);
+						},
+						dataType:'json'					
+					});
+				});
+				//------------------------------------------------------------------------------
+				
+				$('button:eq(2)').click(function(){//세번째 버튼 클릭
+					$.ajax({
+						url:'response/response7_3.jsp',
+						success:function(data){//data == HTML
+							$('div').html(data);
+						}				
+					});
+				});
+				//------------------------------------------------------------------------------
+				
+				$('button:eq(3)').click(function(){//네번째 버튼 클릭
+					$.ajax({
+						url:'/struts/0730/response8.do',
+						data: {deptno:$('input').val()}, //data:{deptno:'30'},
+							//$('#deptno').val() //HTML(현재문서)로 부터 부서버호 얻어오기
+						success:function(data){//응답data == HTML
+							$('div').html(data);
+						}
+					});
+				});
+				
+				
+			});//document.ready
+		</script>
+</head>
+<!-- request.html -->
+<body>
+	<button>response7요청(DB사원정보-이름)</button>
+	<br>
+	<button>response7_2요청(DB사원정보-이름)</button>
+	<br>
+	<button>response7_3요청(DB사원정보-이름)</button>
+	<br> 부서번호:
+	<input type="text">
+	<br>
+	<button>response8요청(DB사원정보-사번,이름,입사일)</button>
+	<br>
+	<h3>결과출력</h3>
+	<hr>
+	<div></div>
+</body>
+</html>
+
+
+
+
