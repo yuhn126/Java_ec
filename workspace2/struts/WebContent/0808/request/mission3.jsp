@@ -8,6 +8,7 @@
 		<script src="../../js/jquery-3.js"></script>
 		<script>
 			$(function() {
+				
 				$('button').click(function() {
 					$.ajax({
 						url:'/struts/0808/mission3.do',
@@ -17,17 +18,23 @@
 						},
 						success: function(data){
 							$('div').html(data)
+							$("tbody tr:even").css("background-color", "#eeeeee");
 						}
 					});
 				});
 			});
 		</script>
+		<style type="text/css">
+		table{
+			border-collapse: collapse;
+			text-align: center;
+		}
+		</style>
 	</head>
 	<body>
 		<input type='radio' name="search" value="ename" checked>사원명
 		<input type='radio' name="search" value="deptno">부서번호<br>
-		<input type='text'><br>
-		<button>검색</button>
+		<input type='text' placeholder="검색"> <button>검색</button>
 		<div></div>
 	</body>
 </html>

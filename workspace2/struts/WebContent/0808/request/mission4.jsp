@@ -7,7 +7,7 @@
 		<title>mission4</title>
 		<script src="../../js/jquery-3.js"></script>
 		<script>
-			window.onload= function() {
+			$(function(){
 				$.ajax({
 					url: '../response/response4.jsp',
 					success: function(data) {
@@ -17,39 +17,43 @@
 						load:"sido"
 					}
 				});
-			}
-			
-			function loadGugun() {
-				$.ajax({
-					url: '../response/response4.jsp',
-					success: function(data){
-						$('#select2').html(data);
-					},
-					data:{
-						load : "gugun",
-						sido : $('#select1').val()
-					}
+				
+				$('#select1').change(function(){
+					$.ajax({
+						url: '../response/response4.jsp',
+						success: function(data){
+							$('#select2').html(data);
+							$('#select3 option:eq(0)').attr("selected","selected");
+						},
+						data:{
+							load : "gugun",
+							sido : $('#select1').val()
+						}
+					});
 				});
-			}
-			
-			function loadDong() {
-				$.ajax({
-					url: '../response/response4.jsp',
-					success: function(data){
-						$('#select3').html(data);
-					},
-					data:{
-						load : "dong",
-						sido : $('#select1').val(),
-						gugun : $('#select2').val()
-					}
+				
+				
+				$('#select2').change(function(){
+					$.ajax({
+						url: '../response/response4.jsp',
+						success: function(data){
+							$('#select3').html(data);
+						},
+						data:{
+							load : "dong",
+							sido : $('#select1').val(),
+							gugun : $('#select2').val()
+						}
+					});
 				});
-			}
+				
+			});
+			
 		</script>
 	</head>
 	<body>
-		<select id="select1" onchange="loadGugun(this)"></select>
-		<select id="select2" onchange="loadDong(this)"></select>
-		<select id="select3"></select>
+		<select id="select1"><option>==선택==</option></select>
+		<select id="select2"><option>==선택==</option></select>
+		<select id="select3"><option>==선택==</option></select>
 	</body>
 </html>
