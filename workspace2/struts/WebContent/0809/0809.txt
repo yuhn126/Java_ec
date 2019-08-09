@@ -1,0 +1,151 @@
+ <프로젝트 환경설정>
+ 
+ []
+ 1. JDK설치
+	- 위치(C:\Program Files\Java\jdk1.8.0_201), 버전(jdk1.8.0_201)을 일치
+	- 환경설정
+		JAVA_HOME  :  C:\Program Files\Java\jdk1.8.0_201
+		path	   :  %JAVA_HOME%\bin  최고상단에
+		classpath  :  .
+		
+ 2. 이클립스 (JavaEE버전)
+	- 압축 풀기
+ 	
+ 3. DBMS설치(Oracle)
+ 	- 계정 생성(create user)
+ 	- 권한 부여(grant)
+ 	
+ 4. Apache-Tomcat설치(압축버전)
+ 	- 압축 풀기    :  C:\apache-tomcat-8.2.42
+
+=======================================================================================
+ [이클립스 설정]
+ 1. 인코딩설정
+ 	- Window메뉴
+ 	- Rreferences
+ 	- General
+ 	- Workspace
+ 		==> Text file encoding
+ 		==> MS949 ---> UTF-8 변경 : 저장포맷변경
+ ------------------------------------------------------------
+ 	- Window메뉴
+ 	- Preferences
+ 	- Web
+ 	- HTML Files
+ 		Encoding : ISO 10646/Unicode(UTF-8)
+ 	- JSP Files
+ 		Encoding : ISO 10646/Unicode(UTF-8)
+ 		
+ 2. Apache-Tomcat(서블릿 컨테이너) 서버설정
+ 	- 이클립스 하단 프레임의 Servers탭 선택
+ 	- 오른쪽 마우스 클릭
+ 		- new
+ 		- server
+ 			- Tomcat v8.5 Server선택
+ 				- Server's host name : localhost
+ 				- Server name : Tomcat v8.5 Server(프로젝트명)
+ 												   ----------
+ 												다른 서버 설정과 구분
+ 				- Server runtime environment : Tomcat v8.5 Server(프로젝트명)								
+ 												
+ 												
+ 2-2. Apache-Tomcat(서블릿 컨테이너) 서버 설정
+ 	- Project Explorer
+ 		- Servers프로젝트
+ 			- 2번에서 설정한 서버 선택(예:Tomcat v8.5 Server(Coffee)-config)
+ 				- server.xml 열기
+ 				- 대략 60번 라인 정도
+ 					<Connector port="8080" protocol="HTTP/1.1">								
+ 					<Connector port="80" protocol="HTTP/1.1"> 포트 변경 확인						
+ 												
+ 	- 이클립스 하단 Servers탭 더블 클릭
+ 		--> Modules탭 선택
+ 		--> Path값 확인 (예: /Coffee)									
+ 			---> 'Edit'버튼을 통해 'ContextRoot'변경 가능
+ 				(예 : /Coffee ----> / )
+ 		
+ 												
+ 3. 이클립스에서 DB연결
+ 	==> sqlplus, sqlDeveloper, 토드 와 같은 역할
+ 	
+ 	이클립스 좌측 프레임 Data Source Explorer
+	- Database Connection 오른쪽 마우스
+		- Oracle선택
+		- Name : 커넥션 이름 설정(예:MyOracle)
+		- Next 버튼 클릭
+			- Drivers우측의 '당구장' 이미지 클릭
+				- Name/Type 탭 : Oracle Thin Driver 11버전 선택
+				- JAR List 탭 : 기존 ojdbc14.jar선택 후 'Remove'버튼 통한 삭제
+					---> 'Add JAR'를 클릭하여 실제 존재하는 ojdbc6.jar선택
+					(선택 후 결과 : E:\hnyu\Java\Java_ec\workspace2\struts\WebContent\WEB-INF\lib\ojdbc6.jar)
+					(선택 후 결과 : E:\jaelee\util\driver\ojdbc6.jar --> 찾아보기!!)
+		- Properties탭
+			Connection URL  ==> jdbc:oracle:thin:@localhost:1521:xe
+			Database Name   ==> xe
+			Driver Class    ==> oracle.jdbc.driver.OracleDriver
+			Password        ==> tiger
+			User ID         ==> scott
+		
+		- 'Test Connection'버튼 클릭
+			==> Ping succeeded! 메시지 얻으면 성공
+			
+ 4. iBatis설정
+ 	- jaelee(공유폴더)/util/ibatis/dtd의 파일 2개 복사
+ 		sql-map-2.dtd
+ 		sql-map-config-2.dtd
+		==> 복사위치 :  E:\jaelee\util\dtd\파일복사 ※ (당구장표시 : 워크스페이스랑 관련 x)
+						E:\jaelee\workspace2\struts\WebContent\dtd\파일복사 ◈
+	 - Window 메뉴
+	 	- Preferences
+ 			- XML
+ 				- XML Catalog 선택
+ 				  우측 'Add..'버튼 클릭해서 User Specified Entries 2개추가
+ 				  [1번째] : Location 의 값 입력
+ 				  			'Workspace...'버튼 ◈  또는   'File System...'버튼 ※
+ 							==> sql-map-config-2.dtd 파일 선택
+ 							
+ 					Key입력:  -//iBATIS.com//DTD SQL Map Config 2.0//EN
+ 							
+ 					Alternative web address 체크 박스 v체크 후 입력
+ 						: http://www.ibatis.com/dtd/sql-map-config-2.dtd
+ 		
+ 		
+ 				  [2번째] : Location 의 값 입력
+ 							'Workspace...'버튼 ◈  또는   'File System...'버튼   ※
+ 							==> sql-map-2.dtd 파일 선택
+ 							
+ 					Key입력:  -//iBATIS.com//DTD SQL Map 2.0//EN	
+ 					
+ 					Alternative web address 체크 박스 v체크 후 입력
+ 						: http://www.ibatis.com/dtd/sql-map-2.dtd
+ 						
+ 						
+ 	- iba패키지 생성 (com.encore.db.iba)
+ 		===> MySqlMapClient.java
+ 			: SqlMap관련 XML파일들을 객체화 시키는 역할
+ 			: sqlMapConfig.xml파일 등록
+ 			
+ 		==> conn.properties		(DB연결에 필요한 요소들 정의, 옵션)
+ 		==> sqlMapConfig.xml	(DataSource와 DB연결 설정, sql작성 XML둥록)
+ 		
+ 	- mapper패키지 생성(com.encore.db.mappers)
+ 		==> emp.xml 작성 후 sqlMapConfig.xml에 등록!
+ 					
+ 			
+ 5. JSTL(JSP Standard Tag Library)설정
+	- jaelee(공유폴더)/util/jstl/jstl-1.2jar파일 복사
+	- 웹프로젝트 생성 후    WebContextRoot(Coffee)/WebContent/WEB-INF/lib에 붙여넣기
+	- 표준 외부태그, 커스텀 태그(JSP페이지 내에서 자바코드 생략)!
+		==> JSP페이지 내에서 사용
+			===> <%@taglib uri="경로" prefix="접두사" %> 명시 후 사용
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
