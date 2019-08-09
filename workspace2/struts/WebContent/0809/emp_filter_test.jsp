@@ -28,18 +28,30 @@
 	}
 	
 	tr:nth-child(even) {
-		background-color: #dddddd;
+		background-color: pink;
 	}
 	</style>
 	
 	<script src="../js/jquery-3.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			$('button').click(function(){
+			$('button:eq(0)').click(function(){
 				var ename = $('[name=ename]').val().toUpperCase();
 				$('#myTable tr').filter(function() {
-					var txt = $(this).text().toUpperCase();
+					console.log($(this).text());
+					var txt = $(this).find(':nth-child(2)').text().toUpperCase();
 					$(this).toggle(txt.indexOf(ename) > -1);
+				})
+			});
+			
+			$('button:eq(1)').click(function(){
+				var sal = $('[name=sal]').val();
+			  //$('td:nth-child(4)').filter(function() {
+				$('#myTable tr').filter(function() {
+					var txt = $(this).find(':nth-child(4)').text();
+					txt = Number(txt);
+					sal = Number(sal);
+					$(this).toggle(txt >= sal);
 				})
 			});
 		});
@@ -47,9 +59,11 @@
 </head>
 <%-- emp_filter_test --%>
 <body>
-	<input type="text" name="ename" placeholder="사원명" ]>
-	<input type="text" name="sal" placeholder="급여" ]>
+	<input type="text" name="ename" placeholder="사원명">
+	<button>조회</button><br>
+	<input type="text" name="sal" placeholder="급여"> 
 	<button>조회</button>
+	<br><br>
 	<hr>
 	<table>
 		<!-- 그룹설정(thead, tbody(여러개 사용 가능), tfood(총합계 등의 결과 출력) -->

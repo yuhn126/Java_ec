@@ -30,7 +30,7 @@
 					var search = $(this).val().toUpperCase();
 					$('#myTable tr').filter(function() {
 						var txt = $(this).text().toUpperCase();
-						
+						console.log(txt);
 						//toggle() - 번갈아 실행 : show() 또는 hide() 실행
 						//엘리먼트.toggle(true)    ---> 엘리먼트 보이기
 						//엘리먼트.toggle(false)   ---> 엘리먼트 숨기기
@@ -40,6 +40,8 @@
 			            //  str.indexOf('g')  ---> 0
 			            //  str.indexOf('d')  ---> 3
 			            //  str.indexOf('x')  ---> -1
+			            
+			            //$('선택자').toggle(true);//보이기 설정
 						$(this).toggle(txt.indexOf(search) > -1);
 					})
 				});
