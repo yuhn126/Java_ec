@@ -5,15 +5,15 @@ DROP TABLE Movie
 /* MOVIE */
 CREATE TABLE Movie (
 	movieCode NUMBER NOT NULL, /* 영화코드 */
-	movieTitle VARCHAR2(50) NOT NULL, /* 영화제목 */
-	director VARCHAR2(20) NOT NULL, /* 감독 */
+	movieTitle VARCHAR2(100) NOT NULL, /* 영화제목 */
+	director VARCHAR2(100) NOT NULL, /* 감독 */
 	actors VARCHAR2(30) NOT NULL, /* 출연자 */
-	ganre VARCHAR2(30) NOT NULL, /* 장르 */
+	ganre VARCHAR2(100) NOT NULL, /* 장르 */
 	filmRate NUMBER DEFAULT 0 NOT NULL, /* 등급 */
 	openingDate DATE, /* 개봉일 */
 	runningTime NUMBER, /* 상영시간 */
 	stock NUMBER NOT NULL, /* 재고 */
-	image VARCHAR2(25) NOT NULL /* 영화 이미지 */
+	image VARCHAR2(25) /* 영화이미지 */
 );
 
 ALTER TABLE Movie
@@ -60,6 +60,7 @@ CREATE TABLE Rental (
 	movieCode NUMBER NOT NULL, /* 영화코드 */
 	memberCode NUMBER NOT NULL, /* 회원번호 */
 	rentalDate DATE NOT NULL, /* 대여일 */
+	COL DATE /* 반납일 */
 );
 
 ALTER TABLE Rental
@@ -99,7 +100,8 @@ create sequence rental_seq
  -- 시퀀스 쓸 때 : rental_seq.nextval
        
        
-       
+SELECT * FROM ALL_TRIGGERS
+WHERE TRIGGER_NAME = 'minus_renNum';
        
 drop trigger minus_renNum;
 drop trigger plus_renNum;
@@ -116,9 +118,10 @@ begin
 	where memberCode = :new.memberCode;
 end;
 /
+
 --(반납)
 create or replace trigger plus_renNum
-after delete on Rental
+after update on Rental
 for each row --행트리거
 begin
 	update Membership set rentalNum=rentalNum+1
@@ -140,7 +143,7 @@ end;
 
 --(반납)
 create or replace trigger plus_stock
-after delete on Rental
+after update on Rental
 for each row --행트리거
 begin
 	update Movie set stock=stock+1
@@ -152,8 +155,13 @@ delete from MOVIE;
 delete from Membership;
 delete from RENTAL;
 
-insert into MOVIE (movieCode,movieTitle,director,ganre,filmRate,stock)
-values (19980231,'트루먼쇼(the truman Show)','피터 위어','드라마/로맨스',12,3);
+select * from movie;
+
+insert into MOVIE (movieCode,movieTitle,director,actors,ganre,filmRate,openingDate,runningTime,stock,image)
+values (19980231,'트루먼쇼(the truman Show)','피터 위어','시리언니','드라마/로맨스',12,'1992-11-11',125, 5, null);
+
+insert into MOVIE (movieCode,movieTitle,director,actors,ganre,filmRate,openingDate,runningTime,stock,image)
+values (20184621,'엑시트(EXIT)','이상근','조정석,윤아','드라마/로맨스',12,'1992-11-11',125, 5, null);
 
 insert into Membership (memberCode, memberId, memberPass, memberName, birth, telNum, rentalNum)
 values (1234, 'gildong', 'a1234', '홍길동', '1992-11-11', '010-1111-1111', 3);
