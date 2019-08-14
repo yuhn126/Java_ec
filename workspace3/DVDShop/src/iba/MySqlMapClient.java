@@ -1,4 +1,4 @@
-package com.encore.db.iba;
+package iba;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -17,6 +17,7 @@ public class MySqlMapClient {
 	private static final SqlMapClient sqlMap;
 
 	static {
+
 		try {
 			String resource = "./iba/sqlMapConfig.xml";
 			Reader reader = Resources.getResourceAsReader(resource);

@@ -1,4 +1,4 @@
-package com.encore.util.enc;
+package util.enc;
 
 import java.io.IOException;
 

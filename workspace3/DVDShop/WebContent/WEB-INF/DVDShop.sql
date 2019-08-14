@@ -1,3 +1,10 @@
+create table dateTest(
+	datetest date
+);
+
+insert into DATETEST
+values ('2019-09-09');
+
 /* MOVIE */
 DROP TABLE Movie 
 	CASCADE CONSTRAINTS;
@@ -25,27 +32,34 @@ ALTER TABLE Movie
 		
 
 		
-/* MEMBERSHIP */
-DROP TABLE Membership 
+/* User */
+DROP TABLE UserInfo
 	CASCADE CONSTRAINTS;
 
-/* MEMBERSHIP */
-CREATE TABLE Membership (
-	memberCode NUMBER NOT NULL, /* 회원번호 */
-	memberId VARCHAR2(20) NOT NULL, /* 회원아이디 */
-	memberPass VARCHAR2(20) NOT NULL, /* 비밀번호 */
-	memberName VARCHAR(10) NOT NULL, /* 회원이름 */
+/* User */
+CREATE TABLE UserInfo (
+	userCode NUMBER NOT NULL, /* 회원번호 */
+	userId VARCHAR2(20) NOT NULL, /* 회원아이디 */
+	password VARCHAR2(20) NOT NULL, /* 비밀번호 */
+	username VARCHAR(10) NOT NULL, /* 회원이름 */
 	birth DATE NOT NULL, /* 생년월일 */
 	telNum VARCHAR2(15) NOT NULL, /* 연락처 */
 	rentalNum NUMBER NOT NULL /* 대여가능횟수 */
 );
 
-ALTER TABLE Membership
+ALTER TABLE UserInfo
 	ADD
-		CONSTRAINT PK_Membership
+		CONSTRAINT PK_UserInfo
 		PRIMARY KEY (
-			memberCode
+			userCode
 		);
+		
+drop sequence userInfo_seq;
+create sequence userInfo_seq
+       start with 1001
+       increment by 1
+       nocycle
+       nocache;
 
 		
 		
@@ -54,13 +68,13 @@ ALTER TABLE Membership
 DROP TABLE Rental 
 	CASCADE CONSTRAINTS;
 
-/* RENTAL */
+/* Rental */
 CREATE TABLE Rental (
 	rentalCode NUMBER NOT NULL, /* 대여번호 */
 	movieCode NUMBER NOT NULL, /* 영화코드 */
-	memberCode NUMBER NOT NULL, /* 회원번호 */
+	userCode NUMBER NOT NULL, /* 회원번호 */
 	rentalDate DATE NOT NULL, /* 대여일 */
-	COL DATE /* 반납일 */
+	returnDate DATE /* 반납일 */
 );
 
 ALTER TABLE Rental
@@ -82,17 +96,17 @@ ALTER TABLE Rental
 
 ALTER TABLE Rental
 	ADD
-		CONSTRAINT FK_Membership_TO_Rental
+		CONSTRAINT FK_UserInfo_TO_Rental
 		FOREIGN KEY (
-			memberCode
+			userCode
 		)
-		REFERENCES Membership (
-			memberCode
+		REFERENCES UserInfo (
+			userCode
 		);
 		
 drop sequence rental_seq;
 create sequence rental_seq
-       start with 1001
+       start with 1
        increment by 1
        nocycle
        nocache;
@@ -152,19 +166,27 @@ end;
 /
 
 delete from MOVIE;
-delete from Membership;
+delete from userinfo;
 delete from RENTAL;
 
 select * from movie;
 
 insert into MOVIE (movieCode,movieTitle,director,actors,ganre,filmRate,openingDate,runningTime,stock,image)
-values (19980231,'트루먼쇼(the truman Show)','피터 위어','시리언니','드라마/로맨스',12,'1992-11-11',125, 5, null);
+values (19980231,'트루먼쇼(the truman Show)','피터 위어','시리언니','드라마/로맨스',12,'1992-11-11',125, 5, '../image/trumanshow.jpg');
 
 insert into MOVIE (movieCode,movieTitle,director,actors,ganre,filmRate,openingDate,runningTime,stock,image)
-values (20184621,'엑시트(EXIT)','이상근','조정석,윤아','드라마/로맨스',12,'1992-11-11',125, 5, null);
+values (20184621,'엑시트(EXIT)','이상근','조정석,윤아','드라마/로맨스',12,'1992-11-11',125, 5, '../image/exit.jpg');
 
-insert into Membership (memberCode, memberId, memberPass, memberName, birth, telNum, rentalNum)
-values (1234, 'gildong', 'a1234', '홍길동', '1992-11-11', '010-1111-1111', 3);
+insert into userinfo (userCode, userId, password, username, birth, telNum, rentalNum)
+values (1234, 'gildong', 'a1234', '홍길동', '1992-11-11', '010-1111-1111', 5);
 
 insert into RENTAL (rentalCode, movieCode, memberCode, rentalDate, returnDate)
 values (rental_seq.nextval, 19980231, 1234, sysdate, sysdate+7);
+
+
+
+
+
+select m.movieTitle
+from movie m, rental r
+where r.usercode=1234

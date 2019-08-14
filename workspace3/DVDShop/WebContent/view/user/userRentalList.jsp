@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
 	int i = 1;
@@ -9,12 +8,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>DVD Shop</title>
+<title>대여 목록</title>
 <link rel="stylesheet" href="../css/view.css" type="text/css">
 </head>
-<%-- mainView.jsp --%>
+<%-- userRentalList.jsp --%>
 <body>
-	<form action="list" method="post">
 	<header>
 		<h3>DVD Shop</h3>
 	</header>
@@ -24,13 +22,13 @@
 				if (i > j) {
 			%>
 			<div id="userList">
-				<%@ include file="usersList.jsp"%>
+				<%@ include file="../common/usersList.jsp"%>
 			</div>
 			<%
 				} else {
 			%>
 			<div id="managersList">
-				<%@ include file="managersList.jsp"%>
+				<%@ include file="../common/managersList.jsp"%>
 				<%
 					}
 				%>
@@ -44,6 +42,9 @@
 				<th>제목</th>
 				<th>장르</th>
 				<th>감독</th>
+				<th>
+				<input type="text">
+				</th>
 			</tr>
 			<c:forEach items="${movieList}" var="movie" >
 				<tr>
@@ -55,6 +56,5 @@
 			</c:forEach>
 		</table>
 	</article>
-	</form>
 </body>
 </html>

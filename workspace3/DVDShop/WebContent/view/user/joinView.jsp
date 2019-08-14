@@ -14,35 +14,36 @@
 	</head>
 	<%-- joinView.jsp --%>
 	<body>
+		<form action="control?action=joinInsert" method="post">
 		<h2>회원가입</h2>
 		<br>
 		<table>
 			<tr>
 				<td>아이디 : </td>
-				<td><input type="text" id="userid" placeholder="ID"></td>
+				<td><input type="text" name="id" placeholder="ID"></td>
 			</tr>
 			<tr>
 				<td>비밀번호 : </td>
-				<td><input type="text" id="password" placeholder="PASSWORD"></td>
+				<td><input type="password" name="password" placeholder="Password"></td>
 			</tr>
 			<tr>
 				<td>이름 : </td>
-				<td><input type="text" id="username" placeholder="NAME"></td>
+				<td><input type="text" name="username" placeholder="Name"></td>
 			</tr>
 			<tr>
 				<td>생년월일 :</td>
 				<td>
-					<select id="birthYear">
+					<select name="birthYear">
 						<% for(int y = 1900; y <= year; y++){ %>
 						<option><%= y %></option>
 						<% } %>
 					</select>
-					<select id="birthMonth">
+					<select name="birthMonth">
 						<% for(int m = 1; m <= 12; m++){ %>
 						<option><%= m %></option>
 						<% } %>
 					</select>
-					<select id="birthDay">
+					<select name="birthDay">
 						<% for(int d = 1; d <= 31; d++){ %>
 						<option><%= d %></option>
 						<% } %>
@@ -51,14 +52,14 @@
 			</tr>
 			<tr>
 				<td>전화번호 : </td>
-				<td><input type="text" id="tel" placeholder="Phone Number"></td>
+				<td><input type="text" name="tel" placeholder="Phone Number"></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><button>확인</button> <button>취소</button></td>
+				<td><input type="submit" value="확인">
+				<input type="button" value="취소" onclick="location.href='control'"></td>
 			</tr>
 		</table>
-		
-		
+		</form>
 	</body>
 </html>
