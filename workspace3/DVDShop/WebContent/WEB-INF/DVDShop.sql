@@ -185,8 +185,9 @@ values (rental_seq.nextval, 19980231, 1234, sysdate, sysdate+7);
 
 
 
-
+select * from MOVIE;
+select * from re
 
 select m.movieTitle
 from movie m, rental r
-where r.usercode=1234
+where r.usercode=1234 and r.moviecode=m.moviecode
