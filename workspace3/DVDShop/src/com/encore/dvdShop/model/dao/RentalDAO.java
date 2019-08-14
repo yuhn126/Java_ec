@@ -26,7 +26,13 @@ public class RentalDAO {
 		return false;
 	}
 	
-	public List<RentalVO> selectUserList(int userCode) throws SQLException{
-		return smc.queryForList("dvdShop.selectUserList", userCode);
+	public List<RentalVO> selectUserList(int userCode){
+		try {
+			return smc.queryForList("dvdShop.selectUserList", userCode);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

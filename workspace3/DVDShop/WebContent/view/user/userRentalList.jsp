@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <%
 	int i = 1;
@@ -42,16 +43,15 @@
 				<th>제목</th>
 				<th>장르</th>
 				<th>감독</th>
-				<th>
-				<input type="text">
-				</th>
+				<th></th>
 			</tr>
-			<c:forEach items="${movieList}" var="movie" >
+			<c:forEach items="${selectUserList}" var="movie" >
 				<tr>
-					<td><a href="control?action=moviedetail&movCode=${movie.movieCode}"><img width="130px" height="auto" src="${movie.image }" ></a></td>
-					<td><a href="control?action=moviedetail&movCode=${movie.movieCode}">${movie.movieTitle}</a></td>
+					<td><img width="130px" height="auto" src="${movie.image }" ></td>
+					<td>${movie.movieTitle}</td>
 					<td>${movie.ganre}</td>
 					<td>${movie.director}</td>
+					<td><input type="button" value="반납" ></td>
 				</tr>
 			</c:forEach>
 		</table>

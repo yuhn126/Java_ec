@@ -103,10 +103,12 @@ public class Controller extends HttpServlet{
 			}
 		} else if (action.equals("rentalList")) {
 			if(req.getSession().getAttribute("loginCode") == null) {
-				out.print("<script>alert('로그인을하렴'); location.href='/DVDShop/dvdshop/control'</script>");
+				out.print("<script charset='euc-kr'>alert('Login Please!'); location.href='/DVDShop/dvdshop/control'</script>");
 			} else {
 				int userCode = Integer.parseInt(req.getSession().getAttribute("loginCode").toString());
-				System.out.println("로긴함");
+				List<RentalVO> list = rd.selectUserList(userCode);
+				req.setAttribute("selectUserList", list);
+				req.getRequestDispatcher("/view/user/userRentalList.jsp").forward(req, resp);
 			}
 		}
 		
