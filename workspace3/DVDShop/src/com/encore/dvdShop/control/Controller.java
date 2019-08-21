@@ -52,6 +52,7 @@ public class Controller extends HttpServlet{
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			
 		} else if (action.equals("moviedetail")) {
 			String movCode = req.getParameter("movCode");
 			try {
@@ -62,8 +63,10 @@ public class Controller extends HttpServlet{
 			} catch (NumberFormatException | SQLException e) {
 				e.printStackTrace();
 			}
+			
 		} else if(action.equals("join")) {
 			req.getRequestDispatcher("/view/user/joinView.jsp").forward(req, resp);
+		
 		} else if (action.equals("joinInsert")) {
 			String id = req.getParameter("id");
 			String password = req.getParameter("password");
@@ -75,6 +78,7 @@ public class Controller extends HttpServlet{
 			if(ud.insertUser(uv)) {
 				resp.sendRedirect("/DVDShop/dvdshop/control");
 			}
+			
 		} else if (action.equals("login")) {
 			req.getRequestDispatcher("/view/common/loginView.jsp").forward(req, resp);
 			
@@ -91,9 +95,11 @@ public class Controller extends HttpServlet{
 			} else {
 				req.getRequestDispatcher("/view/common/loginView.jsp").forward(req, resp);
 			}
+			
 		} else if (action.equals("logout")) {
 			session.invalidate();
 			resp.sendRedirect("/DVDShop/dvdshop/control");
+			
 		} else if (action.equals("movrental")) {
 			RentalVO rv = new RentalVO();
 			rv.setUserCode(Integer.parseInt(req.getSession().getAttribute("loginCode").toString()));
@@ -101,6 +107,7 @@ public class Controller extends HttpServlet{
 			if(rd.insertRental(rv)) {
 				resp.sendRedirect("/DVDShop/dvdshop/control");
 			}
+			
 		} else if (action.equals("rentalList")) {
 			if(req.getSession().getAttribute("loginCode") == null) {
 				out.print("<script charset='euc-kr'>alert('Login Please!'); location.href='/DVDShop/dvdshop/control'</script>");
@@ -110,6 +117,7 @@ public class Controller extends HttpServlet{
 				req.setAttribute("selectUserList", list);
 				req.getRequestDispatcher("/view/user/userRentalList.jsp").forward(req, resp);
 			}
+			
 		}
 		
 		

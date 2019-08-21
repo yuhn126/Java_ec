@@ -1,0 +1,60 @@
+ 
+ 
+ <스프링 프레임워크 개요>
+	- Spring Core
+	 	: 스프링의 핵심으로 그 설명을 분리하기 위한 IoC기능이 구현된 BeanFactory를 제공
+	 	(= <jsp:useBean class="A" id="a"/>)
+	 	
+	- Spring AOP
+	 	: 공통된 관심사
+	 	
+	- Spring ORM
+	 	: Object와 DB매핑
+	 
+	- Spring Context
+	 	:
+	 	- JNDI : 객체 등록, 사용
+ 	
+
+ 연관성 삽입 (Dependency Injection) (=매개변수)
+
+	연관성 삽입은 크게 Constructor Injection, Setter Injection, Interface Injection의
+	3가지 유형을 가진다. Constructor Injection이 생성자를 이용해서 의존성을
+	설정해주는 방법이고, Setter Injection이 Setter 메쏘드를 이용해서 의존성을
+	설정해주는 방법이다. Pico Container는 Constructor Injection을 주로 사용하고,
+	스프링은 자바 빈 규칙을 이용한 Setter Injection을 주로 사용한다.
+
+ 
+ 인터페이스
+  : 연결자, 연결객체, 언제든 갈아끼울수있다!
+  
+ CSV (comma-separated values  /  colon- ~)
+   : 콤마(',')/콜론(':')을 구분자로 사용 
+   
+   
+   
+ class MovieLister...
+ 	private MovieFinder finder;
+ 	
+ 	public MovieLister() {
+		finder = new ColonDelimitedMovieFinder("movies1.txt");
+	}
+	 
+   
+   
+ 의존성표현 --> 삼각형쪽이 부모
+ 				실선 : extends
+ 				점선 : implements
+   
+   
+ <AOP의 개념>
+ 	- Primary Concern : 구현하려고 하는 비즈니스 기능 (ex.계좌이체)
+ 	- Cross-cuttin Concern : 시스템 전반적으로 산재된 기능(ex.보안, 로그, 인증)
+ 							 공통 관심 사항 (=Adviced) 
+ 	
+ DI -> 스프링 하다보면 많이 본당
+  
+  
+  
+  
+  

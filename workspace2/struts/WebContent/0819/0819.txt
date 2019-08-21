@@ -1,0 +1,111 @@
+ - 알맞은(적절한) 뷰의 변환, 방법
+		1. jsp페이지 이동(전체 HTML을 변환)
+		
+		   a.html							c.jsp
+		  --------
+		 <%@include file="header.jsp"%>	   <%@include file="header.jsp"%>
+		 <a href="c.jsp">						안녕SCOTT!
+		 
+		 
+		2. ajax페이지 요청(일단 페이지 이동을 하지X, 부분 HTML요청)
+		
+			a.html
+			------
+			<script>
+				$.ajax('c.jsp',function(result){
+					$('div').html(result);
+				});
+			</script>
+			<body>
+				<div></div>
+			</body>
+			
+		3. 조건문 사용
+		
+			home.jsp
+			- 로그인 하세요
+			- [길동]님 환영합니다!
+		
+	
+ - 리다이렉트, 포워드
+	   ===> 공통점 : 페이지이동
+	   ===> 기본은 forward!
+	  
+	  	Controller1{
+	  		service(req, resp){
+	  			req.getParameter("uname");
+	  			
+	  			DB작업 : 추가, 삭제, 수정 작업
+	  				    ------
+	  				   상품구입 기능정의
+	  				   회원가입
+	  			
+	  			req.setAttribute("su3", 3000);
+	  			forward("c.jsp");
+	  		}
+	  	}
+	  
+	  
+	  ※포워드 이동 시 웹브라우저 상단 URL변화
+	  	h.jsp에서 위의 컨트롤러 호출 --> http://localhost/cr1
+	  								 --> 상품구입 또는 회원가입을 위한 insert작입이 저장
+	  								 --> 중복구입 또는 에러나는 회원가입의 가능성 존재
+	  	
+	  	==> DML작업후에는 direct()이동을 하자!  	
+	  								
+	  
+	  	Controller2{
+	  		service(req, resp){
+	  			req.getParameter("uname");
+	  			
+	  			DB작업 : 추가, 삭제, 수정 작업
+	  				    ------
+	  				   상품구입 기능정의
+	  				   회원가입
+	  			
+	  			req.setAttribute("su3", 3000);
+	  			forward("c.jsp");
+	  		}
+	  	}
+	  
+ - 
+ 	★ 프로세스 단위(DVD정보, 회원정보, DVD대여)로 작업을 분담
+ 		==> 이클립스에서 작성 시 요청, 응답관계의 페이지만 오픈해서 작업
+ 		==> 예) b.jsp탭, Controller탭, DAO탭, sql.xml탭
+ 		
+	- 우선순위 정하기 (dvd, member, rent) ==> 선정 아이템 주요  서비스 
+ 
+ 
+ - 패키지 구성
+  		==> 정리정돈, 인덱스
+  
+  
+ - 같은 기능을 효율적으로 하는 방법
+	    ==> 최적화된 코드(짧은 라인으로 같은 효과)
+	    ==> 경험, 프레임워크(기반이 되는 코드를 생략) 또는 라이브러리(함수 지원) 사용
+	    
+  
+ - 에러 났을 때 그 위치 찾기
+	 	==> 에러노트
+	 	==> 순차적으로 데이터를 출력(디버깅)
+	 	==> b.jsp탭 ,  			 Controller탭 ,				  DAO탭 ,        sql.xml탭
+	 		버튼 클릭   		syso("service!!")
+	 							syso(req.getParam("uname"))
+	 							dao.method(전달데이터);		  
+	 														syso(파라미터)
+	 		자바스크립트에러								syso(리턴)
+	  		(개발자모드에서 확인)
+  
+ - 이름 설정과 그것에 맞는 코드
+	 	==> 내용 content에 맞는 이름 부여(파일을 오픈하기 전에 추측할 수 있는 이름 부여)
+	 		~.jsp [HTML(CSS, JS), 영역.getAttribute("키값") ==> ${키} ]
+	 		~.java(Controller)
+	 			===> request.getParameter("?");
+ 									  	  ---
+ 									  <form>태그 내의 <input name=uname>
+ 									  /cr?su=300
+  
+ - 
+  
+  
+  
