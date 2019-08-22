@@ -17,12 +17,12 @@ public class MessageBeanImpl implements MessageBean{
 		System.out.println("MessageBeanImpl기본생성자");
 	}
 	
-	public MessageBeanImpl(String name) {
+	public MessageBeanImpl(String name) { //생성자 주입
 		System.out.println("MessageBeanImpl 오버로딩 생성자");
 		this.name = name;
 	}
 	
-	public void setGreeting(String greeting) {
+	public void setGreeting(String greeting) { //세터 주입
 		this.greeting = greeting;
 	}
 

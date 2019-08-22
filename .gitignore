@@ -49,3 +49,8 @@ workspace/.metadata/.plugins/org.eclipse.jdt.core/savedIndexNames.txt
 *.class
 workspace/JavaApp/.tern-project
 *.policy
+*.MF
+workspace2/Spring/.classpath
+workspace2/Spring/.project
+workspace2/Spring/.springBeans
+workspace2/Spring/.tern-project
