@@ -1,0 +1,18 @@
+
+ ※ @ResponseBody 한글 처리
+  ==> servlet-context.xml의 <annotation-driven>안에 <messege-converters>추가
+  
+	<message-converters>
+		<beans:bean class="org.springframework.http.converter.StringHttpMessageConverter">
+			<beans:property name="supportedMediaTypes" >
+				<beans:value>text/html;charset=utf-8</beans:value>
+			</beans:property>
+		</beans:bean>
+	</message-converters>
+  
+-----------------------------------------------------------------------------------------------
+
+ ※ Controller에서 JSON출력 예) return new Person();
+  ==> pom.xml에 JSON Converter추가
+   
+ 

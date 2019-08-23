@@ -1,0 +1,130 @@
+<프로젝트 구성>
+  Project Explorer에서 오른쪽 마우스 클릭
+  메뉴 New - Other 클릭
+    Wizard대화상자
+       Spring - Spring Legacy Project 선택
+        - Next버튼
+        - Project name 입력
+          Templates영역에서 Spring MVC Project선택
+       
+        - Next버튼
+        - Please specify the top-level package설정
+           예) com.encore.myapp
+               최소 3개이상의 패키지 지정(일반적으로 앞에는 도메인명, 맨뒤에는 App명)
+        - Finish버튼
+
+=============================================================================
+1. 프로젝트 - pom.xml
+    <java-version>1.6</java-version>
+      ====> <java-version>1.8</java-version>
+
+    <org.springframework-version>3.1.1.RELEASE</org.springframework-version>
+      ====> <org.springframework-version>5.1.9.RELEASE</org.springframework-version>
+
+   <dependency>
+	<groupId>javax.servlet</groupId>
+	<artifactId>servlet-api</artifactId>
+	<version>2.5</version> 
+	<scope>provided</scope>
+   </dependency>
+       ====>
+   <dependency>
+	<groupId>javax.servlet</groupId>
+	<artifactId>javax.servlet-api</artifactId>
+	<version>3.1.0</version>
+   </dependency>
+
+   <dependency>
+	<groupId>junit</groupId>
+	<artifactId>junit</artifactId>
+	<version>4.7</version>          =======> 4.12로 변경
+	<scope>test</scope>
+   </dependency>
+
+2. 프로젝트 - 오른쪽마우스 - properties
+    - Project Facets  : 1.6 ----> 1.8  (facet변경시 compiler 자동변경)
+    - Dynamic Web Module : 2.5 ----> 3.1    
+    - Java Compiler  : 1.6 ----> 1.8
+
+3. 프로젝트 - 오른쪽마우스 - Configure
+    - Convert to Tern Project
+    
+===============================================================================    
+※  파라미터 한글처리 (web.xml) - 필터처리
+    <filter>
+      <filter-name>encoding</filter-name>
+      <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+      <init-param>
+         <param-name>encoding</param-name>
+         <param-value>UTF-8</param-value>
+      </init-param>
+    </filter>
+    
+    <filter-mapping>
+      <filter-name>encoding</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping>    
+===============================================================================    
+※ @ResponseBody 한글처리
+ ==> servlet-context.xml의 <annotation-driven>안에 <message-converters>추가
+ 
+   <annotation-driven >
+	   <!-- @ResponseBody 한글처리 -->
+	   <message-converters>
+	      <beans:bean class="org.springframework.http.converter.StringHttpMessageConverter">
+	         <beans:property name="supportedMediaTypes">
+	            <beans:value>text/html;charset=UTF-8</beans:value>
+	         </beans:property>
+	      </beans:bean>
+	   </message-converters>
+	</annotation-driven>
+===============================================================================    
+※ Controller에서 JSON출력    예) return new Person();
+===> pom.xml에 JSON Converter추가
+
+
+=====================================================================================
+※ 데이터베이스 관련 설정(1번 또는 2번중 선택!!) 
+1. 오라클 드라이버 라이브러리 설정ⅰ (pom.xml파일 없이)   
+ - webapp/WEB-INF밑에 lib폴더 생성
+   ojdbc6.jar파일을 복사                                                    =====> 런타임시 사용
+   ---> 파일선택후 마우스 우클릭 : Add to Build Path    =====> 컴파일시 사용
+   
+2. 오라클 드라이버 라이브러리 설정ⅱ (pom.xml파일에 정의)
+    https://repo.maven.apache.org/maven2  <==== Central Repository 
+                                               (pom.xml파일에 기술된 jar파일들을 가져오는 곳) 
+       기본 원격 repository(Central Repository)에 오라클 드라이버가 없기 때문에
+       다운 받을 주소를 따로 명시해 주어야 함.
+       
+ - 첫번째)
+   dependencies태그 위에 오라클 드라이버를 가져올 주소를 명시
+   <repositories>
+      <repository>
+        <id>oracle</id>
+        <name>ORACLE JDBC Repository</name>
+        <url>http://maven.jahia.org/maven2</url>
+      </repository>
+   </repositories>
+   
+ - 두번째)
+   dependencies태그 안에 dependency태그 정의
+   <dependency>
+	  <groupId>com.oracle</groupId>
+	  <artifactId>ojdbc6</artifactId>
+	  <version>12.1.0.2</version>
+   </dependency>
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+  
