@@ -1,0 +1,246 @@
+
+ public class MyController{} ---> 자바 Object클래스
+
+--------------------------------------------------------------------------------
+ package com.encore.myapp.control;
+
+ @Controller
+ public class MyController{}
+ ----> 스프링 컨트롤러 객체!
+ ----> 단, 컨트롤러 객체 등록 : servlet-context.xml ==> 루트 : <beans>
+ 		--> 방법1) <bean class="com.encore.myapp.control.MyController"></bean>
+ 			--> 앞으로 생성되는 모든 컨트롤러를 등록하는 것이 불편할 수 있다.
+ 		
+ 		--> 방법2) <context:component-scan base-package="com.encore.myapp.control"/>
+ 			--> base-package에 정의된 패키지 또는 하위 패키지에서 만들어진
+ 				컨트롤러들은 별도의 <bean>등록이 필요 없음
+ 				
+ @Controller
+ @RequestMapping("가상경로") my
+ public class MyController{
+ 	
+ 	@RequestMapping("가상경로")	hello	==> 가상 경로 : 클라이언트 URL요청 ("/my/hello")
+ 	public void method(){
+ 		- 1. 요청 분석
+ 		- 2. (클라이언트가 보낸)데이터 얻기
+ 		- 3. 모델 객체 생성, 호출
+ 		- 4. 리턴값 영역에 저장하기
+ 		- 5. (단순 이동 또는 모델의 값을 출력할)페이지 설정
+ 	}
+ 	----> 서블릿의 service(req, resp)메소드, 스트럿츠의 execute()메소드에 해당
+ 	
+ }
+
+--------------------------------------------------------------------------------
+
+ //단순 JSP페이지 포워딩 case1) --> 데이터 이동 없이 폼 만 보여주겠음
+ @RequestMapping("test1")
+ public void m1(){
+	//만약 리턴 타입을 명시하지 않는다면 (void) ==> [요청URL == 이동 할 View]
+	----> /WEB-INF/views/ + test1 + .jsp
+	----> /WEB-INF/views/test1.jsp
+ }
+ 
+ 
+ //단순 JSP페이지 포워딩 case2)
+ @RequestMapping("test2")
+ public String m2(){
+	return "0826/hello"
+	----> /WEB-INF/views/ + 0826/hello + .jsp
+	----> /WEB-INF/views/0826/hello.jsp //이동 할 (브라우저에 전달할)페이지
+ }
+
+ ====================================================
+ //폼 안의 (파라미터)데이터
+ <form action="/Spring/my/test3?age=13"  method=post>
+ 	<input name=uname>
+ </form>
+ 
+ 
+ <script>
+ 	$.ajax({url : '/Spring/my/test3',
+ 			data : {
+ 				un : $('[name=uname]').val()
+ 			} 
+ 	});
+ </script>
+
+ //폼 안의 (파라미터)데이터 얻어오기
+ @RequestMapping("test3") //클라이언트 URL요청을 의미!
+ public String m3(HttpServletRequest request){
+ 
+ 	// ※스프링의 매핑 메소드의 매개변수에는 서블릿 관련된 필요객체를 변수 선언하면 자동 객체 생성됨!
+ 	String name = request.getParameter("uname"); 
+ 	request.getParameter("age"); 
+ 	request.getParameter("un"); //ajax요청에서 새로 정의된 변수 파라미터명을 사용해야 함.
+ 	
+ 	request.setAttribute("msg", name); //뷰와 공유할 데이터를 request영역에 저장
+ 	return "0826/hello";
+ }
+ 
+ 
+ //폼 안의 (파라미터)데이터 얻어오기
+ @RequestMapping("test4") //클라이언트 URL요청을 의미!
+ public String m4(HttpServletRequest request, HttpSession session){
+ 	String name = request.getParameter("uname"); 
+ 	
+ 	session.setAttribute("msg", name); //뷰와 공유할 데이터를 session영역에 저장
+ 	return "0826/hello";
+ }
+ 
+ 
+ //★권장) 폼 안의 (파라미터)데이터 얻어오기 
+ @RequestMapping("test5") //클라이언트 URL요청을 의미!
+ public String m5(String uname, Model model){
+ 				  ---> uname : <form>내의 <input>태그의 name속성의 값과 일치!
+ 				  
+ 	model.addAttribute("msg", uname); //model.addAttribute("키값", 공유Object);
+ 	//---> 스프링에서는 Model이라는 데이터 저장 영역을 사용, request영역처럼 사용됨!
+ 	
+ 	return "0826/hello";
+ }
+ 
+ 
+ //★권장) 폼 안의 (파라미터)데이터 얻어오기 
+ @RequestMapping("test6") //클라이언트 URL요청을 의미!
+ public String m6(String name, int age, String job){
+ 			---> name, age, job : <form>내의 <input>태그의 name속성의 값과 일치!
+ 				  
+ 	return "0826/hello";
+ }
+ 
+ 
+ //★권장) 폼 안의 (파라미터)데이터 얻어오기 
+ @RequestMapping("test7") //클라이언트 URL요청을 의미!
+ public String m7(Person p){
+ 	//주의 사항 : Person클래스 안에는 <form>내의 <input>태그의 name속성의 값과
+ 	//			  일치하는 변수명고 세터메소드가 존재해야 함
+ 	//			  예) class Person{ private String name;
+ 	//								public void setName(){ this.name = name; }}
+ 	// Person p = new Person();
+ 	// 		  p.setName(request.getParameter("name"));
+ 	//		  p.setAge(Integer.parseInt(request.getParameter("age")));
+ 	
+ 	
+	System.out.println("사람정보 : " + p);
+	 				  
+ 	return "0826/hello";
+ }
+
+
+ //폼 안의 (파라미터)데이터 얻어오기
+ @RequestMapping("test8") //클라이언트 URL요청을 의미!
+ pulbic String m8(){
+ 	//"p" ---> 영역키로 사용, 변수명ppp ---> 현재 메소드내에서 사용할 이름
+ 	System.out.println("사람정보 : " + ppp)
+ 	return "0826/hello";
+ }
+ 
+ 
+ //폼 안의 (파라미터)데이터 얻어오기
+ @RequestMapping("test9")
+ public ModelAndView m9 (Person p){
+ 	ModelAndView mav = new ModelAndView();
+ 	//ModelAndView객체 : Model(데이터 : String, VO, List)과 View정보(hello.jsp)를 담는 바구니
+ 	mav.addObjest("p", p); 			//위의 model.addAttribute("p",p); 와 같음
+ 	mav.setViewName("0826/hello");  //return "0826/hello";"와 같음
+ 	
+ 	return mav;
+ }
+ 
+ 
+ //폼 안의 (파라미터)데이터 얻어오기
+ @RequestMapping("insert")
+ public String m10 (Person p, RedirectAttributes attr){
+ 	//insert관련된 기능 수행
+ 
+ 	//model.addAttribute("favoriteColor", "파랑색");
+ 	// ---> 이동하는 list.jsp와 색깔을 공유하지 못한다
+ 	attr.addFlashAttribute("favoriteColor","파란색");
+ 	//RedirectAttributes : 리다이렉트 이동 시 request공유할 데이터를 표현
+ 	
+ 	return "redirect:/my/list"; //m9메소드 까지는 forward이동!
+ 	//리턴 문자열 중 앞에 접두사 "redirect:"을 붙이면 리다이렉트 이동
+ 	//---> 필요한 경우 : insert, delete, update후 이동페이지를 표현 할 때 사용
+ 	//---> 왜? 만약 포워드 이동 시 (F5 기능키 누를 때) DML을 다시 한 번 실행 할 수도 있기 때문에
+ }
+ 
+ 
+ @RequestMapping("list")
+ public String m11 (){
+ 	return "0826/list";
+ }
+
+--------------------------------------------------------------------------------
+ 
+ @RequestMapping("hello")
+ public @ResponseBody String m12 (){
+ 	return "Hello, Spring~!!"; //요청 브라우저에게 '안녕' 메시지를 전달하고 싶다
+ }
+
+ ---> URL요청에 대해 JSP페이지 없이 문자열 데이터를 전달하고 싶다면 
+ 	  리턴타입 앞에 @ResponseBody를 붙이면 된다.
+ ---> 주로 Ajax요청에 대한 응답데이터로 사용됨.
+ 
+ 
+ @RequestMapping("hello2")
+ public @ResponseBody String m13 (){
+ 	return "안녕"
+ }
+
+ ---> @ResponseBody가 정의되어 있으므로 "안녕"데이터를 JSP페이지 없이 전달!
+ ---> JSP페이지에서는 맨 상단에 <%@ page contentType="text/html"; charset=utf-8"%>를
+ 	  통해 출력되는 문자에 대한 charset설정을 하고 있지만
+ 	  위의 return "안녕"; 에서는 charset 설정이 빠져 있음! ==> 한글 깨짐 현상 발생
+ 	  
+ ---> 추가적인 설정 필요 (servlet-context.xml)
+ 
+-------------------------------------------------------------------------------- 
+
+ @RequestMapping("doPerson")
+ public @ResponseBody Person m14(){
+ 	Person p = new Person("나길동", 15, "학생");
+ 	
+ 	return p;
+ }
+ 
+ --> @ResponseBody선언 후 리턴값이 VO인 경우 JSON으로 변경해서 클라이언트에게 전달하는 것이 가능!
+ 		---> {"name":"홍길동", "age":15, "job":"학생"}
+ 		
+ --> 추가적인 설정 필요! (pom.xml)
+ 
+  HTML 													Spring Controller
+ 							ajax요청
+ 	   ------------------------------------------------>
+ 	   <------------------------------------------------
+		    text(String, Array, JSON), HTML, XML
+
+														Person p = new Person("나길동", 13, "학생");
+														return p;
+		@ResponseBody선언된 return p;에 대한 응답데이터
+		  {"name":"홍길동", "age":15, "job":"학생"}
+
+														Person p1, p2, p3;
+															p1 = new Person("길동",13,"학생");
+															p2 = new Person("라임",15,"학생");
+															p3 = new Person("주원",17,"학생");
+														
+														List<Person> list = new ArrayList<>();
+															list.add(p1);	
+															list.add(p2);	
+															list.add(p3);	
+		@ResponseBody선언된 return p;에 대한 응답데이터
+		  [{"name":"길동", "age":13, "job":"학생"},											
+		   {"name":"라임", "age":15, "job":"학생"},													
+		   {"name":"주원", "age":17, "job":"학생"}]													
+
+
+
+
+
+
+
+
+
+
+

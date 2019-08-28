@@ -87,7 +87,7 @@ from  (select no, writer, tel, wdate, contents, rownum rn
       )
 where rn between 31 and 40;
 
-
+select * from guest;
 
 insert into guest values (guest_seq.nextval, '홍길동1', 'gildong@daum.net', '010-1234-5678', '1234', '홍길동입니다.', sysdate );
 insert into guest values (guest_seq.nextval, '홍길동2', 'gildong@daum.net', '010-1234-5678', '1234', '홍길동입니다.', sysdate );

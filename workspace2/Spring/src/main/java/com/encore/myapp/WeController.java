@@ -1,5 +1,8 @@
 package com.encore.myapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,9 +75,24 @@ public class WeController {
 	
 	@RequestMapping("/doPerson")
 	public @ResponseBody PersonVO doJSON() {
-		PersonVO p = new PersonVO("나길동", 15, "직업");
+		PersonVO p = new PersonVO("나길동", 15, "학생");
 		return p;
 	}
+	
+//	@RequestMapping("/doPerson2")
+//	public @ResponseBody List<PersonVO> doJSON2() {
+//		PersonVO p1 = new PersonVO("길동", 15, "학생");
+//		PersonVO p2 = new PersonVO("라임", 17, "직업");
+//		PersonVO p3 = new PersonVO("주원", 12, "학생");
+//		
+//		List<PersonVO> list = new ArrayList<PersonVO>();
+//		list.add(p1);
+//		list.add(p2);
+//		list.add(p3);
+//		return list;  //JSON으로 
+//	}
+	
+	
 	
 	
 	@RequestMapping(value = "good", method = RequestMethod.GET)

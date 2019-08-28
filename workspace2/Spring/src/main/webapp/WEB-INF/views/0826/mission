@@ -1,0 +1,22 @@
+
+
+
+<미션>: Emp_Copy테이블을 CRUD하는 DAO만들기
+
+- emp테이블을 복사해서 emp_copy테이블을 생성하시오.
+
+  - com.encore.myapp.control.EmpController   생성
+  - com.encore.myapp.persistence.EmpDAO2     생성
+ - com.encore.myapp.persistence.EmpDAOImpl2 생성
+
+- emp_form.jsp생성                                                URL매핑 : '/emp/form'                                          
+   ==>  사원번호, 사원명, 급여, 부서번호 입력폼
+   ==>  '등록'버튼 클릭시 emp_copy테이블에 행 입력
+   
+- emp_list.jsp생성                                                URL매핑: '/emp/list'
+   ==>  전체 사원의 사원번호, 사원명, 급여, 부서번호를 테이블 출력
+   ==> 사원정보를 출력하는 테이블위에 <input name=deptno>,<button>조회</button> 위치 
+       : 부서번호를 입력받아 특정부서의 사원정보를 출력하기
+
+
+
