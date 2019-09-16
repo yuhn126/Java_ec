@@ -63,24 +63,34 @@
 		</table>
 	</form>
 	<br>
-	<c:if test="${page == 1 }">
+	<%-- <c:if test="${page == 1 }">
 		이전
 	</c:if>
 	<c:if test="${page > 1 }">
 		<a href="control?action=list&page=${page-1}">이전</a>
-	</c:if>
+	</c:if> --%>
+	
+	<%-- 
+		  [미션1]  마지막페이지에서  '다음'텍스트에 있는 하이퍼링크 제거하기!!  
+           ===> 컨트롤러에서 총 페이지를 구해서(totalPage)  ===> 영역에 저장
+           
+          [미션2] '이전'과 '다음'사이에  페이지 넘버(수)를 출력하고
+                                  넘버클릭시 해당페이지로 이동하게 하이퍼링크 설정하시오. 
+    --%>
+	
 	
 	<c:forEach begin="1" end="${totalPage}" var='i'>
 		<a href='control?action=list&page=${i }'>[${i }]</a>
 	</c:forEach>
 	
-	<c:choose>
+	<%-- <c:choose>
 		<c:when test="${page < totalPage}">
 			<a href="control?action=list&page=${page+1}">다음</a>
 		</c:when>
 		<c:otherwise>다음</c:otherwise>
-	</c:choose>
+	</c:choose> --%>
 	
+	<a href="list?page=${page-1}&limit=${limit}">이전</a>
 	<a href="list?page=${page+1}&limit=${limit}">다음</a>
 	
 </body>

@@ -9,6 +9,6 @@
 <%-- /WEB-INF/views/0822/hello.jsp
 	 : 직접 호출 불가             --%>
 <body>
-	<font color="tomato" size="12">즐거운 하루 되세요</font>
+	<font color="tomato" size="12">즐거운 하루 되세요~</font>
 </body>
 </html>

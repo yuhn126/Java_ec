@@ -1,0 +1,40 @@
+
+
+<스프링 게시판 주요기능>
+- 고객은 새로운 게시물을 등록할 수 있어야 한다.
+- 고객은 특정한 게시물을 조회할 수 있어야 한다.
+- 고객은 작성한 게시물을 삭제할 수 있어야 한다.
+
+<게시판 URL요청 정의>
+
+   URL              HTTP요청                     기능정의
+---------------------------------------------------------   
+/board/list          GET              전체목록
+/board/register      GET              등록폼 보이기
+/board/register      POST             등록처리
+/board/read          GET              조회(특정 게시물 한개 조회)
+/board/modify        GET              수정폼 보이기
+/board/modify        POST             수정처리
+/board/remove        POST             삭제처리
+---------------------------------------------------------   
+
+GET의 (DB)의미?    select     
+POST의 (DB)의미?   insert,update
+
+참고) PUT(update)  DELETE(delete)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
