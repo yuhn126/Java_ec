@@ -1,0 +1,2 @@
+RESTController
+ : ajax전용!
