@@ -1,2 +1,146 @@
-RESTController
- : ajax전용!
+
+ ▣ REST(Representational State Transfer)방식
+  - 모바일 시대 이전 : 서버의 데이터를 소비하는 주체는 '브라우저'!!
+  - 모바일 시대 이후 : '브라우저'와 함께 스마트 폰에의 '앱(App)'에서 서버의 데이터를 소비.
+                  		---> 서버는 점점 더 순수하게 데이터에 대한 처리를 목적으로 하는 형태로 진화.
+                  		---> return 'HTML페이지'에서  return '데이터'로 진화!!
+                  
+  - 하나의 URI는 하나의 고유한 리소스(Resource)를 대표하도록 설계된다는 개념에 전송방식을 결합해서 원하는 작업 지정.
+  
+    ==> URI + POST/GET/PUT/DELETE
+               C    R   U    D
+               
+    ==> 이전방식  :  /board?action=insert
+                     /board?action=list
+                 
+        REST방식  :  /board/123 + POST              
+                     /board/all + GET
+                 
+-----------------------------------------------------------------
+ @Conroller
+	public class MyController{
+	     @RequestMapping("/gildong")
+	     public String m1(){
+	        return "hello";   --->   /WEB-INF/views/hello.jsp 응답 
+	     }
+	
+	     @RequestMapping("/lime")
+	     public @ResponseBody String m2(){
+	        return "hello";   --->  "hello"문자열 응답
+	     }
+	}
+----------------------------------------------------------------
+ @RestConroller // 컨트롤러내의 모든 요청매핑은
+                // JSP페이지가 아닌  데이터(텍스트,JSON,XML,배열)를  응답  (모두 @ResponseBody한것처럼)
+                // ==> Ajax요청 전용!!
+                
+	public class YouController{
+	     @RequestMapping("/gildong")
+	     public String m1(){
+	        return "hello";   ---> "hello"문자열 응답
+	     }
+	
+	     @RequestMapping("/lime")
+	     public String m2(){
+	        Person vo = new Person("홍길동",13,"학생");
+	        return vo;        ---> {"name":"홍길동", "age":13, "job":"학생"} JSON 리턴(pom.xml에 컨버터가 등록되어 있어야 함)
+	     }
+	}                 
+                 
+======================================================================================
+ ▣  @RestConroller를 사용할 때 특이점
+
+  1. 모든 메소드의 요청매핑에 대한 응답은 데이터다!! (text,json,xml데이터를 클라이언트에게 전달)
+		---> @ReponseBody를 명시하지 않아도 모든 메소드의 리턴이 @ResponseBody    
+    
+  2. @PathVariable을 사용하여 요청경로에 데이터를 전달시킬 수 있다.
+    
+	  @RequestMapping("/board/{no}/{uname}") //요청경로상에 사용된 {no},{uname}을 '경로변수'라 함!!
+      public String getPath(@PathVariable("no")   Integer no, @PathVariable("uname") String uname){
+	  	 //'경로 변수'를 사용하는 경우  {}중괄호의 갯수 만큼 메소드 매개변수에 @PathVariable선언이 있어야 하고
+	  	 //'경로 변수'와 같은 이름이 정의되어 있어야 함.
+	   	 return  no+"잘했어요!!"+uname;	
+	  } 
+ 
+ 
+  3. 응답데이터로 ReponseEntity<리턴할 데이터의 타입> 를 사용할 수 있다.
+ 
+     @RequestMapping("/hello")
+     public String m1(){
+         return "안녕하세요";    ==> 클라이언트(HTML내의 JavaScript)에게 문자열 전달
+     }
+     
+     @RequestMapping("/good")
+     public ReponseEntity<String> m2(){
+         return new ResponseEntity<>("좋아요", HttpStatus.OK) ;
+         return new ResponseEntity<>("좋아요", HttpStatus.INTERNAL_SERVER_ERROR) ;
+                                              ----------------------------------
+                                                          임의로 변경가능  
+         ==> 클라이언트(HTML내의 JavaScript)에게 문자열뿐만 아니라 조작된 서버의 상태도 전달하는 것이 가능
+     }
+ 
+  4.  @PostMapping(value = "/start", consumes = "application/json")	
+	  public String create(@RequestBody ReplyVO vo) {
+	      return "시작";
+	  }
+    	==> @RequestBody는 클라이언트(내의 JavaScript)가 보낸 JSON데이터를 VO로 변환하는 역할을 한다.
+    	==> consumes : 서버 입장에서 입력되는 데이터
+ 
+  5.  pom.xml에 XML 컨버터 추가 시 변화
+  
+      <!-- JSON Converter(컨트롤러에서 전달한 VO데이터를 JSON으로 변경하기 위해 사용) -->
+		<dependency>
+		   <groupId>com.fasterxml.jackson.core</groupId>
+		   <artifactId>jackson-databind</artifactId>
+		   <version>2.9.6</version>
+		</dependency>
+		
+	  <!-- XML Converter(컨트롤러에서 전달한 VO데이터를 XML로 변경하기 위해 사용) -->   
+		<dependency>
+		   <groupId>com.fasterxml.jackson.dataformat</groupId>
+		   <artifactId>jackson-dataformat-xml</artifactId>
+		   <version>2.9.6</version>
+		</dependency> 
+ 
+      =======================> 변화 <==========================
+      
+      @RequestMapping("/m3")
+      public Person m3(){
+          Person vo = new Person("홍길동",13,"학생");
+          return vo;
+      }
+          
+    ◈ 클라이언트 요청 URL ==> http://192.168.0.96/m3   
+	      ==> 응답데이터
+	        <Person>
+	         <name>홍길동</name>
+	         <age>13</age>
+	         <job>학생</job>
+	        </Person>
+        
+     ◈ 클라이언트 요청 URL ==> http://192.168.0.96/m3.json   
+	      ==> 응답데이터
+	        {"name":"홍길동","age":13,"job":"학생"}
+    ------------------------------------------------------------------------------------
+     ◈ 만약 @RequestMapping(value="/m3" ,produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+      public Person m3(){
+          Person vo = new Person("홍길동",13,"학생");
+         return vo;
+      }
+          클라이언트 요청 URL ==> http://192.168.0.96/m3
+      ==> 응답데이터             
+        {"name":"홍길동","age":13,"job":"학생"}
+      
+          ◈ 만약 pom.xml에 JSON컨버터만 추가되어 있다면 (XML컨버터 추가 안되었을때)    
+          클라이언트 요청 URL ==> http://192.168.0.96/m3
+      ==> 응답데이터             
+        {"name":"홍길동","age":13,"job":"학생"}
+        
+          
+          
+ jQuery --> .closest() 가장 가까운 태그 1개
+ 
+ modalInputReplyDate.closest("div").hide();  --> 가장 가까운 div태그 하나
+ 
+ 
+                                             

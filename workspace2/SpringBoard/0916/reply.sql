@@ -20,4 +20,4 @@ alter table tbl_reply add constraint reply_bno_fk
 	  foreign key(bno) reference tbl_board(bno);
 
 	  
-select * from TBL_REPLY
+select * from TBL_REPLY;

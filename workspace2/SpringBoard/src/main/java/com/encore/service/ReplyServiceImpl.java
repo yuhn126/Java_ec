@@ -23,17 +23,17 @@ public class ReplyServiceImpl implements ReplyService {
 
 	@Override
 	public int modify(ReplyVO vo) {
-		return 0;
+		return dao.update(vo);
 	}
 
 	@Override
 	public int remove(int rno) {
-		return 0;
+		return dao.delete(rno);
 	}
 
 	@Override
 	public ReplyVO get(int rno) {
-		return null;
+		return dao.find(rno);
 	}
 
 	@Override
@@ -43,7 +43,9 @@ public class ReplyServiceImpl implements ReplyService {
 
 	@Override
 	public ReplyPageDTO getListPage(Criteria cri, int bno) {
-		return null;
+		int count = dao.getCountByBno(bno); //특정 게시물에 대한 전체 댓글 수
+		List<ReplyVO> list = dao.getListWithPaging(cri,bno); //특정페이지의 제한된(10개) 조회
+		return new ReplyPageDTO(count,list);
 	}
 
 }
