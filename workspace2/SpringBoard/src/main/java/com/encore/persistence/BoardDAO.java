@@ -20,4 +20,6 @@ public interface BoardDAO {
 	public int delete(int bno);
 
 	public int getTotalCount(Criteria cri);
+	
+	public void updateReplyCnt(int bno, int amount);
 }

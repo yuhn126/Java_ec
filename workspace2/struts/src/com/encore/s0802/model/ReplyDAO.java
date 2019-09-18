@@ -17,7 +17,7 @@ public class ReplyDAO {
 	
 	public boolean create(Reply vo) {
 		try {
-			smc.insert("reply.create", vo);
+			smc.insert("reply0802.create", vo);
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -26,11 +26,11 @@ public class ReplyDAO {
 	}//create
 
 	public List<Reply> findAll() throws SQLException {
-		return smc.queryForList("reply.findAll");
+		return smc.queryForList("reply0802.findAll");
 	}//findAll
 	
 	public boolean modify(Reply vo) throws SQLException {//리턴 int : 수정된 행의 갯수
-		int upCnt = smc.update("reply.modify", vo);
+		int upCnt = smc.update("reply0802.modify", vo);
 		if(upCnt == 1) {
 			return true;
 		} else {
@@ -39,7 +39,7 @@ public class ReplyDAO {
 	}//modify
 	
 	public boolean remove(int no) throws SQLException {
-		int delCnt = smc.delete("reply.remove", no);
+		int delCnt = smc.delete("reply0802.remove", no);
 		if(delCnt == 1) {
 			return true;
 		} else {

@@ -9,7 +9,14 @@ public class BoardVO {
 	private String writer;
 	private Date regdate;
 	private Date updatedate;
+	private int replycnt;	
 	
+	public int getReplycnt() {
+		return replycnt;
+	}
+	public void setReplycnt(int replycnt) {
+		this.replycnt = replycnt;
+	}
 	public int getBno() {
 		return bno;
 	}

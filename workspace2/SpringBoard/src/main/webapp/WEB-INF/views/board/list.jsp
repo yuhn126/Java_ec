@@ -40,7 +40,9 @@
 
 							<td><a class='move' href='<c:out value="${board.bno}"/>'>
 									<c:out value="${board.title}" />
-							</a></td>
+							</a>
+								<b>[${board.replycnt}]</b>
+							</td>
 							<%-- 요청 URL: /board/3 --%>
 
 							<td><c:out value="${board.writer}" /></td>

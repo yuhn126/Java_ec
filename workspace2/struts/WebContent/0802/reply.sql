@@ -2,24 +2,24 @@
 
 -- reply.sql
 
-drop table reply;
+drop table reply0802;
 
-create table reply(
+create table reply0802(
    no       number,
    name     varchar2(20),
    content  varchar2(300)
 );
 
-alter table reply
+alter table reply0802
 add constraint reply_pk primary key(no); 
 
-alter table reply
+alter table reply0802
 modify name not null;
 
-alter table reply
+alter table reply0802
 modify content not null;
 
-drop sequence reply_seq;
+drop sequence reply0802_seq;
 create sequence reply_seq
        start with 1
        increment by 1
@@ -28,7 +28,8 @@ create sequence reply_seq
 
 
 
-select * from REPLY;
+select * from reply0802;
 
+insert
 
-delete from REPLY where no=17;
+delete from reply0802 where no=17;

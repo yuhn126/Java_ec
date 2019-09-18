@@ -1,0 +1,67 @@
+<AspectJ Pointcut 기본 표현식 >
+
+ execution([수식어] [리턴타입] [클래스이름] [이름]([파라미터])
+ 
+1. 수식어 
+ - 생략가능
+ - public, protected 등등
+
+2. 리턴타입 
+ - 메서드의 리턴타입 지정
+
+3. 클래스이름, 이름
+  - 클래스의 이름 및 메서드의 이름 지정
+
+4. 파라미터
+ - 메서드 파라미터 지정
+ 
+ "*" 는 모든 값을 의미
+ ".." 는 0개 이상 의미
+
+----------------------------------------------
+
+	execution(* com.encore.*.*())
+		- com.encore 패키지 내
+		- 파라미터가 없는 모든 메서드 호출
+	
+	execution(* com.encore..*.*(..))
+		- com.encore 패키지와 하위 패키지에 있는
+		- 파라미터가 0개 이상인 모든 메서드 호출
+	
+	execution(String com.encore.SomeService.someMethod(..))
+		- 리턴 타입이 String,
+		- com.encore.SomeService 인터페이스 내
+		- 파라미터가 0개 이상인 someMethod 메서드 호출
+	
+	execution(* some*(*))
+		- 메서드 이름이 some으로 시작되고,
+		- 파라미터가 1개인 메서드 호출
+	
+	execution(* some*(*, *))
+		- 메서드 이름이 some으로 시작되고,
+		- 파라미터가 2개인 메서드 호출
+	
+	execution(* some*(String, ..))
+		- 메서드 이름이 some으로 시작되고,
+		- 첫번째 파라미터 타입이 String,
+		- 파라미터가 1개 이상인 메서드 호출
+
+----------------------------------------------
+
+ <자바코드내에서 트랜잭션 처리>
+ 	public void method(){
+ 		conn.setAutoCommit(false);
+ 		try{
+ 			#sql문 실행 conn.execute(sql insert);
+ 			#sql문 실행 conn.execute(sql update);
+ 			
+ 			conn.commit() //두 개의 DML실행을 실제 DB에 물리적인 반영!
+ 		} catch(SQLException e){
+ 			conn.rollback(); //전체 작업 취소
+ 		}
+ 	}
+ 	
+ 	
+ 	
+ 	
+ 	

@@ -1,6 +1,8 @@
 package com.encore.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -52,6 +54,14 @@ public class BoardDAOImpl implements BoardDAO{
 	@Override
 	public int getTotalCount(Criteria cri) {
 		return sqlSession.selectOne("board.getTotalCount", cri);
+	}
+
+	@Override
+	public void updateReplyCnt(int bno, int amount) {
+		Map<String, Integer> map = new HashMap<>();
+		map.put("bno", bno);
+		map.put("amount", amount);
+		sqlSession.update("board.updateReplyCnt", map);
 	}
 
 }
