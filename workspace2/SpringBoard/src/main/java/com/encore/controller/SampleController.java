@@ -31,7 +31,7 @@ public class SampleController {
 		SampleVO vo = new SampleVO(112, "스타", "로드");
 		return vo;
 	}
-	
+
 	@RequestMapping("/getList")
 	public List<SampleVO> getList() {
 		List<SampleVO> list = new ArrayList<SampleVO>();

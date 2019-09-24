@@ -1,0 +1,110 @@
+=======================pom.xml================================
+<!-- 시큐리티 관련 객체 -->
+<dependency>
+	<groupId>org.springframework.security</groupId>
+	<artifactId>spring-security-web</artifactId>
+	<version>5.0.6.RELEASE</version>
+</dependency>
+
+<dependency>
+	<groupId>org.springframework.security</groupId>
+	<artifactId>spring-security-config</artifactId>
+    <version>5.0.7.RELEASE</version>
+</dependency>
+
+<dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-core</artifactId>
+    <version>5.0.7.RELEASE</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
+<dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-taglibs</artifactId>
+    <version>5.0.7.RELEASE</version>
+</dependency>
+	
+=======================security-context.xml================================
+※주의: http://www.springframework.org/schema/security/spring-security.xsd   : 버전 없이!!
+         <security:form-login/> 반드시 추가
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+<!-- security-context.xml -->
+	<security:http>
+		<security:intercept-url pattern="/sample/all" access="permitAll"/>
+		<security:intercept-url pattern="/sample/member" access="hasRole('ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')"/>
+		<security:form-login/>
+	</security:http>
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:user-service>
+				<security:user name="member" password="{noop}member" authorities="ROLE_MEMBER"/>
+				<security:user name="admin" password="{noop}admin" authorities="ROLE_MEMBER, ROLE_ADMIN"/>
+			</security:user-service>
+		</security:authentication-provider>
+	</security:authentication-manager>
+</beans>
+
+================================web.xml================================
+   ◈등록 : /WEB-INF/spring/security-context.xml
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+		/WEB-INF/spring/root-context.xml
+		/WEB-INF/spring/security-context.xml
+		
+		</param-value>
+	</context-param>
+
+   ◈등록 :   DelegatingFilterProxy
+   <filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+<단계2 : 롤설정>====================================================================
+ ◈변경: <security:authentication-manager></security:authentication-manager>
+  ※ 주의 : ROLE_
+   		<security:intercept-url pattern="/sample/member" 
+                                      access="hasRole('ROLE_MEMBER')" />
+
+		<security:intercept-url pattern="/sample/admin"
+			access="hasRole('ROLE_ADMIN')" />
+
+
+
+
+    <security:authentication-manager>
+     <security:authentication-provider> 
+       <security:user-service> 
+              <security:user name="member" password="{noop}member" 
+                             		authorities="ROLE_MEMBER"/> 
+              <security:user name="admin" password="{noop}admin" 
+		                 authorities="ROLE_MEMBER, ROLE_ADMIN"/>
+       </security:user-service>
+     </security:authentication-provider>
+   </security:authentication-manager>
+
+=================================<단계3 : 롤 에러발생시 이동페이지>============================================
+ ==> 403에러페이지에서 지정된 JSP페이지로
+	추가: <security:access-denied-handler error-page="/accessError"/>
+                                                	----------------
+                                                     	매핑 필요
+	<security:http>
+	        <security:form-login/>
+	        <security:access-denied-handler error-page="/accessError"/>
+	</security:http>
+
+	
