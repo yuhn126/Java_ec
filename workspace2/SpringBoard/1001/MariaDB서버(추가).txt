@@ -1,0 +1,98 @@
+◎ 사용자 계정 생성
+    CREATE USER '아이디'@'localhost' IDENTIFIED BY '비밀번호';  ==>로컬에서만 접근 가능
+    CREATE USER '아이디'@'%' IDENTIFIED BY '비밀번호';  ==> 외부에서 접근 가능
+    CREATE USER '아이디'@'192.168.0.96' IDENTIFIED BY '비밀번호';  ==> 특정IP 접근 가능
+
+    CREATE USER 'scott'@'%' IDENTIFIED BY 'tiger';
+
+
+◎ 사용자 권한 주기
+    GRANT ALL PRIVILEGES ON 데이터베이스.* TO '아이디'@'localhost';
+    GRANT ALL PRIVILEGES ON 데이터베이스.* TO '아이디'@'%';
+    GRANT ALL PRIVILEGES ON 데이터베이스.* TO '아이디'@'192.168.0.96';
+    
+    GRANT ALL PRIVILEGES ON mariaDB.* TO 'scott'@'%';
+    GRANT ALL PRIVILEGES ON mariaDB.* TO 'scott'@'localhost';
+    GRANT ALL PRIVILEGES ON test.* TO 'scott'@'%';
+         
+◎ 새로고침 (변경내용 반영)
+    FLUSH PRIVILEGES;
+            
+◎ 사용자 계정 삭제
+    DROP USER [사용자]@[서버];           
+    DROP USER scott@192.168.0.55;           
+    DROP USER scott@localhost;           
+============================================================================
+▣  MariaDB접속
+  [root@localhost ~]# mysql       ===> root 접속 
+  MariaDB [(none)]> 
+           
+  [root@localhost ~]# mysql -u scott  ==> scott 접속
+  MariaDB [(none)]>    
+
+  [root@localhost ~]# mysql -u scott -p 
+  Enter password:    ==>입력하면(root마찬가지)
+  ERROR 1045 (28000): Access denied for user 'scott'@'localhost' (using password: YES)
+
+  [root@localhost ~]# mysql -u scott -p 
+  Enter password:    ==>입력안하면(root마찬가지)   접속 성공!!
+  MariaDB [(none)]>  
+
+  [root@localhost ~]# mysql -u scott    ==> 패스워드 입력하는 -p옵션 안 주고 접속 성공!!  
+  MariaDB [(none)]> 
+
+  [root@localhost ~]# mysql -u abcd  ==> 존재하지 않는 아이디도 가능
+  MariaDB [(none)]>   
+  ==> 일반사용자들은 기본 'test'데이터베이스와 'information_schema'데이터베이스가 참조됨.
+  ==> test데이터베이스 접속가능하며, 데이터베이스내에 새로운 테이블생성과 다른 사용자가 생성한 테이블 삭제 가능
+  ==> information_schema데이터베이스에 접속이 가능하나 read-only!!
+
+  [root@localhost ~]# mysql -u scott test;
+  MariaDB [test]>
+
+  [root@localhost ~]# mysql -u scott mariaDB
+  ERROR 1044 (42000): Access denied for user ''@'localhost' to database 'mariaDB'
+  ==> scott사용자는 권한이 없는 데이터베이스에 접속하는 것이 불가능. 
+=====================================================================================
+★ MariaDB의  관리자인  root사용자는 비번이 설정되어 있지 않음
+★ mysql데이터베이스에 host,user,password관리하는 user테이블존재
+  초기 root의 비번이 없으므로 이곳에서 변경하는 것이 가능!!
+
+MariaDB [mysql]> update user set password=password('123456') where user='root';
+MariaDB [mysql]> update user set password=password('tiger') where user='scott';
+MariaDB [mysql]> flush privileges;
+
+★설정후 조심★
+
+[root@localhost ~]# mysql
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+==> 더 이상 비번없이 접속하는 것이 불가능!!
+
+[root@localhost local]# mysql -u root -p mariaDB
+Enter password: 123456     ==> 정확한 비번을 입력해서 접속이 가능!!
+MariaDB [mariaDB]>
+
+==================================================================================
+▣ MariaDB접속 끊기
+MariaDB [(none)]> exit
+Bye
+
+MariaDB [(none)]> quit
+Bye        
+==================================================================================
+※ 리눅스OS 시스템 재부팅시 mariaDB재실행!!
+  ==> systemctl enable mariadb 명령
+
+※ mariadb ON,OFF,상택
+  ==> systemctl status mariadb
+  ==> systemctl start mariadb
+  ==> systemctl stop mariadb
+  
+  
+  
+  
+
+
+
+
+

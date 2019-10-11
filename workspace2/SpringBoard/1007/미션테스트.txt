@@ -1,0 +1,26 @@
+
+1. GuestBook.jar파일을 리눅스OS에 설치된 Tomcat서버에 배포(deploy)
+
+
+    ※ 리눅스OS Tomcat서버-conf-server.xml 수정하기(<Context>태그 추가)!!
+    <Server>
+      <Service>
+       <Engine>
+         <Host>
+            <Context docBase="GuestBook" 
+                     path="/" 
+                     reloadable="true"/> 
+         </Host>
+       </Engine>
+     </Service>
+    </Server>
+
+2. 윈도우OS의 웹브라우저 열기
+   URL입력 ==>   http://192.168.0.4/guest?action=form
+                    ---> 입력폼 확인
+                    ---> 내용입력후 목록화면 이동 확인
+                    
+   URL입력 ==>   http://192.168.0.4/guest?action=list
+                    ---> 목록화면 직접 요청 확인
+                    
+   ※  192.168.0.4는   리눅스OS 가상머신의 ip임 !!               

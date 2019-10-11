@@ -1,0 +1,194 @@
+◎ MariaDB설치
+# yum -y install mariadb-server mariadb
+  ==> CentOS에는 기본적으로 MariaDB가 설치되어 있음
+  ==> 설치가 안되어 있다면 설치, 업데이트 확인
+
+# systemctl status mariadb
+  ==> MariaDB서버 시작 상태 확인
+  
+# systemctl start mariadb
+  ==> MariaDB서버 시작
+
+==============================================================================
+◎ DB접속
+[root@localhost ~]# mysql
+
+◎ DB접속상태[sql명령어 입력 대기상태]
+MariaDB [(none)]> 
+
+◎ DB접속 끊기
+MariaDB [(none)]> exit
+
+◎ 생성된 데이터 베이스 정보 보기 (mysql은 'DataBase'내에 테이블 생성)
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+
+◎ 데이터 베이스 생성하기
+MariaDB [(none)]> create database mariaDB;
+
+◎ 데이터 베이스 생성 확인하기
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mariaDB            |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+
+◎ 특정 데이터 베이스 사용,접속 (테이블 생성, DML, DQL을 위해)
+MariaDB [(none)]> use mariadb; ---> 에러!!  ※주의: 대소문자 구분
+MariaDB [(none)]> use mariaDB;
+MariaDB [mariaDB]>
+
+
+◎ 데이터 베이스내의 생성된 테이블 확인
+MariaDB [mariaDB]> show tables;
+
+◎ 테이블 생성
+MariaDB [mariaDB]> create table st_tbl
+                  ( sno int,
+                    name varchar(20), 
+                    dept varchar(30)) default charset=utf8;
+
+MariaDB [mariaDB]> create table score_tbl 
+                  ( sno int,
+                    LINUX int,
+                    DBMS int);
+
+◎ 데이터 베이스내의 테이블 정보 보기
+MariaDB [mariaDB]> show tables;
++-------------------+
+| Tables_in_mariaDB |
++-------------------+
+| score_tbl         |
+| st_tbl            |
++-------------------+
+
+
+◎ 생성 테이블의 정보 보기 (desc 또는 explain)
+MariaDB [mariaDB]> desc score_tbl;
++-------+---------+------+-----+---------+-------+
+| Field | Type    | Null | Key | Default | Extra |
++-------+---------+------+-----+---------+-------+
+| sno   | int(11) | YES  |     | NULL    |       |
+| LINUX | int(11) | YES  |     | NULL    |       |
+| DBMS  | int(11) | YES  |     | NULL    |       |
++-------+---------+------+-----+---------+-------+
+
+
+◎ 테이블 변경
+MariaDB [mariaDB]> alter table st_tbl modify sno int not null;
+
+MariaDB [mariaDB]> alter table st_tbl add constraint st_tbl_pk primary key (sno);
+  
+◎ 데이터 입력
+MariaDB [mariaDB]> insert into st_tbl (sno,name,dept)
+                   values (201901, "홍길동","컴퓨터학과"); 
+                   ==> 문자데이터 표현에 큰 따옴표 사용이 가능
+
+MariaDB [mariaDB]> insert into st_tbl (sno,name,dept) 
+                   values (201903, '길라임','역사학과');
+                   ==> 문자데이터 표현에 작은 따옴표 사용
+  
+===============================================================================
+<MariaDB JDBC>
+          ▣   드라이버 로딩(제품 선택)
+      Class.forName("org.mariadb.jdbc.Driver");//driver
+      // https://downloads.mariadb.org/connector-java/
+      // ---> mariadb-java-client-2.4.4.jar파일 다운로드 (lib폴더, build path설정)
+      
+          ▣   연결객체 생성   ---> url, user, passward
+      Connection conn = DriverManager.getConnection(
+    		  "jdbc:mariadb://192.168.0.55:3306/mariaDB","scott","tiger");
+   
+          ▣ Statement, ResultSet은 오라클과 동일.
+          
+===============================================================================
+  
+◎ 사용자 계정 생성
+    CREATE USER '아이디'@'localhost' IDENTIFIED BY '비밀번호';  ==>로컬에서만 접근 가능
+    CREATE USER '아이디'@'%' IDENTIFIED BY '비밀번호';  ==> 외부에서 접근 가능
+    CREATE USER '아이디'@'192.168.0.96' IDENTIFIED BY '비밀번호';  ==> 특정IP 접근 가능
+
+    CREATE USER 'scott'@'%' IDENTIFIED BY 'tiger';
+
+
+◎ 사용자 권한 주기
+    GRANT ALL PRIVILEGES ON 데이터베이스.* TO '아이디'@'localhost';
+    GRANT ALL PRIVILEGES ON 데이터베이스.* TO '아이디'@'%';
+    GRANT ALL PRIVILEGES ON 데이터베이스.* TO '아이디'@'192.168.0.96';
+    
+    GRANT ALL PRIVILEGES ON mariaDB.* TO 'scott'@'%';
+    GRANT ALL PRIVILEGES ON test.* TO 'scott'@'%';
+         
+◎ 새로고침 (변경내용 반영)
+    FLUSH PRIVILEGES;
+            
+◎ 사용자 계정 삭제
+    DROP USER [사용자]@[서버];           
+    DROP USER scott@192.168.0.55;           
+    DROP USER scott@localhost;           
+
+===============================================================================
+<오라클과 비교>
+
+▶ dual과 같은 테이블 (from없는 출력가능) - 필요없음
+   select '안녕';
+   
+▶ 현재 시각구하기   
+   O : select sysdate from dual;
+   M : select now();
+   
+▶ 1부터 1씩 증가하는 숫자 입력
+   create table 테이블명
+   (
+            컬럼명  자료형  AUTO_INCREMENT
+   );
+  ※ 조건 : 자료형이 int형  ,  primary key 또는 unique로 유일한 값이 설정되어 있어야 함.
+  
+  ※참고)
+    AUTO_INCREMENT 값 초기화
+     ==> ALTER TABLE [테이블명] AUTO_INCREMENT = [초기화 숫자(시작숫자)]
+    AUTO_INCREMENT 값 재정렬
+     ==> SET @ COUNT = 0;
+     ==> UPDATE [테이블명] SET [컬럼명] = @COUNT:=@COUNT+1;
+
+
+▶ varchar2 사용 불가
+
+▶ 테이블 생성시 default charset=utf8 사용의 차이
+  create table 테이블명
+  (컬럼명 자료형);      
+  ==> 한글입력 깨짐
+  
+  create table 테이블명
+  (컬럼명 자료형) default charset=utf8;
+  ==> 한글입력 잘됨
+
+▶ 넘치는 데이터는 잘려서 입력됨
+ create table test
+ (name varchar(10));
+
+insert into test (name) values ('12345678901234567890');
+  ==>'1234567890' 입력
+insert into test (name) values ('가나다라마가나다라마가나다라마');
+  ==>'가나다라마가나다라마' 입력
+  
+  
+  
+  
+  
+  
+  
+  
+

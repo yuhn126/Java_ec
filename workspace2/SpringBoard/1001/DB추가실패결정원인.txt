@@ -1,0 +1,17 @@
+
+
+
+원인) MyBatis기본설정이 AutoCommit ---> false!!
+----------------------------------------------------------------
+
+해결법1) MySqlSession.java문서
+     session = sqlSessionFactory.openSession();//AutoCommit false
+	 ==> 변경: session = sqlSessionFactory.openSession(true);//AutoCommit true
+
+해결법2) GuestDAO에서  각 DML을 실행후 명시적인 커밋!!
+     ==> sqlSession.insert("id",데이터);
+         sqlSession.commit();
+         sqlSession.close();
+         
+         
+         
